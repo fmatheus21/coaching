@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="utf-8" />
+
+
+        <title th:text="${pageTitle}"></title>
+        <meta name="description" content="Default form examples" />
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- Global Theme Styles(used by all pages) -->
+        <link th:href="@{/assets/plugins/global/plugins.bundle.css?v=0.0.1}"  rel="stylesheet" type="text/css" />
+        <link
+            th:href="@{/assets/plugins/custom/prismjs/prismjs.bundle.css?v=0.0.1}"  rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/css/style.bundle.css?v=0.0.1}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/css/custom.css?v=0.0.1}" rel="stylesheet" type="text/css" />
+        <!-- Global Theme Styles(used by all pages) -->
+
+        <link rel="icon" type="image/png" th:href="@{/assets/media/logos/favicon.png}" />
+
+
+    </head>
+
+
+    <!--begin::Body-->
+    <body id="kt_body"
+          class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed page-loading">
+
+        <!--begin::Main-->
+
+
+        <!--begin::Header Mobile-->
+        <div th:replace="app/template/header-mobile :: fragment"></div>
+        <!--end::Header Mobile-->
+
+        <div class="d-flex flex-column flex-root">
+
+            <!--begin::Page-->
+            <div class="d-flex flex-row flex-column-fluid page">
+
+                <!--begin::Aside-->
+                <div th:replace="app/template/aside :: fragment"></div>
+                <!--end::Aside-->
+
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column flex-row-fluid wrapper"
+                     id="kt_wrapper">
+
+                    <!--begin::Header-->
+                    <div th:replace="app/template/header :: fragment"></div>
+                    <!--end::Header-->
+
+                    <!--begin::Content-->
+                    <div class="content  d-flex flex-column flex-column-fluid"
+                         id="kt_content">
+
+                        <!--begin::Subheader-->
+                        <div th:replace="app/template/subheader :: fragment"></div>
+                        <!--end::Subheader-->
+
+                        <!--begin::Entry-->
+                        <div class="d-flex flex-column-fluid">
+                            <!--begin::Container-->
+                            <div id="container" class=" container ">
+                                <div id="row" class="row">
+                                    <div class="col-lg-12">
+                                        <!--begin::Card-->
+                                        <div class="card card-custom">
+                                            <div class="card-header">
+                                                <h3 class="card-title">[[${headerTitle}]]</h3>
+                                                <div th:if="${buttonBack == true}"  class="card-toolbar">
+                                                    <a href="#"
+                                                       class="btn btn-light-primary font-weight-bolder mr-2"  onclick="window.history.go(-1);" data-placement="top" title="Voltar">
+                                                        <i class="ki ki-long-arrow-back icon-sm"></i> Voltar
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <!-- Content Fragment -->
+                                            <div layout:fragment="content"></div>
+                                            <!-- Content Fragment -->
+
+
+
+                                        </div>
+                                        <!--end::Card-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Container-->
+                        </div>
+                        <!--end::Entry-->
+
+
+                    </div>
+                    <!--end::Content-->
+
+                    <!--begin::Footer-->
+                    <div th:replace="app/template/footer :: fragment"></div>
+                    <!--end::Footer-->
+
+                </div>
+                <!--end::Wrapper-->
+            </div>
+            <!--end::Page-->
+        </div>
+        <!--end::Main-->
+
+
+        <!-- begin::Panel User-->
+        <div th:replace="app/template/panel-user :: fragment"></div>
+        <!-- end::Panel User-->
+
+        <!--begin::Panel Cart-->
+        <div th:replace="app/template/panel-cart :: fragment"></div>
+        <!--end::Panel Cart-->
+
+        <!--begin::Panel Quick-->
+        <div th:replace="app/template/panel-quick :: fragment"></div>
+        <!--end::Panel Quick-->
+
+        <!--begin::Panel Chat-->
+        <div th:replace="app/template/panel-chat :: fragment"></div>
+        <!--end::Panel Chat-->
+
+        <!--begin::Scrolltop-->
+        <div th:replace="app/template/scroll-top :: fragment"></div>
+        <!--end::Scrolltop-->
+
+        <!--begin::Sticky Toolbar-->
+        <div th:replace="app/template/sticky-toolbar :: fragment"></div>
+        <!--end::Sticky Toolbar-->
+
+        <!--begin::Demo Panel-->
+        <div th:replace="app/template/panel-demo :: fragment"></div>
+        <!--end::Demo Panel-->
+
+
+        <script>
+            var KTAppSettings = {
+                "breakpoints": {
+                    "sm": 576,
+                    "md": 768,
+                    "lg": 992,
+                    "xl": 1200,
+                    "xxl": 1400
+                },
+                "colors": {
+                    "theme": {
+                        "base": {
+                            "white": "#ffffff",
+                            "primary": "#3699FF",
+                            "secondary": "#E5EAEE",
+                            "success": "#1BC5BD",
+                            "info": "#8950FC",
+                            "warning": "#FFA800",
+                            "danger": "#F64E60",
+                            "light": "#E4E6EF",
+                            "dark": "#181C32"
+                        },
+                        "light": {
+                            "white": "#ffffff",
+                            "primary": "#E1F0FF",
+                            "secondary": "#EBEDF3",
+                            "success": "#C9F7F5",
+                            "info": "#EEE5FF",
+                            "warning": "#FFF4DE",
+                            "danger": "#FFE2E5",
+                            "light": "#F3F6F9",
+                            "dark": "#D6D6E0"
+                        },
+                        "inverse": {
+                            "white": "#ffffff",
+                            "primary": "#ffffff",
+                            "secondary": "#3F4254",
+                            "success": "#ffffff",
+                            "info": "#ffffff",
+                            "warning": "#ffffff",
+                            "danger": "#ffffff",
+                            "light": "#464E5F",
+                            "dark": "#ffffff"
+                        }
+                    },
+                    "gray": {
+                        "gray-100": "#F3F6F9",
+                        "gray-200": "#EBEDF3",
+                        "gray-300": "#E4E6EF",
+                        "gray-400": "#D1D3E0",
+                        "gray-500": "#B5B5C3",
+                        "gray-600": "#7E8299",
+                        "gray-700": "#5E6278",
+                        "gray-800": "#3F4254",
+                        "gray-900": "#181C32"
+                    }
+                },
+                "font-family": "Poppins"
+            };
+        </script>
+        <!--end::Global Config-->
+
+
+        <!--Global Theme Bundle(used by all pages) -->
+        <script th:src="@{/assets/plugins/global/plugins.bundle.js}"></script>
+        <script th:src="@{/assets/plugins/custom/prismjs/prismjs.bundle.js}"></script>
+        <script th:src="@{/assets/js/scripts.bundle.js}"></script>
+        <script th:src="@{/assets/js/breadcrumbs.js}"></script>
+        <script th:src="@{/assets/js/form-validation.js}"></script>
+        <script th:src="@{/assets/js/image-input.js}"></script>	
+        <script th:src="@{/assets/js/action.js}"></script>
+        <!--Global Theme Bundle(used by all pages) -->     
+
+        <!-- Impedir a tecla enter dentro do form -->
+        <script>
+            $('form').keypress(function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    console.log('Não vou enviar');
+                }
+            });
+        </script>
+
+
+    </body>
+    <!-- Body -->
+
+
+</html>

@@ -1,0 +1,112 @@
+@font-face {
+    font-family: Quicksand; src: url('../font/Quicksand-Regular.ttf');
+}
+
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+body {
+    font-family: Quicksand !important;
+}
+
+
+html, body, #kt_content, #container, #row, .card.card-custom {
+    height: 100%;
+}
+
+.container, .container-sm, .container-md, .container-lg, .container-xl,
+.container-xxl {
+    max-width: 100%;
+}
+
+.aside .aside-menu .menu-nav>.menu-item>.menu-link .menu-text {
+    text-align: center;
+}
+
+.w-100-percent {
+    width: 100% !important;
+}
+
+.symbol.symbol-100 .symbol-label {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.datatable.datatable-default.datatable-loaded>.datatable-table>.datatable-head,
+.datatable.datatable-default.datatable-loaded>.datatable-table>.datatable-body,
+.datatable.datatable-default.datatable-loaded>.datatable-table>.datatable-foot
+{
+    text-align: center;
+}
+
+.form-control-label span {
+    color: red;
+    margin-left: 5px;
+}
+.modal-body .symbol.symbol-60 > img {
+    border-radius: 50%;   
+}
+
+.separator.separator-dashed {
+    border-bottom: 1px dashed #B9BABD;
+}
+
+.bootstrap-select > .dropdown-toggle.btn-light, .bootstrap-select > .dropdown-toggle.btn-secondary{
+    height: calc(1.5em + 1.65rem + 2px);
+    padding: 0.825rem 1.42rem;
+    font-size: 1.08rem;
+    line-height: 1.5;
+    border-radius: 0.42rem;
+}
+
+.form-control.is-invalid> .dropdown-toggle.btn-light{
+    border: solid 3px red; 
+}
+
+.md-editor > textarea {   
+    background-color: #ffffff !important;
+    background-clip: padding-box !important;
+    border: 1px solid #E4E6EF !important;
+}
+
+.md-editor > textarea.is-invalid {
+   border-color: #F64E60 !important;
+}
+
+.input-group.input-group-solid .form-control {   
+    background-color: #F3F6F9;   
+}
+
+.bootstrap-select > .dropdown-toggle.btn-light{
+    background: #F3F6F9 !important;
+    border-color: transparent !important;
+}
+
+.form-control.form-control-solid:focus{
+    background-color: #F3F6F9 !important;
+    border: solid 1px #3699FF;
+}
+
+.input-group.input-group-solid:focus-within,
+.bs-searchbox .form-control:focus{    
+    border: solid 1px #3699FF;
+}
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+<div id="kt_header"  th:fragment="fragment"   class="header  header-fixed ">
+
+    <!--begin::Container-->
+    <div
+        class=" container-fluid  d-flex align-items-stretch justify-content-between">
+
+        <!--begin::Header Menu Wrapper-->
+        <div class="header-menu-wrapper header-menu-wrapper-left"
+             id="kt_header_menu_wrapper">		
+
+            <!--begin::Header Menu-->
+            <div th:replace="app/template/header-menu :: fragment"></div>
+            <!--end::Header Menu-->
+
+        </div>
+        <!--end::Header Menu Wrapper-->
+
+        <!--begin::Topbar-->
+        <div class="topbar">					
+
+            <!--begin::Toggle Search-->
+            <div th:replace="app/template/toggle-search :: fragment"></div>
+            <!--end::Toggle Search-->
+
+            <!--begin::Toggle Notifications-->
+            <div th:replace="app/template/toggle-notification :: fragment"></div>
+            <!--end::Toggle Notifications-->
+
+            <!--begin::Toggle Actions-->
+            <div th:replace="app/template/toggle-action :: fragment"></div>
+            <!--end::Toggle Actions-->
+
+            <!--begin::Toggle Cart-->
+            <div th:replace="app/template/toggle-cart :: fragment"></div>
+            <!--end::Toggle Cart-->
+
+            <!--begin::Toggle Quick-->
+            <div th:replace="app/template/toggle-quick :: fragment"></div>
+            <!--end::Toggle Quick-->
+
+            <!--begin::Toggle Chat-->
+            <div th:replace="app/template/toggle-chat :: fragment"></div>
+            <!--end::Toggle Chat-->
+
+            <!--begin::Languages-->
+            <div th:replace="app/template/toggle-language :: fragment"></div>
+            <!--end::Languages-->
+
+            <!--begin::User-->
+            <div th:replace="app/template/toggle-user :: fragment"></div>
+            <!--end::User-->							
+
+        </div>
+        <!--end::Topbar-->
+    </div>
+    <!--end::Container-->
+</div>
+

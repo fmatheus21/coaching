@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{app/template/layout}">
+    <div layout:fragment="content">
+
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-4" style="padding-bottom: 25px">
+                    <div class="card card-custom bg-primary">
+                        <div class="card-header border-0">
+                            <div class="card-title" style="padding: 10px;">
+                                <h3 class="card-label text-white">
+                                    Avaliação Multidirecional de Desenvolvimento em Vendas</br>
+                                    <center>
+                                        <small class="text-white">Avaliações 0</small>
+                                    </center>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="separator separator-solid separator-white opacity-20"></div>
+                        <div class="card-body text-white">Lorem Ipsum is simply dummy
+                            text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when
+                            an unknown printer took a galley of type and scrambled. Lorem
+                            Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has been the industry's standard dummy text
+                            ever since the 1500s, when an unknown printer took a galley of
+                            type and scrambled.</div>
+                        <div class="separator separator-solid separator-white opacity-20"></div>
+                        <div class="card-toolbar" style="padding: 10px">
+
+                            <span data-toggle="modal" data-placement="top"
+                                  data-target="#modalAssessmentDetail"> 
+                                <button type="button" class="btn btn-sm btn-icon btn-light-primary mr-2"  data-toggle="tooltip" data-placement="top" title="Detalhes">
+                                    <i class="flaticon-list-1"></i>
+                                </button>
+                            </span> 
+                            <a th:href="@{/assessments/view/1}"  class="btn btn-sm btn-icon btn-light-primary mr-2"
+                                            data-toggle="tooltip" data-placement="top" title="Visualizar">
+                                <i class="flaticon-search"></i>
+                            </a> 
+                            <span data-toggle="modal" data-placement="top"
+                                  data-target="#modalAssessmentAdd">
+                                <button  type="button" class="btn btn-sm btn-icon btn-light-primary mr-2"
+                                         data-toggle="tooltip" data-placement="top" title="Adicionar">
+                                    <i class="flaticon-plus"></i> </button>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- Card Body -->
+
+
+        <!-- Modal Detail Coache -->
+        <div th:replace="app/page/modal/assessment/assessment-detail :: fragment"></div>
+        <!-- Modal Detail Coache -->
+
+        <!-- Modal Add Coache -->
+        <div th:replace="app/page/modal/assessment/assessment-add :: fragment"></div>
+        <!-- Modal Add Coache -->
+
+        <!--<script th:src="@{/assets/js/jquery-3.5.1.js}"></script>-->
+        <!--<script th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>-->
+
+        <script type="text/javascript">
+            window.addEventListener("load", function (event) {
+                assessments();
+            });
+        </script>                
+        
+
+    </div>
+
+</html>
