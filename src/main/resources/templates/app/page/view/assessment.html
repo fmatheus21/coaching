@@ -4,11 +4,50 @@
     <div layout:fragment="content">
 
 
-        <!-- Card Body -->
+        <!-- Card Body --> 
         <div class="card-body">
             <div class="row">
 
-                <h1>Teste</h1>
+
+                <div class="col-lg-3 form-group-sub">
+                    <div class="kanban-item is-moving">
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-success mr-3">
+                                <img alt="Avatar" th:src="@{${avatarSystem}}">
+                            </div>                   
+                            <div class="d-flex flex-column align-items-start">
+                                <span class="text-dark-50 font-weight-bold mb-1">Danielle Pereira</span>
+                                <span class="label label-inline label-light-success font-weight-bold">2 Avaliações</span>         
+                                <a class="nav-link" href="#" >
+                                    <i class="nav-icon flaticon-search "></i>
+                                    <span class="text-dark-50 font-weight-bold">Visualizar </span> 
+                                </a>
+                            </div>                                
+                        </div>                           
+                    </div>    
+                </div>    
+                
+                <div class="col-lg-3 form-group-sub">
+                    <div class="kanban-item is-moving">
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-success mr-3">
+                                <img alt="Avatar" th:src="@{${avatarSystem}}">
+                            </div>                   
+                            <div class="d-flex flex-column align-items-start">
+                                <span class="text-dark-50 font-weight-bold mb-1">Gustavo Ramos</span>
+                                <span class="label label-inline label-light-success font-weight-bold">2 Avaliações</span>         
+                                <a class="nav-link" href="#" >
+                                    <i class="nav-icon flaticon-search "></i>
+                                    <span class="text-dark-50 font-weight-bold">Visualizar </span> 
+                                </a>
+                            </div>                                
+                        </div>                           
+                    </div>    
+                </div>   
+
+
+
+
 
 
             </div>
@@ -16,13 +55,11 @@
         <!-- Card Body -->
 
 
-         
-
-      <!--   <script type="text/javascript">
+        <script type="text/javascript">
             window.addEventListener("load", function (event) {
-                assessments();
+                coaches_assessments();
             });
-        </script>-->
+        </script>         
 
     </div>
 

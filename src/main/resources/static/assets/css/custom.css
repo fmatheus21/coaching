@@ -104,9 +104,22 @@ html, body, #kt_content, #container, #row, .card.card-custom {
 .bs-searchbox .form-control:focus{    
     border: solid 1px #3699FF;
 }
+.modal-body {    
+    padding: 3.0rem;
+}
 
+.timeline.timeline-3 .timeline-items {  
+    padding: 50px 0;
+}
 
+.kanban-item {
+    background: #F3F6F9; 
+    margin-bottom: 20px;    
+    border-radius: 5px;
+}
 
-
-
+.kanban-item .symbol > img {
+    border: solid 1px;
+    border-radius: 50%;
+}
 
