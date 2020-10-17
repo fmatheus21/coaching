@@ -15,8 +15,8 @@ public class CoacheResource {
 
     @Autowired
     private GlobalService globalService;
-    
-      @GetMapping
+
+    @GetMapping
     public String openCoache(Model model) {
         globalService.model(model);
         model.addAttribute("pageTitle", "Coaches");
@@ -26,7 +26,16 @@ public class CoacheResource {
     }
 
     @GetMapping("/assessments/view/{id}")
-    public String viewCoache(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
+    public String viewCoacheAssessments(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
+        globalService.model(model);
+        model.addAttribute("pageTitle", "Avaliações");
+        model.addAttribute("headerTitle", "Avaliações");
+        model.addAttribute("buttonBack", true);
+        return "app/page/view/assessments";
+    }
+    
+    @GetMapping("/assessments/assessment/view/{id}")
+    public String viewCoacheAssessmentsAssessment(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
         globalService.model(model);
         model.addAttribute("pageTitle", "Avaliações");
         model.addAttribute("headerTitle", "Avaliações");
@@ -42,7 +51,5 @@ public class CoacheResource {
         model.addAttribute("buttonBack", true);
         return "app/page/reader/coache-assessment";
     }
-
-  
 
 }

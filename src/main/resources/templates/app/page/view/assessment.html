@@ -6,53 +6,163 @@
 
         <!-- Card Body --> 
         <div class="card-body">
+
+            <style>
+                .md-editor .md-header {    
+                    display: none;
+                }
+            </style> 
+
+            <div class="form-group row">
+                <div class="col-lg-6 form-group-sub">
+                    <label class="form-control-label">Título<span
+                            class="asterisco">*</span></label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i
+                                    class="flaticon-list  icon-lg"></i></span>
+                        </div>
+                        <input type='text' name="titulo" value="Teste 1"
+                               class="form-control  form-control-lg" disabled />
+                    </div>
+                </div>
+                <div class="col-lg-5 form-group-sub">
+                    <label class="form-control-label">Nome Casual<span
+                            class="asterisco">*</span></label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i
+                                    class="flaticon-user icon-lg"></i></span>
+                        </div>
+                        <input type='text' name="nomeCasual" value="Danielle"
+                               class="form-control  form-control-lg" disabled/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-12 form-group-sub">
+                    <label class="form-control-label">Descrição<span
+                            class="asterisco">*</span></label>
+                    <textarea name="descricao"  class="form-control" data-provide="markdown" rows="10" disabled></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-6 form-group-sub">
+                    <label class="form-control-label">Nome do Avaliado<span
+                            class="asterisco">*</span></label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i
+                                    class="flaticon-user icon-lg"></i></span>
+                        </div>
+                        <input type='text' name="nomeAvaliado" value="Gustavo Ramos"
+                               class="form-control  form-control-lg" disabled />
+                    </div>
+                </div>
+                <div class="col-lg-6 form-group-sub">
+                    <label class="form-control-label">Email do Avaliado<span
+                            class="asterisco">*</span></label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i
+                                    class="flaticon-multimedia-2  icon-lg"></i></span>
+                        </div>
+                        <input id="emailAvaliado" type='email' name="emailAvaliado" value="gustavo@domain.com"
+                               class="form-control  form-control-lg" disabled/>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="separator separator-dashed my-5">Avaliadores</div>
+
+            <br/>
+
             <div class="row">
 
+                <div class="col-lg-6">
+                    <table class="table table-bordered table-checkable" id="kt_datatable">
 
-                <div class="col-lg-3 form-group-sub">
-                    <div class="kanban-item is-moving">
-                        <div class="d-flex align-items-center">
-                            <div class="symbol symbol-success mr-3">
-                                <img alt="Avatar" th:src="@{${avatarSystem}}">
-                            </div>                   
-                            <div class="d-flex flex-column align-items-start">
-                                <span class="text-dark-50 font-weight-bold mb-1">Danielle Pereira</span>
-                                <span class="label label-inline label-light-success font-weight-bold">2 Avaliações</span>         
-                                <a class="nav-link" href="#" >
-                                    <i class="nav-icon flaticon-search "></i>
-                                    <span class="text-dark-50 font-weight-bold">Visualizar </span> 
-                                </a>
-                            </div>                                
-                        </div>                           
-                    </div>    
-                </div>    
-                
-                <div class="col-lg-3 form-group-sub">
-                    <div class="kanban-item is-moving">
-                        <div class="d-flex align-items-center">
-                            <div class="symbol symbol-success mr-3">
-                                <img alt="Avatar" th:src="@{${avatarSystem}}">
-                            </div>                   
-                            <div class="d-flex flex-column align-items-start">
-                                <span class="text-dark-50 font-weight-bold mb-1">Gustavo Ramos</span>
-                                <span class="label label-inline label-light-success font-weight-bold">2 Avaliações</span>         
-                                <a class="nav-link" href="#" >
-                                    <i class="nav-icon flaticon-search "></i>
-                                    <span class="text-dark-50 font-weight-bold">Visualizar </span> 
-                                </a>
-                            </div>                                
-                        </div>                           
-                    </div>    
-                </div>   
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>                        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nome 1</td>
+                                <td>nome1@domain.com</td>                                   
+                            </tr>
+                            <tr>
+                                <td>Nome 2</td>
+                                <td>nome2@domain.com</td>                                   
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <div class="col-lg-12 form-group-sub">
+                            <label class="form-control-label">Observações<span
+                                    class="asterisco">*</span></label>
+                            <textarea name="descricao"  class="form-control" data-provide="markdown" rows="3" disabled></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>            
 
 
-
-
-
-
-            </div>
         </div>
         <!-- Card Body -->
+
+        <div class="card-footer">
+             <button type="button" data-toggle="modal" data-target="#modalConfirmDelete" class="btn btn-light-danger font-weight-bold" >
+                    <i class="flaticon-delete"></i>Excluir
+                </button>
+                <button type="button" class="btn btn-light-primary font-weight-bold">
+                    <i class="far fa-check-circle"></i>Confirmar
+                </button>
+        </div>
+        
+           <!-- Modal Confirm Delete -->
+        <div id="modalConfirmDelete"  class="modal fade" data-backdrop="static"
+             tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Exlusão</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Mensagem de Confirmação -->
+                        <div th:replace="app/template/message/confirmation :: fragment"></div>
+                        <!-- Mensagem de Confirmação -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold"
+                                data-dismiss="modal">
+                            <i class="fas fa-minus-circle"></i>Cancelar
+                        </button>
+                        <button type="button"
+                                class="btn btn-light-primary font-weight-bold">
+                            <i class="far fa-check-circle"></i>Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Confirm Delete -->
 
 
         <script type="text/javascript">
