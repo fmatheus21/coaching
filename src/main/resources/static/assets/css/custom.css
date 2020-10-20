@@ -135,3 +135,11 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     bottom: 0;    
     left: 0;
 }
+
+.bootstrap-select.disabled, .bootstrap-select > .disabled {    
+    cursor: no-drop !important;
+}
+
+.accordion.accordion-panel .card .card-header .card-title {
+    background-color: #F3F6F9;   
+}

@@ -10,7 +10,7 @@ function dashboard() {
 function coaches() {
     var breadcrumbs = `
 <li class="breadcrumb-item"><a href="/dashboard" class="text-muted">Dashboard</a></li> 
-<li class="breadcrumb-item"><a href="/coaches" class="text-muted">Coaches</a></li>`;
+<li class="breadcrumb-item"><a href="" class="text-muted">Coaches</a></li>`;
     document.getElementById("breadcrumb").innerHTML = breadcrumbs;
     $('#coaches').addClass("menu-item-active");
 }
@@ -27,9 +27,17 @@ function coaches_assessments() {
 function assessments() {
     var breadcrumbs = `
 <li class="breadcrumb-item"><a href="/dashboard" class="text-muted">Dashboard</a></li> 
-<li class="breadcrumb-item"><a href="/assessments" class="text-muted">Avaliações</a></li>`;
+<li class="breadcrumb-item"><a href="" class="text-muted">Avaliações</a></li>`;
     document.getElementById("breadcrumb").innerHTML = breadcrumbs;
     $('#assessments').addClass("menu-item-active");
+}
+
+function team_coaching() {
+    var breadcrumbs = `
+<li class="breadcrumb-item"><a href="/dashboard" class="text-muted">Dashboard</a></li> 
+<li class="breadcrumb-item"><a href="" class="text-muted">Team Coaching</a></li>`;
+    document.getElementById("breadcrumb").innerHTML = breadcrumbs;
+    $('#team-coaching').addClass("menu-item-active");
 }
 
 

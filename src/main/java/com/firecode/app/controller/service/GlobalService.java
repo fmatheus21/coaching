@@ -13,8 +13,10 @@ public class GlobalService {
     private PathUtil pathUtil;
 
     public Model model(Model model) {
-        String avatarSystem = pathUtil.getPathAvatarSystem();
-        model.addAttribute("avatarSystem", avatarSystem);
+        String avatarUserSystem = pathUtil.getPathAvatarUserSystem();
+         String avatarTeamSystem = pathUtil.getPathAvatarTeamSystem();
+        model.addAttribute("avatarUserSystem", avatarUserSystem);
+        model.addAttribute("avatarTeamSystem", avatarTeamSystem);
         model.addAttribute("footerLink", "https://firecodesystems.com");
         model.addAttribute("footerName", "Firecode Systems");
         return model;

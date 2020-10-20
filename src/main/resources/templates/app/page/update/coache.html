@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{app/template/layout}">
+    <div layout:fragment="content">
+
+
+        <!-- Form -->
+        <form id="form-coache-edit" method="post">
+            <!-- Card Body -->
+            <div class="card-body">
+                <!-- Row -->
+                <div class="row">
+                    <!-- Col -->
+                    <div class="col-lg-12">
+
+
+
+                       <div id="avatar-add" class="form-group row image-input image-input-outline image-input-circle" >
+                        <div class="image-input-wrapper"
+                             th:style="'background-image:url('+ @{${avatarUserSystem}} +');'" ></div>
+                        <label
+                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="change" data-toggle="tooltip" title=""
+                            data-original-title="Mudar Avatar"> <i
+                                class="fa fa-pen icon-sm text-muted"></i> <input type="file"
+                                name="profile_avatar" accept=".png, .jpg, .jpeg" /> <input
+                                type="hidden" name="profile_avatar_remove" />
+                        </label> 
+                           <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="cancel" data-toggle="tooltip" title="Excluir Avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-7 form-group-sub">
+                            <label class="form-control-label">Nome Completo<span
+                                    class="asterisco">*</span></label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="flaticon-user icon-lg"></i></span>
+                                </div>
+                                <input type='text' name="nome"
+                                       class="form-control  form-control-lg" />
+                            </div>
+                        </div>
+                        <div class="col-lg-5 form-group-sub">
+                            <label class="form-control-label">Nome Casual<span
+                                    class="asterisco">*</span></label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="flaticon-user icon-lg"></i></span>
+                                </div>
+                                <input type='text' name="nomeCasual"
+                                       class="form-control  form-control-lg" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-4 form-group-sub">
+                            <label class="form-control-label">CPF<span
+                                    class="asterisco">*</span></label> 
+                                    <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="flaticon-list-1 icon-lg"></i></span>
+                                </div>
+                            <input type='text' name="cpf"   class="form-control form-control-solid form-control-lg mask-cpf" />
+                        </div>
+                             </div>
+                        <div class="col-lg-4 form-group-sub">
+                            <label class="form-control-label">Sexo<span
+                                    class="asterisco">*</span></label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="fas fa-venus-mars icon-lg"></i></span>
+                                </div>
+                                <select name="idSexo" class="form-control selectpicker"
+                                        data-size="7" data-live-search="true">
+                                    <option value="0">Selecione</option>
+                                    <option value="1">Feminino</option>
+                                    <option value="2">Masculino</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 form-group-sub">
+                            <label class="form-control-label">Data de Nascimento<span
+                                    class="asterisco">*</span></label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="flaticon-calendar icon-lg"></i></span>
+                                </div>
+                                <input type='text' name="dataNascimento"
+                                       class="form-control  form-control-lg mask-date" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-8 form-group-sub">
+                            <label class="form-control-label">Email<span
+                                    class="asterisco">*</span></label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="flaticon-multimedia-2  icon-lg"></i></span>
+                                </div>
+                                <input type='email' name="email"
+                                       class="form-control  form-control-lg" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 form-group-sub">
+                            <label class="form-control-label">Telefone<span
+                                    class="asterisco">*</span></label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i
+                                            class="fas fa-phone-alt  icon-lg"></i></span>
+                                </div>
+                                <input type="text" name="telefone"
+                                       class="form-control  form-control-lg mask-phone" />
+                            </div>
+                        </div>
+                    </div>
+                        
+                        
+                        <div class="separator separator-dashed my-5"></div>
+
+                        <div class="timeline timeline-3">
+                            <div class="timeline-items">                                
+
+                                <div class="timeline-item">
+                                    <div class="timeline-media">
+                                        <i class="flaticon2-layers text-warning"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="mr-2">
+                                                <span class="label label-light-warning font-weight-bolder label-inline ml-2">Ciclo 1</span>                                                
+                                                <span class="text-muted ml-2">
+                                                    04/12/2019
+                                                </span>                                                
+                                            </div>
+                                            <div class="ml-2" data-toggle="tooltip" title="" data-placement="left" data-original-title="Excluir">
+                                                <a href="#"  data-toggle="modal" data-target="#modalConfirmDeleteCycle" class="btn btn-hover-light-primary btn-sm btn-icon" >
+                                                    <i class="far fa-trash-alt font-size-lg text-primary"></i>
+                                                </a>                                                
+                                            </div>
+                                        </div>
+                                        <p class="p-0">
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-media">
+                                        <i class="flaticon2-layers text-warning"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="mr-2">
+                                                <span class="label label-light-warning font-weight-bolder label-inline ml-2">Ciclo 1</span>                                                
+                                                <span class="text-muted ml-2">
+                                                    04/12/2019
+                                                </span>                                                
+                                            </div>
+                                            <div class="ml-2" data-toggle="tooltip" title="" data-placement="left" data-original-title="Excluir">
+                                                <a href="#"  data-toggle="modal" data-target="#modalConfirmDeleteCycle" class="btn btn-hover-light-primary btn-sm btn-icon" >
+                                                    <i class="far fa-trash-alt font-size-lg text-primary"></i>
+                                                </a>                                                
+                                            </div>
+                                        </div>
+                                        <p class="p-0">
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-media">
+                                        <i class="flaticon2-layers text-warning"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="mr-2">
+                                                <span class="label label-light-warning font-weight-bolder label-inline ml-2">Ciclo 1</span>                                                
+                                                <span class="text-muted ml-2">
+                                                    04/12/2019
+                                                </span>                                                
+                                            </div>
+                                            <div class="ml-2" data-toggle="tooltip" title="" data-placement="left" data-original-title="Excluir">
+                                                <a href="#"  data-toggle="modal" data-target="#modalConfirmDeleteCycle" class="btn btn-hover-light-primary btn-sm btn-icon" >
+                                                    <i class="far fa-trash-alt font-size-lg text-primary"></i>
+                                                </a>                                                
+                                            </div>
+                                        </div>
+                                        <p class="p-0">
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-media">
+                                        <i class="flaticon2-layers text-warning"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="mr-2">
+                                                <span class="label label-light-warning font-weight-bolder label-inline ml-2">Ciclo 1</span>                                                
+                                                <span class="text-muted ml-2">
+                                                    04/12/2019
+                                                </span>                                                
+                                            </div>
+                                            <div class="ml-2" data-toggle="tooltip" title="" data-placement="left" data-original-title="Excluir">
+                                                <a href="#"  data-toggle="modal" data-target="#modalConfirmDeleteCycle" class="btn btn-hover-light-primary btn-sm btn-icon" >
+                                                    <i class="far fa-trash-alt font-size-lg text-primary"></i>
+                                                </a>                                                
+                                            </div>
+                                        </div>
+                                        <p class="p-0">
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                        </p>
+                                    </div>
+                                </div>      
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- Col -->
+                </div>
+                <!-- Row -->
+            </div>
+            <!-- Card Body -->
+      
+
+        <!-- Card Footer -->
+        <div class="card-footer">
+            <button type="button" data-toggle="modal" data-target="#modalConfirmDelete" class="btn btn-light-danger font-weight-bold" >
+                <i class="flaticon-delete"></i>Excluir
+            </button>
+            <button type="submit" class="btn btn-light-primary font-weight-bold">
+                <i class="far fa-check-circle"></i>Confirmar
+            </button>
+        </div>
+        <!-- Card Footer -->     
+        
+          </form>
+        <!-- Form -->
+        
+        
+          <!-- Modal Team Coache Confirm Delete -->
+        <div id="modalConfirmDelete"  class="modal fade" data-backdrop="static"
+             tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Exlusão</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Mensagem de Confirmação -->
+                        <div th:replace="app/template/message/confirmation :: fragment"></div>
+                        <!-- Mensagem de Confirmação -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold"
+                                data-dismiss="modal">
+                            <i class="fas fa-minus-circle"></i>Cancelar
+                        </button>
+                        <button type="button"
+                                class="btn btn-light-primary font-weight-bold">
+                            <i class="far fa-check-circle"></i>Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Team Coache Confirm Delete -->
+        
+        
+          <!-- Modal Confirm Delete Cycle -->
+        <div class="modal fade"  id="modalConfirmDeleteCycle" data-backdrop="static"
+             tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Exlusão de Ciclo</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Mensagem de Confirmação -->
+                        <div th:replace="app/template/message/confirmation :: fragment"></div>
+                        <!-- Mensagem de Confirmação -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold"
+                                data-dismiss="modal">
+                            <i class="fas fa-minus-circle"></i>Cancelar
+                        </button>
+                        <button type="button"
+                                class="btn btn-light-primary font-weight-bold">
+                            <i class="far fa-check-circle"></i>Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Confirm Delete Cycle -->
+
+
+         <script th:src="@{/assets/js/jquery-3.5.1.js}"></script>
+        <script th:src="@{/assets/js/mask.js}"></script>
+        <script th:src="@{/assets/js/datatable/coache.js}"></script>  
+        <script th:src="@{/assets/js/bootstrap-select.js}"></script>
+
+
+        <script type="text/javascript">
+            window.addEventListener("load", function (event) {
+                coaches();
+            });
+        </script>
+
+        <!-- Impedir a tecla enter dentro do form -->
+        <script>
+            $('form').keypress(function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    console.log('Não vou enviar');
+                }
+            });
+        </script>
+
+    </div>
+
+
+
+
+</html>

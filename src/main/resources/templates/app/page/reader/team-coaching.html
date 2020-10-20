@@ -17,16 +17,17 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-4 my-2 my-md-0">
                                         <div class="input-icon">
-                                            <input type="text" class="form-control"
-                                                   placeholder="Pesquisar..." id="kt_datatable_search_query" /> <span><i
-                                                    class="flaticon2-search-1 text-muted"></i></span>
+                                            <input type="text" class="form-control" placeholder="Pesquisar..." id="kt_datatable_search_query" /> 
+                                            <span>
+                                                <i class="flaticon2-search-1 text-muted"></i>
+                                            </span>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4 my-2 my-md-0">
                                         <div class="d-flex align-items-center">
-                                            <label class="mr-3 mb-0 d-none d-md-block">Sexo:</label> <select
-                                                class="form-control" id="kt_datatable_search_status">
+                                            <label class="mr-3 mb-0 d-none d-md-block">Sexo:</label> 
+                                            <select class="form-control" id="kt_datatable_search_status">
                                                 <option value="">Todos</option>
                                                 <option value="1">Masculino</option>
                                                 <option value="2">Feminino</option>
@@ -35,8 +36,8 @@
                                     </div>
                                     <div class="col-md-4 my-2 my-md-0">
                                         <div class="d-flex align-items-center">
-                                            <label class="mr-3 mb-0 d-none d-md-block">Status:</label> <select
-                                                class="form-control" id="kt_datatable_search_type">
+                                            <label class="mr-3 mb-0 d-none d-md-block">Status:</label> 
+                                            <select class="form-control" id="kt_datatable_search_type">
                                                 <option value="">Todos</option>
                                                 <option value="1">Online</option>
                                                 <option value="2">Offline</option>
@@ -61,8 +62,7 @@
                             <tr>
                                 <th title="Field #1"># ID</th>
                                 <th title="Field #2">Nome</th>
-                                <th title="Field #3">Data de Nascimento</th>
-                                <th title="Field #4">Email</th>
+                                <th title="Field #3">Data de Registro</th>                                
                                 <th title="Field #7">Status</th>
                                 <th>Ações</th>
                                 <th></th>
@@ -74,17 +74,15 @@
                                 <td class="sorting_1 dtr-control" tabindex="0">
                                     <div class="d-flex align-items-center">
                                         <div class="symbol symbol-50 flex-shrink-0">
-                                            <img th:src="@{${avatarUserSystem}}" alt="avatar">
+                                            <img th:src="@{${avatarTeamSystem}}" alt="avatar">
                                         </div>
                                         <div class="ml-3">
                                             <span
-                                                class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">Berenice
-                                                Lampett</span>
+                                                class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">Teste</span>
                                         </div>
                                     </div>
                                 </td>
-                                <td>01/09/1980</td>
-                                <td>lobo_danielle@hotmail.com</td>
+                                <td>19/10/2020  </td>                                
                                 <td class="text-right">1</td>
                                 <td>
                                     <div class="dropdown">
@@ -97,41 +95,47 @@
                                             <ul class="nav nav-hoverable flex-column">
 
                                                 <li class="nav-item">
-                                                    <a class="nav-link" th:href="@{/coaches/view/1}">
+                                                    <a class="nav-link" th:href="@{/team/coaching/view/1}">
                                                         <i class="nav-icon flaticon-search "></i>
                                                         <span class="nav-text">Visualizar </span> 
                                                     </a>
                                                 </li>
 
                                                 <li class="nav-item">
-                                                    <a class="nav-link" th:href="@{/coaches/update/1}">
+                                                    <a class="nav-link" th:href="@{/team/coaching/update/1}">
                                                         <i class="nav-icon flaticon-edit"></i>
                                                         <span class="nav-text">Editar </span> 
                                                     </a>
                                                 </li>
 
                                                 <li class="nav-item">
-                                                    <a class="nav-link"  th:href="@{/coaches/1/assessments/reader}">
-                                                        <i class="nav-icon flaticon-edit-1"></i>
-                                                        <span class="nav-text">Avaliações </span> 
+                                                    <a class="nav-link" href="#">
+                                                        <i class="nav-icon flaticon2-group"></i>
+                                                        <span class="nav-text">Registro de Sessão</span>  
                                                     </a>
                                                 </li>
 
                                                 <li class="nav-item">
-                                                    <a class="nav-link" th:href="@{/coaches/1/session/reader}">
-                                                        <i class="nav-icon flaticon2-group"></i>
-                                                        <span class="nav-text">Registro de Sessão</span> 
+                                                    <a class="nav-link" href="#" data-toggle="modal" data-target="#modalConfirmDelete">
+                                                        <i class="nav-icon far fa-trash-alt"></i>
+                                                        <span class="nav-text">Remover</span> 
                                                     </a>
                                                 </li>
-
-                                                <li class="nav-item"><a class="nav-link" href="#"
-                                                                        data-toggle="modal" data-target="#modalConfirmDelete"><i
-                                                            class="nav-icon far fa-trash-alt"></i><span
-                                                            class="nav-text">Remover</span> </a></li>
 
                                             </ul>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <span>Participantes</span>
+                                    <ul>
+                                        <li style="list-style-type: none;">
+                                            <span class="menu-text">Bruno Cardoso</span>
+                                        </li>
+                                        <li style="list-style-type: none;">
+                                            <span class="menu-text">Aline de Almeida</span>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
                         </tbody>
@@ -144,8 +148,7 @@
         </div>
         <!-- Card Body -->
 
-
-        <!-- Modal Confirm Delete -->
+        <!-- Modal Team Coache Confirm Delete -->
         <div id="modalConfirmDelete"  class="modal fade" data-backdrop="static"
              tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
              aria-hidden="true">
@@ -176,20 +179,18 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Confirm Delete -->
-
-
+        <!-- Modal Team Coache Confirm Delete -->
 
 
         <script th:src="@{/assets/js/jquery-3.5.1.js}"></script>
+        <script th:src="@{/assets/js/form-repeater.js}"></script>
         <script th:src="@{/assets/js/mask.js}"></script>
-        <script th:src="@{/assets/js/datatable/coache.js}"></script>  
-        <script th:src="@{/assets/js/bootstrap-select.js}"></script>
+        <script th:src="@{/assets/js/datatable/coache.js}"></script>    
 
 
         <script type="text/javascript">
             window.addEventListener("load", function (event) {
-                coaches();
+                team_coaching();
             });
         </script>
 

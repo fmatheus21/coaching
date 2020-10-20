@@ -71,11 +71,15 @@
                                         <!--begin::Card-->
                                         <div class="card card-custom">
                                             <div class="card-header">
-                                                <h3 class="card-title">[[${headerTitle}]]</h3>
-                                                <div th:if="${buttonBack == true}"  class="card-toolbar">
-                                                    <a href="#"
-                                                       class="btn btn-light-primary font-weight-bolder mr-2"  onclick="window.history.go(-1);" data-placement="top" title="Voltar">
-                                                        <i class="ki ki-long-arrow-back icon-sm"></i> Voltar
+                                                <h3 class="card-title">[[${formTitle}]]</h3>
+                                                <div class="card-toolbar">
+                                                    <a th:if="${buttonBack == true}"  href="#"
+                                                       class="btn btn-light-primary font-weight-bolder mr-2"  onclick="window.history.go(-1);" data-container="body" data-toggle="tooltip" data-placement="top" title="Voltar">
+                                                        <i class="ki ki-long-arrow-back icon-md"></i> Voltar
+                                                    </a>
+                                                    <a th:if="${buttonAdd == true}"  th:href="@{${buttonAddLink}}"
+                                                       class="btn btn-light-success font-weight-bolder mr-2" data-container="body" data-toggle="tooltip" data-placement="top" title="Novo">
+                                                        <i class="flaticon-plus icon-md"></i> Novo
                                                     </a>
                                                 </div>
                                             </div>
@@ -83,7 +87,6 @@
                                             <!-- Content Fragment -->
                                             <div layout:fragment="content"></div>
                                             <!-- Content Fragment -->
-
 
 
                                         </div>
@@ -113,11 +116,7 @@
 
         <!-- begin::Panel User-->
         <div th:replace="app/template/panel-user :: fragment"></div>
-        <!-- end::Panel User-->
-
-        <!--begin::Panel Cart-->
-        <div th:replace="app/template/panel-cart :: fragment"></div>
-        <!--end::Panel Cart-->
+        <!-- end::Panel User-->       
 
         <!--begin::Panel Quick-->
         <div th:replace="app/template/panel-quick :: fragment"></div>
