@@ -95,7 +95,7 @@ public class CoacheResource {
         model.addAttribute("headerTitle", "Avaliações");
         model.addAttribute("buttonBack", true);
         return "app/page/reader/coache-assessment";
-    }
+    } 
     
     
      @GetMapping("/{id}/session/reader")

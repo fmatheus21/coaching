@@ -8,10 +8,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-public class CoachingApplication  extends SpringBootServletInitializer {
+public class CoachingApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CoachingApplication.class, args);
-	}
- 
+    public static void main(String[] args) {
+        SpringApplication.run(CoachingApplication.class, args);
+    }
+
 }
