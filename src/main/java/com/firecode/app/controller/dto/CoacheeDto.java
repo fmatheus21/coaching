@@ -7,12 +7,13 @@ import com.firecode.app.model.entity.GenderEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.entity.PersonTypeEntity;
 import com.firecode.app.model.entity.UserEntity;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 
 public class CoacheeDto {
 
@@ -23,7 +24,7 @@ public class CoacheeDto {
     @Getter
     @Setter
     @NotNull
-    @NotBlank   
+    @NotBlank
     private String casualName;
     @Getter
     @Setter
@@ -82,6 +83,12 @@ public class CoacheeDto {
     @Getter
     @Setter
     private String twitter;
+    @Getter
+    @Setter
+    private String gender;
+    @Getter
+    @Setter
+    private String avatar;
 
     public PersonEntity create(CoacheeDto dto, UserEntity user) {
 
@@ -110,10 +117,41 @@ public class CoacheeDto {
         contact.setInstagram(dto.getInstagram());
         contact.setTwitter(dto.getTwitter());
         person.setContactEntity(contact);
-        
-         System.out.println("person:::::::::::::::::::::: "+person.getCpfCnpj());
 
         return person;
+    }
+
+    public List<CoacheeDto> reader(Iterable<CoacheeEntity> listCoachees, String avatar) {
+        List<CoacheeDto> list = new ArrayList<>();
+        for (CoacheeEntity coachee : listCoachees) {
+            CoacheeDto dto = new CoacheeDto();
+            dto.setId(coachee.getId());
+            dto.setName(coachee.getIdPerson().getNameCompanyname());
+            dto.setDateBirth(FormatLocalDatetUtil.converterToLocalDate(coachee.getDateBirth()));
+            dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
+            dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
+            dto.setCreatedAt(FormatLocalDatetUtil.converterLocalDateTimeToString(coachee.getCreatedAt()));
+            dto.setCreatedUser(coachee.getIdCreatedUser().getIdPerson().getNameCompanyname());
+            dto.setAvatar(avatar);
+            list.add(dto);
+        }
+
+        return list;
+    }
+
+    public CoacheeDto find(CoacheeEntity coachee) {
+
+        CoacheeDto dto = new CoacheeDto();
+
+        dto.setName(coachee.getIdPerson().getNameCompanyname());
+        dto.setCpf(coachee.getIdPerson().getCpfCnpj());
+        dto.setCasualName(coachee.getCasualName());
+        dto.setGender(coachee.getIdGender().getName());
+        dto.setDateBirth(FormatLocalDatetUtil.converterToLocalDate(coachee.getDateBirth()));
+        dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
+        dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
+
+        return dto;
     }
 
 }

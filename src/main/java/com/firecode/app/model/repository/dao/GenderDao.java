@@ -2,6 +2,7 @@ package com.firecode.app.model.repository.dao;
 
 import com.firecode.app.model.entity.GenderEntity;
 import com.firecode.app.model.repository.GenderRepository;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -19,7 +20,7 @@ public class GenderDao implements GenericDao<GenderEntity> {
     }
 
     @Override
-    public Iterable<GenderEntity> findAll(String orderBy) {
+    public List<GenderEntity> findAll(String orderBy) {
         return repository.findAll(Sort.by(Sort.Order.asc(orderBy)));
     }
 

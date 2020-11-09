@@ -7,7 +7,7 @@ function dashboard() {
     $('#dashboard').addClass("menu-item-active");
 }
 
-function coaches() {
+function coachees() {
     var breadcrumbs = `
 <li class="breadcrumb-item"><a href="/dashboard" class="text-muted">Dashboard</a></li> 
 <li class="breadcrumb-item"><a href="" class="text-muted">Coaches</a></li>`;
@@ -15,7 +15,7 @@ function coaches() {
     $('#coaches').addClass("menu-item-active");
 }
 
-function coaches_assessments() {
+function coachees_assessments() {
     var breadcrumbs = `
 <li class="breadcrumb-item"><a href="/dashboard" class="text-muted">Dashboard</a></li> 
     <li class="breadcrumb-item"><span class="text-muted">Coache</span></li> 

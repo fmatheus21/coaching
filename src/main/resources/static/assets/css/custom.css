@@ -160,12 +160,31 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     padding-top: 20px;
 }
 
-.pulse .pulse-ring {   
-    margin-top: -28px;
-    margin-left: -11px;
-}
-
 .alert[data-notify] {  
     width: 400px;
 }
 
+.alert[data-notify]{
+    display: inline-block; 
+    margin: 0px auto; 
+    position: fixed; 
+    transition: all 0.5s ease-in-out 0s; 
+    z-index: 10000; 
+    top: 30px; 
+    right: 30px; 
+    animation-iteration-count: 1;
+}
+
+.aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading, .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link {
+    background-color: #1b1b28;
+    border: solid 1px;
+}
+
+.datatable.datatable-default > .datatable-table > .datatable-body .datatable-row-detail .datatable-detail .datatable-row > .datatable-cell:last-child {
+    padding-left: 0;
+}
+
+.datatable.datatable-default > .datatable-table > .datatable-body .datatable-row-detail .datatable-detail .datatable-row > .datatable-cell li{
+    list-style-type: none;
+    margin-left: -50px;
+}

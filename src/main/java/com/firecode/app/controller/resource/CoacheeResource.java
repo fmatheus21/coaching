@@ -4,13 +4,16 @@ import com.firecode.app.controller.dto.CoacheeDto;
 import com.firecode.app.controller.rule.CoacheeRule;
 import com.firecode.app.controller.rule.GlobalRule;
 import com.firecode.app.controller.service.GenderService;
+import com.firecode.app.controller.util.MessageValidationUtil;
+import com.firecode.app.model.entity.CoacheeEntity;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,24 +28,28 @@ public class CoacheeResource {
 
     @Autowired
     private GenderService genderService;
-    
-       @Autowired
-    private  CoacheeRule coacheeRule;
+
+    @Autowired
+    private CoacheeRule coacheeRule;
+
+    @Autowired
+    private MessageValidationUtil messageValidationUtil;
 
     @GetMapping
-    public String openReader(Model model) {      
+    public String openReader(Model model) {
         globalRule.model(model);
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Listar Coachees");
         model.addAttribute("buttonBack", false);
-        model.addAttribute("buttonAdd", true);       
+        model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
+        model.addAttribute("listCoachees", coacheeRule.listAll());
         return "app/page/reader/coachee";
     }
 
     @GetMapping("/create")
-    public String openCreate(Model model) {
+    public String openCreate(Model model, HttpServletRequest request, HttpServletResponse response) {
         globalRule.model(model);
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
@@ -50,14 +57,9 @@ public class CoacheeResource {
         model.addAttribute("buttonBack", true);
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
-         model.addAttribute("listGender", genderService.findAll("name"));
-        model.addAttribute("modelCoachee", coacheeRule.init());
+        model.addAttribute("listGender", genderService.findAll("name"));
+        model.addAttribute("modelCoachee", coacheeRule.init(request, response));
         return "app/page/create/coachee";
-    }
-    
-      @PostMapping("/create")
-    public String create(@Valid CoacheeDto dto, BindingResult result, RedirectAttributes attributes) {
-        return coacheeRule.create(dto, result, attributes);
     }
 
     @GetMapping("/update/{id}")
@@ -75,12 +77,18 @@ public class CoacheeResource {
     @GetMapping("/view/{id}")
     public String openView(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
         globalRule.model(model);
+        CoacheeDto coachee = coacheeRule.findById(id);
+        if (coachee == null) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
+            return "redirect:/coachees";
+        }
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Visualizar Coache");
         model.addAttribute("buttonBack", true);
         model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
+        model.addAttribute("modelCoachee", coachee);
         return "app/page/view/coachee";
     }
 
@@ -128,7 +136,10 @@ public class CoacheeResource {
         model.addAttribute("buttonAddLink", "/coachees/create");
         return "app/page/view/coache-session";
     }
-    
-   
+
+    @PostMapping("/create")
+    public String create(@Valid CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
+        return coacheeRule.create(dto, result, attributes, request, response);
+    }
 
 }

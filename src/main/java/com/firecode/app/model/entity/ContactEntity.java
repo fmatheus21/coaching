@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
+import com.firecode.app.controller.util.AppUtil;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,51 +9,43 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Fernando Matheus
- */
 @Entity
 @Table(name = "contact", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id_person"}),
     @UniqueConstraint(columnNames = {"email"}),
     @UniqueConstraint(columnNames = {"id"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ContactEntity.findAll", query = "SELECT c FROM ContactEntity c"),
-    @NamedQuery(name = "ContactEntity.findById", query = "SELECT c FROM ContactEntity c WHERE c.id = :id"),
-    @NamedQuery(name = "ContactEntity.findByEmail", query = "SELECT c FROM ContactEntity c WHERE c.email = :email"),
-    @NamedQuery(name = "ContactEntity.findByPhone", query = "SELECT c FROM ContactEntity c WHERE c.phone = :phone"),
-    @NamedQuery(name = "ContactEntity.findByFacebook", query = "SELECT c FROM ContactEntity c WHERE c.facebook = :facebook"),
-    @NamedQuery(name = "ContactEntity.findByInstagram", query = "SELECT c FROM ContactEntity c WHERE c.instagram = :instagram"),
-    @NamedQuery(name = "ContactEntity.findByTwitter", query = "SELECT c FROM ContactEntity c WHERE c.twitter = :twitter")})
+
 public class ContactEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+
     @Basic(optional = false)
     @Column(name = "email", nullable = false, length = 100)
     private String email;
+
     @Basic(optional = false)
     @Column(name = "phone", nullable = false, length = 20)
     private String phone;
+
     @Column(name = "facebook", length = 255)
     private String facebook;
+
     @Column(name = "instagram", length = 255)
     private String instagram;
+
     @Column(name = "twitter", length = 255)
     private String twitter;
+
     @JoinColumn(name = "id_person", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
     private PersonEntity idPerson;
@@ -69,12 +57,6 @@ public class ContactEntity implements Serializable {
         this.id = id;
     }
 
-    public ContactEntity(Integer id, String email, String phone) {
-        this.id = id;
-        this.email = email;
-        this.phone = phone;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -84,19 +66,31 @@ public class ContactEntity implements Serializable {
     }
 
     public String getEmail() {
+        if (email != null) {
+            return AppUtil.convertAllLowercaseCharacters(email);
+        }
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = AppUtil.convertAllUppercaseCharacters(email);
     }
 
     public String getPhone() {
+        if (phone != null) {
+            int count = AppUtil.countCharacter(phone);
+            if (count == 10) {
+                return AppUtil.formatMask(phone, "## ####-####");
+            }
+            if (count == 11) {
+                return AppUtil.formatMask(phone, "## #####-####");
+            }
+        }
         return phone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = AppUtil.removeSpecialCharacters(phone);
     }
 
     public String getFacebook() {
@@ -145,15 +139,12 @@ public class ContactEntity implements Serializable {
             return false;
         }
         ContactEntity other = (ContactEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.ContactEntity[ id=" + id + " ]";
     }
-    
+
 }

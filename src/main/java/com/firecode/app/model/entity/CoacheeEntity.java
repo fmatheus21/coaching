@@ -1,5 +1,6 @@
 package com.firecode.app.model.entity;
 
+import com.firecode.app.controller.util.AppUtil;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
@@ -90,11 +89,14 @@ public class CoacheeEntity implements Serializable {
     }
 
     public String getCasualName() {
+        if(casualName!=null){
+            return AppUtil.convertFirstUppercaseCharacter(AppUtil.removeDuplicateSpace(casualName));
+        }
         return casualName;
     }
 
     public void setCasualName(String casualName) {
-        this.casualName = casualName;
+        this.casualName = AppUtil.convertAllUppercaseCharacters(AppUtil.removeDuplicateSpace(casualName));
     }
 
     public LocalDate getDateBirth() {

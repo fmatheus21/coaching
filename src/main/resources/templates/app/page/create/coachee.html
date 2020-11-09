@@ -15,7 +15,7 @@
 
 
 
-                        <div id="avatar-add" class="form-group row image-input image-input-outline image-input-circle" >
+                        <!--<div id="avatar-add" class="form-group row image-input image-input-outline image-input-circle" >
                             <div class="image-input-wrapper"
                                  th:style="'background-image:url('+ @{${avatarUserSystem}} +');'" ></div>
                             <label
@@ -30,7 +30,7 @@
                                 data-action="cancel" data-toggle="tooltip" title="Excluir Avatar">
                                 <i class="ki ki-bold-close icon-xs text-muted"></i>
                             </span>
-                        </div>
+                        </div>-->
 
                         <div class="form-group row">
                             <div class="col-lg-7 form-group-sub">
@@ -184,11 +184,7 @@
 
 
             <!-- Card Footer -->
-            <div class="card-footer">               
-                <button type="button" data-toggle="modal" data-target="#modalConfirmDelete" class="btn btn-light-danger font-weight-bold" >
-                    <i class="flaticon-delete"></i>                  
-                    Excluir
-                </button>
+            <div class="card-footer">     
                 <button type="submit" class="btn btn-light-primary font-weight-bold">
                     <i class="far fa-check-circle"></i>                   
                     Confirmar
@@ -199,39 +195,6 @@
         </form>
         <!-- Form -->
 
-
-        <!-- Modal Team Coache Confirm Delete -->
-        <div id="modalConfirmDelete"  class="modal fade" data-backdrop="static"
-             tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirmar Exlusão</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Mensagem de Confirmação -->
-                        <div th:replace="app/template/message/confirmation :: fragment"></div>
-                        <!-- Mensagem de Confirmação -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-danger font-weight-bold"
-                                data-dismiss="modal">
-                            <i class="fas fa-minus-circle"></i>Cancelar
-                        </button>
-                        <button type="button"
-                                class="btn btn-light-primary font-weight-bold">
-                            <i class="far fa-check-circle"></i>Confirmar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Team Coache Confirm Delete -->
 
 
         <script th:src="@{/assets/js/jquery-3.5.1.js}"></script>

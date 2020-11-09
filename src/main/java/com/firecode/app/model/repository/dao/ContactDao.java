@@ -1,7 +1,7 @@
 package com.firecode.app.model.repository.dao;
 
-import com.firecode.app.model.entity.PersonEntity;
-import com.firecode.app.model.repository.PersonRepository;
+import com.firecode.app.model.entity.ContactEntity;
+import com.firecode.app.model.repository.ContactRepository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,28 +9,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonDao implements GenericDao<PersonEntity> {
+public class ContactDao implements GenericDao<ContactEntity> {
 
     @Autowired
-    private PersonRepository repository;
+    private ContactRepository repository;
 
     @Override
-    public PersonEntity findById(int id) {
+    public ContactEntity findById(int id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public List<PersonEntity> findAll(String orderBy) {
+    public List<ContactEntity> findAll(String orderBy) {
         return repository.findAll(Sort.by(Sort.Order.asc(orderBy)));
     }
 
     @Override
-    public void create(PersonEntity t) {
+    public void create(ContactEntity t) {
         repository.save(t);
     }
 
     @Override
-    public void update(PersonEntity t) {
+    public void update(ContactEntity t) {
         repository.save(t);
     }
 
@@ -39,8 +39,8 @@ public class PersonDao implements GenericDao<PersonEntity> {
         repository.deleteById(id);
     }
 
-    public PersonEntity findByCpfCnpj(String value) {
-        return repository.findByCpfCnpj(value);
+    public ContactEntity findByEmail(String value) {
+        return repository.findByEmail(value);
     }
 
 }

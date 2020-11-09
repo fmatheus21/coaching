@@ -11,8 +11,12 @@ public class PersonService {
     @Autowired
     private PersonDao dao;
 
-    public void create(PersonEntity person) {       
+    public void create(PersonEntity person) {
         dao.create(person);
+    }
+
+    public PersonEntity findBycpfCnpj(String value) {
+        return dao.findByCpfCnpj(value);
     }
 
 }

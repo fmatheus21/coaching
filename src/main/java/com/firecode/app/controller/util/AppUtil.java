@@ -1,18 +1,24 @@
 package com.firecode.app.controller.util;
 
+import br.com.caelum.stella.ValidationMessage;
+import br.com.caelum.stella.format.CNPJFormatter;
+import br.com.caelum.stella.format.CPFFormatter;
+import br.com.caelum.stella.format.Formatter;
+import br.com.caelum.stella.validation.CNPJValidator;
+import br.com.caelum.stella.validation.CPFValidator;
 import java.text.Normalizer;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.text.WordUtils;
 
-
 public class AppUtil {
-    
-        public static String convertFirstUppercaseCharacter(String string) {
+
+    public static String convertFirstUppercaseCharacter(String string) {
         return WordUtils.capitalizeFully(string).trim();
     }
-    
-      public static String convertsAllUppercaseCharacters(String string) {
+
+    public static String convertAllUppercaseCharacters(String string) {
         return string.toUpperCase().trim();
     }
 
@@ -37,7 +43,7 @@ public class AppUtil {
         normalize = normalize.replaceAll("[^\\p{ASCII}]", "");
         return normalize;
     }
-    
+
     public static String formatMask(String valor, String mascara) {
         String dado = "";
         // remove caracteres nao numericos
@@ -61,10 +67,34 @@ public class AppUtil {
         }
         return saida;
     }
-    
-    
-    
-     public static boolean validateEmail(String email) {
+
+    public static int countCharacter(String value) {
+        return value.length();
+    }
+
+    public static boolean validateCPF(String value) {
+        CPFValidator validator = new CPFValidator();
+        List<ValidationMessage> erros = validator.invalidMessagesFor(value);
+        return erros.size() <= 0;
+    }
+
+    public static boolean validateCNPJ(String value) {
+        CNPJValidator validator = new CNPJValidator();
+        List<ValidationMessage> erros = validator.invalidMessagesFor(value);
+        return erros.size() <= 0;
+    }
+
+    public static String formatCPF(String cpf) {
+        Formatter formatter = new CPFFormatter();
+        return formatter.format(cpf);
+    }
+
+    public static String formatCNPJ(String cnpj) {
+        Formatter formatter = new CNPJFormatter();
+        return formatter.format(cnpj);
+    }
+
+    public static boolean validateEmail(String email) {
         if (email != null && email.length() > 0) {
             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -75,6 +105,5 @@ public class AppUtil {
         }
         return false;
     }
-    
-    
+
 }

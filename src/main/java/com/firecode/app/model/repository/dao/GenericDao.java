@@ -1,12 +1,14 @@
 package com.firecode.app.model.repository.dao;
 
+import java.util.List;
+
 public interface GenericDao<T> {
 
     void create(T t);
 
     void update(T t);
 
-    Iterable<T> findAll(String orderBy);
+    List<T> findAll(String orderBy);
 
     T findById(int id);
 

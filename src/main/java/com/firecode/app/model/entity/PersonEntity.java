@@ -1,5 +1,6 @@
 package com.firecode.app.model.entity;
 
+import com.firecode.app.controller.util.AppUtil;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -69,19 +70,29 @@ public class PersonEntity implements Serializable {
     }
 
     public String getNameCompanyname() {
+        if (nameCompanyname != null) {
+            return AppUtil.convertFirstUppercaseCharacter(AppUtil.removeDuplicateSpace(nameCompanyname));
+        }
         return nameCompanyname;
     }
 
     public void setNameCompanyname(String nameCompanyname) {
-        this.nameCompanyname = nameCompanyname;
+        this.nameCompanyname = AppUtil.convertAllUppercaseCharacters(AppUtil.removeDuplicateSpace(nameCompanyname));
     }
 
     public String getCpfCnpj() {
+        if (cpfCnpj != null) {
+            if (idPersonType.getId() == 1) {
+                return AppUtil.formatCPF(cpfCnpj);
+            } else if (idPersonType.getId() == 2) {
+                return AppUtil.formatCNPJ(cpfCnpj);
+            }
+        }
         return cpfCnpj;
     }
 
     public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
+        this.cpfCnpj = AppUtil.removeSpecialCharacters(cpfCnpj);
     }
 
     public PersonTypeEntity getIdPersonType() {
