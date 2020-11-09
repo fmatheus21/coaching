@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
+import com.firecode.app.controller.util.AppUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -14,38 +10,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Fernando Matheus
- */
+
 @Entity
 @Table(name = "gender", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"}),
     @UniqueConstraint(columnNames = {"id"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "GenderEntity.findAll", query = "SELECT g FROM GenderEntity g"),
-    @NamedQuery(name = "GenderEntity.findById", query = "SELECT g FROM GenderEntity g WHERE g.id = :id"),
-    @NamedQuery(name = "GenderEntity.findByName", query = "SELECT g FROM GenderEntity g WHERE g.name = :name")})
+
 public class GenderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @Column(name = "name", nullable = false, length = 20)
     private String name;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGender")
     private Collection<CoacheeEntity> coacheeEntityCollection;
 
@@ -70,6 +59,9 @@ public class GenderEntity implements Serializable {
     }
 
     public String getName() {
+        if(name!=null){
+            return AppUtil.convertFirstUppercaseCharacter(name);
+        }
         return name;
     }
 
@@ -100,10 +92,7 @@ public class GenderEntity implements Serializable {
             return false;
         }
         GenderEntity other = (GenderEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

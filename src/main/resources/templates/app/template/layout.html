@@ -83,6 +83,14 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            
+                                                <!-- Mensagem de Sucesso -->
+                                            <div th:replace="app/template/message/success :: mensagem"></div>
+                                            <!-- Mensagem de Sucesso -->
+                                            
+                                              <!-- Mensagem de Erro -->
+                                            <div th:replace="app/template/message/error :: mensagem"></div>
+                                            <!-- Mensagem de Erro -->
 
                                             <!-- Content Fragment -->
                                             <div layout:fragment="content"></div>
@@ -214,6 +222,7 @@
 
         <!-- Impedir a tecla enter dentro do form -->
         <script>
+            
             $(document).ready(function () {
                 $(window).keydown(function (event) {
                     if ((event.keyCode === 13) && !$(document.activeElement).is('textarea')) {
@@ -222,17 +231,11 @@
                     }
                 });
             });
+            
+            $(".message").delay(10000).hide(1000);
+            
         </script>
-        <!--<script>
-            $('form').keypress(function (e) {
-                if (e.which === 13) {
-                    e.preventDefault();
-                    console.log('Não vou enviar');
-                }
-            });
-        </script>-->
-
-
+   
     </body>
     <!-- Body -->
 

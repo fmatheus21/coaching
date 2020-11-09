@@ -11,7 +11,7 @@ var KTFormControls = function () {
         FormValidation.formValidation(document.getElementById(element), {
             fields: {
 
-                nome: {
+                name: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -23,7 +23,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                nomeCasual: {
+                casualName: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -42,7 +42,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                idSexo: {
+                idGender: {
                     validators: {
                         greaterThan: {
                             message: 'Preenchimento obrigatório.',
@@ -50,7 +50,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                dataNascimento: {
+                dateBirth: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -71,7 +71,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                telefone: {
+                phone: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -122,7 +122,7 @@ var KTFormControls = function () {
         FormValidation.formValidation(document.getElementById(element), {
             fields: {
 
-                nome: {
+                name: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -134,7 +134,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                nomeCasual: {
+                casualName: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -153,7 +153,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                idSexo: {
+                idGender: {
                     validators: {
                         greaterThan: {
                             message: 'Preenchimento obrigatório.',
@@ -182,7 +182,7 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                telefone: {
+                phone: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -259,12 +259,12 @@ var KTFormControls = function () {
                             message: "Preenchimento obrigatório."
                         },
                         stringLength: {
-                            min: 5,                            
+                            min: 5,
                             message: 'Deve conter no mínimo 5 caracteres'
                         }
                     }
                 },
-                 nomeAvaliado: {
+                nomeAvaliado: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -275,7 +275,7 @@ var KTFormControls = function () {
                             message: 'Deve conter no mínimo 3 e no máximo 100 caracteres'
                         }
                     }
-                },               
+                },
                 emailAvaliado: {
                     validators: {
                         notEmpty: {
@@ -285,12 +285,12 @@ var KTFormControls = function () {
                             message: 'O valor não é um endereço de email válido'
                         }
                     }
-                },           
-                 envioEmail: {
+                },
+                envioEmail: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
-                        }                    
+                        }
                     }
                 }
 
@@ -330,14 +330,14 @@ var KTFormControls = function () {
         });
     };
     /* form-assessment-add */
-    
-    
-    
+
+
+
     /* form-team-coaching-add */
     var initTeamCoachingAdd = function (element) {
         FormValidation.formValidation(document.getElementById(element), {
             fields: {
-                 nomeTurma: {
+                nomeTurma: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -349,14 +349,14 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                 '[0][nome]': {
+                '[0][nome]': {
                     validators: {
                         /*choice: {
-                            min: 2,
-                            max: 4,
-                            message: 'Please choose 2 - 4 programming languages you are good at'
-                        }*/
-                          notEmpty: {
+                         min: 2,
+                         max: 4,
+                         message: 'Please choose 2 - 4 programming languages you are good at'
+                         }*/
+                        notEmpty: {
                             message: "Preenchimento obrigatório."
                         },
                         stringLength: {
@@ -365,22 +365,22 @@ var KTFormControls = function () {
                             message: 'Deve conter no mínimo 3 e no máximo 50 caracteres'
                         }
                     }
-                },          
-                  '[0][email]': {
-                    validators: {                       
-                          notEmpty: {
+                },
+                '[0][email]': {
+                    validators: {
+                        notEmpty: {
                             message: "Preenchimento obrigatório."
                         },
                         emailAddress: {
                             message: 'O valor não é um endereço de email válido'
                         }
                     }
-                },   
-                  '[0][telefone]': {
-                    validators: {                       
-                          notEmpty: {
+                },
+                '[0][telefone]': {
+                    validators: {
+                        notEmpty: {
                             message: "Preenchimento obrigatório."
-                        }                       
+                        }
                     }
                 }
 
@@ -419,12 +419,12 @@ var KTFormControls = function () {
         });
     };
     /* form-team-coaching-add */
-    
+
     /* form-team-coaching-edit */
     var initTeamCoachingEdit = function (element) {
         FormValidation.formValidation(document.getElementById(element), {
             fields: {
-                 nomeTurma: {
+                nomeTurma: {
                     validators: {
                         notEmpty: {
                             message: "Preenchimento obrigatório."
@@ -436,9 +436,9 @@ var KTFormControls = function () {
                         }
                     }
                 },
-                 '[0][nome]': {
-                    validators: {                     
-                          notEmpty: {
+                '[0][nome]': {
+                    validators: {
+                        notEmpty: {
                             message: "Preenchimento obrigatório."
                         },
                         stringLength: {
@@ -447,22 +447,22 @@ var KTFormControls = function () {
                             message: 'Deve conter no mínimo 3 e no máximo 50 caracteres'
                         }
                     }
-                },          
-                  '[0][email]': {
-                    validators: {                       
-                          notEmpty: {
+                },
+                '[0][email]': {
+                    validators: {
+                        notEmpty: {
                             message: "Preenchimento obrigatório."
                         },
                         emailAddress: {
                             message: 'O valor não é um endereço de email válido'
                         }
                     }
-                },   
-                  '[0][telefone]': {
-                    validators: {                       
-                          notEmpty: {
+                },
+                '[0][telefone]': {
+                    validators: {
+                        notEmpty: {
                             message: "Preenchimento obrigatório."
-                        }                       
+                        }
                     }
                 }
 
@@ -501,11 +501,11 @@ var KTFormControls = function () {
         });
     };
     /* form-team-coaching-edit */
-    
+
 
     return {
         // public functions
-        init: function () {         
+        init: function () {
 
             if (document.getElementById('form-coache-add')) {
                 initCoacheAdd('form-coache-add');
@@ -516,10 +516,10 @@ var KTFormControls = function () {
             if (document.getElementById('form-assessment-add')) {
                 initAssessmentAdd('form-assessment-add');
             }
-             if (document.getElementById('form-team-coaching-add')) {
+            if (document.getElementById('form-team-coaching-add')) {
                 initTeamCoachingAdd('form-team-coaching-add');
-            }            
-               if (document.getElementById('form-team-coaching-edit')) {
+            }
+            if (document.getElementById('form-team-coaching-edit')) {
                 initTeamCoachingEdit('form-team-coaching-edit');
             }
 

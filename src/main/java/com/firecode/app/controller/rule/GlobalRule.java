@@ -1,4 +1,4 @@
-package com.firecode.app.controller.service;
+package com.firecode.app.controller.rule;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import com.firecode.app.controller.util.PathUtil;
 
 @Service
-public class GlobalService {
+public class GlobalRule {
 
     @Autowired
     private PathUtil pathUtil;

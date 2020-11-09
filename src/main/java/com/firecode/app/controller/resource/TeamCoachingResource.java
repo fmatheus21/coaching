@@ -1,6 +1,6 @@
 package com.firecode.app.controller.resource;
 
-import com.firecode.app.controller.service.GlobalService;
+import com.firecode.app.controller.rule.GlobalRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +14,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class TeamCoachingResource {
 
     @Autowired
-    private GlobalService globalService;
+    private GlobalRule globalRule;
 
     @GetMapping
     public String openReader(Model model) {
-        globalService.model(model);
+        globalRule.model(model);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", false);
@@ -29,7 +29,7 @@ public class TeamCoachingResource {
 
   @GetMapping("/create")
     public String openCreate(Model model) {
-        globalService.model(model);
+        globalRule.model(model);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", true);
@@ -40,7 +40,7 @@ public class TeamCoachingResource {
 
     @GetMapping("/update/{id}")
     public String openUpdate(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
-        globalService.model(model);
+        globalRule.model(model);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", true);
@@ -51,7 +51,7 @@ public class TeamCoachingResource {
     
      @GetMapping("/view/{id}")
     public String openView(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
-        globalService.model(model);
+        globalRule.model(model);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", true);

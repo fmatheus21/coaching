@@ -1,8 +1,9 @@
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,10 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
@@ -38,27 +41,23 @@ public class CoacheeEntity implements Serializable {
     private String casualName;
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "date_birth", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dateBirth;
+    private LocalDate dateBirth;
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Basic(optional = false)
-    @Column(name = "updated_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    @NotNull
+    @Column(name = "updated_at", nullable = false)   
+    private LocalDateTime updatedAt;
 
     @JoinColumn(name = "id_gender", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private GenderEntity idGender;
-
-    @JoinColumn(name = "id_person", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private PersonEntity idPerson;
 
     @JoinColumn(name = "id_created_user", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
@@ -68,6 +67,10 @@ public class CoacheeEntity implements Serializable {
     @ManyToOne(optional = false)
     private UserEntity idUpdatedUser;
 
+    @JoinColumn(name = "id_person", referencedColumnName = "id", nullable = false)
+    @OneToOne(optional = false)
+    private PersonEntity idPerson;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoachee")
     private Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection;
 
@@ -76,14 +79,6 @@ public class CoacheeEntity implements Serializable {
 
     public CoacheeEntity(Integer id) {
         this.id = id;
-    }
-
-    public CoacheeEntity(Integer id, String casualName, Date dateBirth, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.casualName = casualName;
-        this.dateBirth = dateBirth;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -102,27 +97,27 @@ public class CoacheeEntity implements Serializable {
         this.casualName = casualName;
     }
 
-    public Date getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(Date dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

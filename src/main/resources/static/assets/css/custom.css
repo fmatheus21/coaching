@@ -160,5 +160,12 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     padding-top: 20px;
 }
 
+.pulse .pulse-ring {   
+    margin-top: -28px;
+    margin-left: -11px;
+}
 
+.alert[data-notify] {  
+    width: 400px;
+}
 

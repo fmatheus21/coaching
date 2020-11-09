@@ -1,35 +1,35 @@
 package com.firecode.app.model.repository.dao;
 
-import com.firecode.app.model.entity.CoacheeEntity;
-import com.firecode.app.model.repository.CoacheeRepository;
+import com.firecode.app.model.entity.GenderEntity;
+import com.firecode.app.model.repository.GenderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CoacheeDao implements GenericDao<CoacheeEntity> {
+public class GenderDao implements GenericDao<GenderEntity> {
 
     @Autowired
-    private CoacheeRepository repository;
+    private GenderRepository repository;
 
     @Override
-    public CoacheeEntity findById(int id) {
+    public GenderEntity findById(int id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public Iterable<CoacheeEntity> findAll(String orderBy) {
-           return repository.findAll(Sort.by(Sort.Order.asc(orderBy)));
+    public Iterable<GenderEntity> findAll(String orderBy) {
+        return repository.findAll(Sort.by(Sort.Order.asc(orderBy)));
     }
 
     @Override
-    public void create(CoacheeEntity t) {
+    public void create(GenderEntity t) {
         repository.save(t);
     }
 
     @Override
-    public void update(CoacheeEntity t) {
+    public void update(GenderEntity t) {
         repository.save(t);
     }
 
