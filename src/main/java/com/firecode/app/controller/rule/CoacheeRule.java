@@ -111,7 +111,28 @@ public class CoacheeRule {
         if (coachee == null) {
             return null;
         }
-        return coacheeDto.find(coachee);
+        return coacheeDto.find(coachee, this.avatar());
+    }
+
+    public String delete(int id, RedirectAttributes attributes) {
+
+        String redirect = "redirect:/coachees";
+
+        CoacheeEntity coachee = coacheeService.findById(id);
+
+        if (coachee == null) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
+            return redirect;
+        }
+
+        try {
+            personService.deleteById(coachee.getIdPerson().getId());
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
+        } catch (DataIntegrityViolationException ex) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), ex.getMessage());
+        }
+        return redirect;
+
     }
 
 }

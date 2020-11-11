@@ -16,7 +16,7 @@
 
                         <div class="form-group row image-input image-input-outline image-input-circle" >
                             <div class="image-input-wrapper"
-                                 th:style="'background-image:url('+ @{${avatarUserSystem}} +');'" ></div>						
+                                 th:style="'background-image:url('+ @{${modelCoachee.avatar}} +');'" ></div>						
                         </div>
 
                         <div class="form-group row">
@@ -28,7 +28,7 @@
                                         <span class="input-group-text"> <i
                                                 class="flaticon-user icon-lg"></i></span>
                                     </div>
-                                    <input type='text' name="nome"
+                                    <input type='text' th:field="*{modelCoachee.name}"
                                            class="form-control  form-control-lg" disabled/>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                         <span class="input-group-text"> <i
                                                 class="flaticon-user icon-lg"></i></span>
                                     </div>
-                                    <input type='text' name="nomeCasual"
+                                    <input type='text' th:field="*{modelCoachee.casualName}" 
                                            class="form-control  form-control-lg" disabled/>
                                 </div>
                             </div>
@@ -55,9 +55,10 @@
                                         <span class="input-group-text"> <i
                                                 class="flaticon-list-1 icon-lg"></i></span>
                                     </div>
-                                    <input type='text' name="cpf"   class="form-control form-control-solid form-control-lg mask-cpf"  disabled/>
+                                    <input type='text' th:field="*{modelCoachee.cpf}"  class="form-control form-control-solid form-control-lg mask-cpf"  disabled/>
                                 </div>
                             </div>
+
                             <div class="col-lg-4 form-group-sub">
                                 <label class="form-control-label">Sexo<span
                                         class="asterisco">*</span></label>
@@ -66,14 +67,10 @@
                                         <span class="input-group-text"> <i
                                                 class="fas fa-venus-mars icon-lg"></i></span>
                                     </div>
-                                    <select name="idSexo" class="form-control selectpicker"
-                                            data-size="7" data-live-search="true" disabled>
-                                        <option value="0">Selecione</option>
-                                        <option value="1">Feminino</option>
-                                        <option value="2">Masculino</option>
-                                    </select>
+                                    <input type='text' th:field="*{modelCoachee.gender}" 
+                                           class="form-control  form-control-lg" disabled/>
                                 </div>
-                            </div>
+                            </div>       
                             <div class="col-lg-4 form-group-sub">
                                 <label class="form-control-label">Data de Nascimento<span
                                         class="asterisco">*</span></label>
@@ -82,7 +79,7 @@
                                         <span class="input-group-text"> <i
                                                 class="flaticon-calendar icon-lg"></i></span>
                                     </div>
-                                    <input type='text' name="dataNascimento"
+                                    <input type='text' th:field="*{modelCoachee.dateBirth}" 
                                            class="form-control  form-control-lg mask-date" disabled />
                                 </div>
                             </div>
@@ -97,7 +94,7 @@
                                         <span class="input-group-text"> <i
                                                 class="flaticon-multimedia-2  icon-lg"></i></span>
                                     </div>
-                                    <input type='email' name="email"
+                                    <input type='email' th:field="*{modelCoachee.email}" 
                                            class="form-control  form-control-lg" disabled />
                                 </div>
                             </div>
@@ -109,7 +106,7 @@
                                         <span class="input-group-text"> <i
                                                 class="fas fa-phone-alt  icon-lg"></i></span>
                                     </div>
-                                    <input type="text" name="telefone"
+                                    <input type="text" th:field="*{modelCoachee.phone}" 
                                            class="form-control  form-control-lg mask-phone" disabled />
                                 </div>
                             </div>
@@ -209,56 +206,11 @@
                 </div>
                 <!-- Row -->
             </div>
-            <!-- Card Body -->
-
-
-            <!-- Card Footer -->
-            <div class="card-footer">
-                <button type="button" data-toggle="modal" data-target="#modalConfirmDelete" class="btn btn-light-danger font-weight-bold" >
-                    <i class="flaticon-delete"></i>Excluir
-                </button>
-                <button type="submit" class="btn btn-light-primary font-weight-bold">
-                    <i class="far fa-check-circle"></i>Confirmar
-                </button>
-            </div>
-            <!-- Card Footer -->     
+            <!-- Card Body -->          
 
         </form>
         <!-- Form -->
 
-
-        <!-- Modal Team Coache Confirm Delete -->
-        <div id="modalConfirmDelete"  class="modal fade" data-backdrop="static"
-             tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirmar Exlusão</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Mensagem de Confirmação -->
-                        <div th:replace="app/template/message/confirmation :: fragment"></div>
-                        <!-- Mensagem de Confirmação -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-danger font-weight-bold"
-                                data-dismiss="modal">
-                            <i class="fas fa-minus-circle"></i>Cancelar
-                        </button>
-                        <button type="button"
-                                class="btn btn-light-primary font-weight-bold">
-                            <i class="far fa-check-circle"></i>Confirmar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Team Coache Confirm Delete -->
 
 
         <script th:src="@{/assets/js/jquery-3.5.1.js}"></script>
@@ -272,7 +224,7 @@
                 coachees();
             });
         </script>
-      
+
 
     </div>
 

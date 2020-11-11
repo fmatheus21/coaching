@@ -1,4 +1,4 @@
-/* global checkboxElem */
+/* global checkboxElem, KTApp */
 
 function changeSelectCoache() {
     var select = document.getElementById('coache');
@@ -34,6 +34,30 @@ function checkboxCoache(checkboxElem) {
         document.getElementById('emailAvaliado').disabled = false;
     }
 
+}
+
+
+function loadDelete(id) {
+    document.getElementById("id-delete").innerHTML = id;
+}
+
+function deleteCoachee() {
+    var id = document.getElementById('id-delete').innerText;
+    $('#modalConfirmDelete').modal('hide');
+    KTApp.blockPage({
+        overlayColor: '#000000',
+        type: 'v2',
+        state: 'success',
+        size: "lg",
+        message: 'Por favor, aguarde...'
+    });
+    setTimeout(function () {
+        let form = document.createElement('form');
+        form.action = '/coachees/delete/' + id;
+        form.method = 'POST';
+        document.body.append(form);
+        form.submit();
+    }, 10);
 }
 
 

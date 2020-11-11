@@ -19,4 +19,8 @@ public class PersonService {
         return dao.findByCpfCnpj(value);
     }
 
+    public void deleteById(int id) {
+        dao.deleteById(id);
+    }
+
 }

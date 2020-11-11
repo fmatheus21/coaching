@@ -99,10 +99,13 @@
                                                     </a>
                                                 </li>
 
-                                                <li class="nav-item"><a class="nav-link" href="#"
-                                                                        data-toggle="modal" data-target="#modalConfirmDelete"><i
-                                                            class="nav-icon far fa-trash-alt"></i><span
-                                                            class="nav-text">Remover</span> </a></li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#"  data-toggle="modal" data-target="#modalConfirmDelete"
+                                                       th:onclick="'loadDelete('+ ${coachee.id} +')'">
+                                                        <i class="nav-icon far fa-trash-alt"></i>
+                                                        <span class="nav-text">Remover</span> 
+                                                    </a>
+                                                </li>
 
                                             </ul>
                                         </div>
@@ -134,7 +137,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmar Exlusão</h5>
+                        <h5 class="modal-title">Confirmar Exlusão #ID <span id="id-delete"></span></h5>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
@@ -150,7 +153,7 @@
                                 data-dismiss="modal">
                             <i class="fas fa-minus-circle"></i>Cancelar
                         </button>
-                        <button type="button"
+                        <button type="button" onclick="deleteCoachee();"
                                 class="btn btn-light-primary font-weight-bold">
                             <i class="far fa-check-circle"></i>Confirmar
                         </button>
@@ -175,7 +178,7 @@
             });
         </script>
 
-   
+
 
     </div>
 

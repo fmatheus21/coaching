@@ -139,10 +139,11 @@ public class CoacheeDto {
         return list;
     }
 
-    public CoacheeDto find(CoacheeEntity coachee) {
+    public CoacheeDto find(CoacheeEntity coachee, String avatar) {
 
         CoacheeDto dto = new CoacheeDto();
 
+        dto.setId(coachee.getId());
         dto.setName(coachee.getIdPerson().getNameCompanyname());
         dto.setCpf(coachee.getIdPerson().getCpfCnpj());
         dto.setCasualName(coachee.getCasualName());
@@ -150,6 +151,7 @@ public class CoacheeDto {
         dto.setDateBirth(FormatLocalDatetUtil.converterToLocalDate(coachee.getDateBirth()));
         dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
         dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
+        dto.setAvatar(avatar);
 
         return dto;
     }

@@ -5,7 +5,6 @@ import com.firecode.app.controller.rule.CoacheeRule;
 import com.firecode.app.controller.rule.GlobalRule;
 import com.firecode.app.controller.service.GenderService;
 import com.firecode.app.controller.util.MessageValidationUtil;
-import com.firecode.app.model.entity.CoacheeEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -53,7 +52,7 @@ public class CoacheeResource {
         globalRule.model(model);
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
-        model.addAttribute("formTitle", "Adicionar Coache");
+        model.addAttribute("formTitle", "Adicionar Coachee");
         model.addAttribute("buttonBack", true);
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
@@ -84,7 +83,7 @@ public class CoacheeResource {
         }
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
-        model.addAttribute("formTitle", "Visualizar Coache");
+        model.addAttribute("formTitle", "Visualizar Coachee");
         model.addAttribute("buttonBack", true);
         model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
@@ -140,6 +139,10 @@ public class CoacheeResource {
     @PostMapping("/create")
     public String create(@Valid CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
         return coacheeRule.create(dto, result, attributes, request, response);
+    }
+        @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id,  RedirectAttributes attributes) {      
+        return coacheeRule.delete(id,  attributes);
     }
 
 }
