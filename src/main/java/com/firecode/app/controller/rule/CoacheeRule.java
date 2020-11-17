@@ -4,6 +4,7 @@ import com.firecode.app.controller.dto.CoacheeDto;
 import com.firecode.app.controller.service.CoacheeService;
 import com.firecode.app.controller.service.ContactService;
 import com.firecode.app.controller.service.PersonService;
+import com.firecode.app.controller.service.UserService;
 import com.firecode.app.controller.util.AppUtil;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.PathUtil;
@@ -40,6 +41,9 @@ public class CoacheeRule {
 
     @Autowired
     private CookieRule cookieRule;
+
+    @Autowired
+    private UserService userService;
 
     private CoacheeDto coacheeDto;
 
@@ -81,11 +85,39 @@ public class CoacheeRule {
 
         try {
             coacheeDto = new CoacheeDto();
-            personService.create(coacheeDto.create(dto, new UserEntity(1)));
+            personService.create(coacheeDto.create(dto, userService.loggedUser()));
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
             cookieRule.deleteCookie(request, response);
         } catch (DataIntegrityViolationException ex) {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), ex.getMessage());
+        }
+
+        return redirect;
+
+    }
+
+    public String update(int id, CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
+
+        String redirect = "redirect:/coachees/update/" + id;
+
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorRequired());
+            return this.errorRedirect(dto, request, response);
+        }
+
+        CoacheeEntity coachee = coacheeService.findById(id);
+        if (coachee == null) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
+            return "redirect:/coachees";
+        }
+
+        try {
+            coacheeDto = new CoacheeDto();
+            PersonEntity person = coacheeDto.update(coachee.getIdPerson(), dto, userService.loggedUser());
+            personService.create(person);
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
+        } catch (DataIntegrityViolationException ex) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), "O CPF ou email já está cadastrado.");
         }
 
         return redirect;

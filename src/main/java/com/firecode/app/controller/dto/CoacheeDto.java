@@ -121,6 +121,29 @@ public class CoacheeDto {
         return person;
     }
 
+    public PersonEntity update(PersonEntity person, CoacheeDto dto, UserEntity user) {
+
+        person.setIdPersonType(new PersonTypeEntity(1));
+        person.setNameCompanyname(dto.getName());
+        person.setCpfCnpj(dto.getCpf());
+
+        person.getCoacheeEntity().setIdGender(new GenderEntity(dto.getIdGender()));
+        person.getCoacheeEntity().setCasualName(dto.getCasualName());
+        person.getCoacheeEntity().setDateBirth(FormatLocalDatetUtil.converterStringToLocalDate(dto.getDateBirth()));
+        person.getCoacheeEntity().setCreatedAt(FormatLocalDatetUtil.currentDateTime());
+        person.getCoacheeEntity().setUpdatedAt(FormatLocalDatetUtil.currentDateTime());
+        person.getCoacheeEntity().setIdCreatedUser(user);
+        person.getCoacheeEntity().setIdUpdatedUser(user);
+
+        person.getContactEntity().setEmail(dto.getEmail());
+        person.getContactEntity().setPhone(dto.getPhone());
+        person.getContactEntity().setFacebook(dto.getFacebook());
+        person.getContactEntity().setInstagram(dto.getInstagram());
+        person.getContactEntity().setTwitter(dto.getTwitter());
+
+        return person;
+    }
+
     public List<CoacheeDto> reader(Iterable<CoacheeEntity> listCoachees, String avatar) {
         List<CoacheeDto> list = new ArrayList<>();
         for (CoacheeEntity coachee : listCoachees) {
@@ -152,6 +175,10 @@ public class CoacheeDto {
         dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
         dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
         dto.setAvatar(avatar);
+        dto.setIdGender(coachee.getIdGender().getId());
+        dto.setFacebook(coachee.getIdPerson().getContactEntity().getFacebook());
+        dto.setInstagram(coachee.getIdPerson().getContactEntity().getInstagram());
+        dto.setTwitter(coachee.getIdPerson().getContactEntity().getTwitter());
 
         return dto;
     }

@@ -73,8 +73,8 @@
                                             <div class="card-header">
                                                 <h3 class="card-title">[[${formTitle}]]</h3>
                                                 <div class="card-toolbar">
-                                                    <a th:if="${buttonBack == true}"  href="#"
-                                                       class="btn btn-light-primary font-weight-bolder mr-2"  onclick="window.history.go(-1);" data-container="body" data-toggle="tooltip" data-placement="top" title="Voltar">
+                                                    <a th:if="${buttonBack == true}"  th:href="@{${buttonBackLink}}"
+                                                       class="btn btn-light-primary font-weight-bolder mr-2" data-container="body" data-toggle="tooltip" data-placement="top" title="Voltar">
                                                         <i class="ki ki-long-arrow-back icon-md"></i> Voltar
                                                     </a>
                                                     <a th:if="${buttonAdd == true}"  th:href="@{${buttonAddLink}}"

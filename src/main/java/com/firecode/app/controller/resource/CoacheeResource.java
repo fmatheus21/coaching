@@ -41,9 +41,11 @@ public class CoacheeResource {
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Listar Coachees");
         model.addAttribute("buttonBack", false);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("listCoachees", coacheeRule.listAll());
+        model.addAttribute("modelCoachee", new CoacheeDto());
         return "app/page/reader/coachee";
     }
 
@@ -54,6 +56,7 @@ public class CoacheeResource {
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Adicionar Coachee");
         model.addAttribute("buttonBack", true);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("listGender", genderService.findAll("name"));
@@ -64,12 +67,20 @@ public class CoacheeResource {
     @GetMapping("/update/{id}")
     public String openUpdate(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
         globalRule.model(model);
+        CoacheeDto coachee = coacheeRule.findById(id);
+        if (coachee == null) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
+            return "redirect:/coachees";
+        }
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Editar Coachee");
         model.addAttribute("buttonBack", true);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
+        model.addAttribute("listGender", genderService.findAll("name"));
+        model.addAttribute("modelCoachee", coachee);
         return "app/page/update/coachee";
     }
 
@@ -85,6 +96,7 @@ public class CoacheeResource {
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Visualizar Coachee");
         model.addAttribute("buttonBack", true);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("modelCoachee", coachee);
@@ -98,6 +110,7 @@ public class CoacheeResource {
         model.addAttribute("headerTitle", "Avaliações");
         model.addAttribute("formTitle", "Visualizar Avaliações");
         model.addAttribute("buttonBack", true);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
         return "app/page/view/assessments";
@@ -110,6 +123,7 @@ public class CoacheeResource {
         model.addAttribute("headerTitle", "Avaliações");
         model.addAttribute("formTitle", "Visualizar Avaliação");
         model.addAttribute("buttonBack", true);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
         return "app/page/view/assessment";
@@ -121,6 +135,7 @@ public class CoacheeResource {
         model.addAttribute("pageTitle", "Avaliações");
         model.addAttribute("headerTitle", "Avaliações");
         model.addAttribute("buttonBack", true);
+        model.addAttribute("buttonBackLink", "/coachees");
         return "app/page/reader/coachee-assessment";
     }
 
@@ -131,6 +146,7 @@ public class CoacheeResource {
         model.addAttribute("headerTitle", "Sessões");
         model.addAttribute("formTitle", "Visualizar Sessões");
         model.addAttribute("buttonBack", false);
+        model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
         return "app/page/view/coache-session";
@@ -140,9 +156,15 @@ public class CoacheeResource {
     public String create(@Valid CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
         return coacheeRule.create(dto, result, attributes, request, response);
     }
-        @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id,  RedirectAttributes attributes) {      
-        return coacheeRule.delete(id,  attributes);
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") int id, @Valid CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
+        return coacheeRule.update(id, dto, result, attributes, request, response);
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id, RedirectAttributes attributes) {
+        return coacheeRule.delete(id, attributes);
     }
 
 }
