@@ -6,6 +6,7 @@ import br.com.caelum.stella.format.CPFFormatter;
 import br.com.caelum.stella.format.Formatter;
 import br.com.caelum.stella.validation.CNPJValidator;
 import br.com.caelum.stella.validation.CPFValidator;
+import java.io.File;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -104,6 +105,34 @@ public class AppUtil {
             }
         }
         return false;
+    }
+
+    /* Verifica se o arquivo existe em um diretorio */
+    public static boolean checkArchiveExists(String directory) {
+        File file = new File(directory);
+        if (file.exists()) {
+            return true;
+        } else if (!file.exists()) {
+            return false;
+        }
+        return false;
+    }
+
+    public static boolean createDirectoy(String directory) {
+        File file = new File(directory);
+        if (!file.exists()) {
+            file.mkdirs();
+            return true;
+        } else if (file.exists()) {
+            return false;
+        }
+        return false;
+    }
+
+    public static void deleteFile(File file) {
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
 }

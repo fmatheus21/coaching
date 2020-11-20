@@ -1,9 +1,9 @@
 package com.firecode.app.controller.util;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PathUtil {
@@ -21,16 +21,24 @@ public class PathUtil {
     private String pathLogo;
 
     @Getter
+    @Value("${path.avatar.coachee}")
+    private String pathAvatarCoachee;
+
+    @Getter
     @Value("${path.avatar.user.system}")
     private String pathAvatarUserSystem;
-    
-     @Getter
+
+    @Getter
     @Value("${path.avatar.team.system}")
     private String pathAvatarTeamSystem;
 
     @Getter
     @Value("${extension.image}")
     private String extensionImage;
+
+    @Getter
+    @Value("${file.size.total}")
+    private long fileSizeTotal;
 
     public String localPath() {
         // return System.getProperty("user.dir");

@@ -1,10 +1,10 @@
 package com.firecode.app.controller.rule;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.firecode.app.controller.util.PathUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class GlobalRule {
@@ -14,7 +14,7 @@ public class GlobalRule {
 
     public Model model(Model model) {
         String avatarUserSystem = pathUtil.getPathAvatarUserSystem();
-         String avatarTeamSystem = pathUtil.getPathAvatarTeamSystem();
+        String avatarTeamSystem = pathUtil.getPathAvatarTeamSystem();
         model.addAttribute("avatarUserSystem", avatarUserSystem);
         model.addAttribute("avatarTeamSystem", avatarTeamSystem);
         model.addAttribute("footerLink", "https://firecodesystems.com");

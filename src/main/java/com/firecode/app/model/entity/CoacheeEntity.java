@@ -42,7 +42,11 @@ public class CoacheeEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "date_birth", nullable = false)
-    private LocalDate dateBirth;
+    private LocalDate dateBirth; 
+            
+    @Basic(optional = false)
+    @Column(name = "image", nullable = false, length = 50)
+    private String image;
 
     @Basic(optional = false)
     @NotNull
@@ -51,7 +55,7 @@ public class CoacheeEntity implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "updated_at", nullable = false)   
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @JoinColumn(name = "id_gender", referencedColumnName = "id", nullable = false)
@@ -89,7 +93,7 @@ public class CoacheeEntity implements Serializable {
     }
 
     public String getCasualName() {
-        if(casualName!=null){
+        if (casualName != null) {
             return AppUtil.convertFirstUppercaseCharacter(AppUtil.removeDuplicateSpace(casualName));
         }
         return casualName;
@@ -106,6 +110,16 @@ public class CoacheeEntity implements Serializable {
     public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
+    
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

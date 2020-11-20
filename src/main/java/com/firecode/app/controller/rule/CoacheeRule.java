@@ -8,24 +8,23 @@ import com.firecode.app.controller.service.UserService;
 import com.firecode.app.controller.util.AppUtil;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.PathUtil;
+import com.firecode.app.controller.util.UploadMultipartFileUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.PersonEntity;
-import com.firecode.app.model.entity.UserEntity;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Component
 public class CoacheeRule {
-
-    @Autowired
-    private PathUtil pathUtil;
 
     @Autowired
     private PersonService personService;
@@ -45,7 +44,13 @@ public class CoacheeRule {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UploadRule uploadRule;
+
     private CoacheeDto coacheeDto;
+
+    @Autowired
+    private PathUtil pathUtil;
 
     public CoacheeDto init(HttpServletRequest request, HttpServletResponse response) {
         if (cookieRule.readerCookie(request, response) == null) {
@@ -54,11 +59,19 @@ public class CoacheeRule {
         return coacheeDto;
     }
 
+    public String pathAvatar() {
+        return pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee();
+    }
+
+    public String pathAvatarSystem() {
+        return pathUtil.localPath() + pathUtil.getPathAvatarUserSystem();
+    }
+
     private String avatar() {
         return pathUtil.getPathAvatarUserSystem();
     }
 
-    public String create(CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
+    public String create(CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response) {
 
         String redirect = "redirect:/coachees/create";
 
@@ -83,9 +96,28 @@ public class CoacheeRule {
             }
         }
 
+        long size = 0;
+        long total = pathUtil.getFileSizeTotal();
+        String fileName = "avatar.png";
+        MultipartFile[] files = upload.getFileDatas();
+
+        for (MultipartFile multipartFile : files) {
+            String name = multipartFile.getOriginalFilename();
+            if (name != null && name.length() > 0) {
+                size = size + multipartFile.getSize();
+            }
+        }
+
+        if (size > total) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), "Tamanho da imagem exedido. Tamanho máximo de 1MB");
+            return this.errorRedirect(dto, request, response);
+        }
+
+        fileName = this.saveImage(files);
+
         try {
             coacheeDto = new CoacheeDto();
-            personService.create(coacheeDto.create(dto, userService.loggedUser()));
+            personService.create(coacheeDto.create(dto, userService.loggedUser(), fileName));
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
             cookieRule.deleteCookie(request, response);
         } catch (DataIntegrityViolationException ex) {
@@ -96,7 +128,7 @@ public class CoacheeRule {
 
     }
 
-    public String update(int id, CoacheeDto dto, BindingResult result, RedirectAttributes attributes, HttpServletRequest request, HttpServletResponse response) {
+    public String update(int id, CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response) {
 
         String redirect = "redirect:/coachees/update/" + id;
 
@@ -109,6 +141,27 @@ public class CoacheeRule {
         if (coachee == null) {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
             return "redirect:/coachees";
+        }
+
+        long size = 0;
+        long total = pathUtil.getFileSizeTotal();
+        String fileName = "avatar.png";
+        MultipartFile[] files = upload.getFileDatas();
+
+        for (MultipartFile multipartFile : files) {
+            String name = multipartFile.getOriginalFilename();
+            if (name != null && name.length() > 0) {
+                size = size + multipartFile.getSize();
+            }
+        }
+
+        if (size > total) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), "Tamanho da imagem exedido. Tamanho máximo de 1MB");
+            return this.errorRedirect(dto, request, response);
+        }
+
+        if (size > 0) {
+            fileName = this.saveImage(files);
         }
 
         try {
@@ -132,9 +185,7 @@ public class CoacheeRule {
     }
 
     public List<CoacheeDto> listAll() {
-        coacheeDto = new CoacheeDto();
-        List<CoacheeEntity> list = coacheeService.findAll("id");
-        return coacheeDto.reader(list, this.avatar());
+        return coacheeService.findAll("id").stream().map(CoacheeDto::converterObject).collect(Collectors.toList());
     }
 
     public CoacheeDto findById(int id) {
@@ -143,7 +194,7 @@ public class CoacheeRule {
         if (coachee == null) {
             return null;
         }
-        return coacheeDto.find(coachee, this.avatar());
+        return coacheeDto.find(coachee, this.pathAvatar());
     }
 
     public String delete(int id, RedirectAttributes attributes) {
@@ -164,6 +215,26 @@ public class CoacheeRule {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), ex.getMessage());
         }
         return redirect;
+
+    }
+
+    private String saveImage(MultipartFile[] files) {
+
+        String fileName;
+        int number = 0;
+        for (MultipartFile multipartFile : files) {
+
+            number++;
+            fileName = uploadRule.saveFileSingle(pathUtil, multipartFile, this.pathAvatar(), number, 700, 700, false);
+
+            /*String name = multipartFile.getOriginalFilename();
+            if (name != null && name.length() > 0) {
+                number++;
+                fileName = uploadRule.saveFileSingle(pathUtil, multipartFile, this.pathAvatar(), number, 700, 700, false);
+                return fileName;
+            }*/
+        }
+        return null;
 
     }
 

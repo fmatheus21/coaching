@@ -82,24 +82,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        
-    
+        </dependency>            
 		
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <type>jar</type>
-        </dependency>
-		
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        </dependency>		
+      
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
+       
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -117,12 +113,20 @@
             <artifactId>validation-api</artifactId>          
             <type>jar</type>
         </dependency>
+        
         <dependency>
             <groupId>br.com.caelum.stella</groupId>
             <artifactId>caelum-stella-core</artifactId>
             <version>2.1.3</version>
             <type>jar</type>
         </dependency>
+        
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+        
     </dependencies>
 
     <build>

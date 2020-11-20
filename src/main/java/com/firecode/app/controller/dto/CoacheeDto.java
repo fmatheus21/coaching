@@ -1,19 +1,19 @@
 package com.firecode.app.controller.dto;
 
 import com.firecode.app.controller.util.FormatLocalDatetUtil;
+import com.firecode.app.controller.util.PathUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.GenderEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.entity.PersonTypeEntity;
 import com.firecode.app.model.entity.UserEntity;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CoacheeDto {
 
@@ -90,7 +90,7 @@ public class CoacheeDto {
     @Setter
     private String avatar;
 
-    public PersonEntity create(CoacheeDto dto, UserEntity user) {
+    public PersonEntity create(CoacheeDto dto, UserEntity user, String image) {
 
         PersonEntity person = new PersonEntity();
         CoacheeEntity coachee = new CoacheeEntity();
@@ -108,6 +108,7 @@ public class CoacheeDto {
         coachee.setUpdatedAt(FormatLocalDatetUtil.currentDateTime());
         coachee.setIdCreatedUser(user);
         coachee.setIdUpdatedUser(user);
+        coachee.setImage(image);
         person.setCoacheeEntity(coachee);
 
         contact.setIdPerson(person);
@@ -144,25 +145,28 @@ public class CoacheeDto {
         return person;
     }
 
-    public List<CoacheeDto> reader(Iterable<CoacheeEntity> listCoachees, String avatar) {
-        List<CoacheeDto> list = new ArrayList<>();
-        for (CoacheeEntity coachee : listCoachees) {
-            CoacheeDto dto = new CoacheeDto();
-            dto.setId(coachee.getId());
-            dto.setName(coachee.getIdPerson().getNameCompanyname());
-            dto.setDateBirth(FormatLocalDatetUtil.converterToLocalDate(coachee.getDateBirth()));
-            dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
-            dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
-            dto.setCreatedAt(FormatLocalDatetUtil.converterLocalDateTimeToString(coachee.getCreatedAt()));
-            dto.setCreatedUser(coachee.getIdCreatedUser().getIdPerson().getNameCompanyname());
-            dto.setAvatar(avatar);
-            list.add(dto);
-        }
-
-        return list;
+    public static CoacheeDto converterObject(CoacheeEntity coachee) {
+        CoacheeDto dto = new CoacheeDto();
+        String avatar = "/upload/avatar/coachee/" + coachee.getImage();        
+        dto.setId(coachee.getId());
+        dto.setName(coachee.getIdPerson().getNameCompanyname());
+        dto.setCpf(coachee.getIdPerson().getCpfCnpj());
+        dto.setCasualName(coachee.getCasualName());
+        dto.setGender(coachee.getIdGender().getName());
+        dto.setDateBirth(FormatLocalDatetUtil.converterToLocalDate(coachee.getDateBirth()));
+        dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
+        dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
+        dto.setCreatedAt(FormatLocalDatetUtil.converterLocalDateTimeToString(coachee.getCreatedAt()));
+        dto.setCreatedUser(coachee.getIdCreatedUser().getIdPerson().getNameCompanyname());
+        dto.setAvatar(avatar);
+        dto.setIdGender(coachee.getIdGender().getId());
+        dto.setFacebook(coachee.getIdPerson().getContactEntity().getFacebook());
+        dto.setInstagram(coachee.getIdPerson().getContactEntity().getInstagram());
+        dto.setTwitter(coachee.getIdPerson().getContactEntity().getTwitter());
+        return dto;
     }
 
-    public CoacheeDto find(CoacheeEntity coachee, String avatar) {
+   public CoacheeDto find(CoacheeEntity coachee, String avatar) {
 
         CoacheeDto dto = new CoacheeDto();
 
@@ -174,7 +178,7 @@ public class CoacheeDto {
         dto.setDateBirth(FormatLocalDatetUtil.converterToLocalDate(coachee.getDateBirth()));
         dto.setEmail(coachee.getIdPerson().getContactEntity().getEmail());
         dto.setPhone(coachee.getIdPerson().getContactEntity().getPhone());
-        dto.setAvatar(avatar);
+        dto.setAvatar(avatar + coachee.getImage());
         dto.setIdGender(coachee.getIdGender().getId());
         dto.setFacebook(coachee.getIdPerson().getContactEntity().getFacebook());
         dto.setInstagram(coachee.getIdPerson().getContactEntity().getInstagram());
