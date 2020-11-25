@@ -1,0 +1,266 @@
+<!-- <nav th:fragment="fragment" aria-label="Pagination" th:if="${modelPage.totalPages gt 0}">
+    <ul class="pagination justify-content-center font-weight-bold">
+        <li class="page-item" th:classappend="${modelPage.number eq 0} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number})}"
+               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item" th:classappend="${i eq modelPage.number + 1} ? 'active'"
+            th:each="i : ${#numbers.sequence( 1, modelPage.totalPages, 1)}">
+            <a class="page-link" th:href="@{/coachees?page={id}(id=${i})}" th:text="${i}"
+               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+        </li>
+        <li class="page-item" th:classappend="${modelPage.number + 1 eq modelPage.totalPages} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{/coachees?page={id}(id=${modelPage.number + 2})}"
+               aria-label="Next" title="Next Page" data-toggle="tooltip">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>-->
+
+<!--
+
+<div th:fragment='fragment'>
+  <div class='pagination pagination-centered'>
+    <ul>
+      <li th:class='${modelPage.firstPage}? 'disabled' : '''>
+        <span th:if='${modelPage.firstPage}'>← First</span>
+        <a th:if='${not modelPage.firstPage}' th:href='@{${modelUrl}(modelPage.page=1,modelPage.size=${modelPage.size})}'>← First</a>
+      </li>
+      <li th:class='${modelPage.hasPreviousPage}? '' : 'disabled''>
+        <span th:if='${not modelPage.hasPreviousPage}'>«</span>
+        <a th:if='${modelPage.hasPreviousPage}' th:href='@{${modelUrl}(modelPage.page=${modelPage.number-1},modelPage.size=${modelPage.size})}' title='Go to previous modelPage'>«</a>
+      </li>
+      <li th:each='item : ${modelPage.items}' th:class='${item.current}? 'active' : '''>
+        <span th:if='${item.current}' th:text='${item.number}'>1</span>
+        <a th:if='${not item.current}' th:href='@{${modelUrl}(modelPage.page=${item.number},modelPage.size=${modelPage.size})}'><span th:text='${item.number}'>1</span></a>
+      </li>
+      <li th:class='${page.hasNextPage}? '' : 'disabled''>
+        <span th:if='${not page.hasNextPage}'>»</span>
+        <a th:if='${modelPage.hasNextPage}' th:href='@{${modelUrl}(modelPage.page=${modelPage.number+1},modelPage.size=${modelPage.size})}' title='Go to next page'>»</a>
+      </li>
+      <li th:class='${modelPage.lastPage}? 'disabled' : '''>
+        <span th:if='${modelPage.lastPage}'>Last →</span>
+        <a th:if='${not modelPage.lastPage}' th:href='@{${modelUrl}(modelPage.page=${modelPage.totalPages},page.size=${modelPage.size})}'>Last →</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+-->
+
+
+<!--
+
+<div th:fragment="fragment" class="d-flex justify-content-between align-items-center flex-wrap" th:if="${modelPage.totalPages gt 0}">
+    <div class="d-flex flex-wrap py-2 mr-3" > 
+       
+
+        <a th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number})}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"
+           th:classappend="${modelPage.isFirst()} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Primeiro">
+            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+        </a>
+  
+        <a th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number},size=${modelPage.size})}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1" 
+           th:classappend="${modelPage.number eq 0} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Anterior">
+            <i class="ki ki-bold-arrow-back icon-xs"></i>
+        </a>
+
+
+        <a th:href="@{/coachees?page={id}(id=${i},size=${modelPage.size})}" th:text="${i}"
+           th:title="${'Page '+ i}"  
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           th:each="i : ${#numbers.sequence( 1, modelPage.totalPages, 1)}"
+           class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1"></a> 
+
+     <a th:href="@{/coachees?page={id}(id=${modelPage.number + 2},size=${modelPage.size})}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1" 
+        th:classappend="${modelPage.number + 1 eq modelPage.totalPages} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Próximo">
+            <i class="ki ki-bold-arrow-next icon-xs"></i>
+        </a>
+
+        <a th:href="@{/coachees?page={id}(id=${modelPage.getTotalPages()},size=${modelPage.size})}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1" 
+           th:classappend="${modelPage.isLast()} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Último">
+            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+        </a>
+
+    </div>    
+
+
+    <div class="d-flex align-items-center py-3">  
+        
+        <div class="datatable-pager-info">
+            <div class="dropdown bootstrap-select datatable-pager-size" style="width: 70px;">
+                <select class="selectpicker datatable-pager-size" title="Select page size" data-width="70px" data-container="body" data-selected="10" tabindex="null">        
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>      
+            </div>
+            <span class="datatable-pager-detail" >Mostrando [[${modelPage.numberOfElements}]] de [[${modelPage.totalElements}]] registros.</span>
+        </div>   
+
+ </div>
+
+</div> 
+
+-->
+
+
+
+
+<div th:fragment="fragment" class="d-flex justify-content-between align-items-center flex-wrap" th:if="${modelPage.totalPages gt 0}">
+    <div class="d-flex flex-wrap py-2 mr-3" >      
+
+        <!-- Primeiro -->
+        <a th:href="@{/coachees?page={id}(id=${1},size=${modelPage.size})}" 
+           class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"
+           th:classappend="${modelPage.isFirst()} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Primeiro">
+            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+        </a>
+
+        <!-- Anterior -->
+        <a th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number},size=${modelPage.size})}" 
+           class="btn btn-icon btn-sm btn-light-primary mr-2 my-1" 
+           th:classappend="${modelPage.number eq 0} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Anterior">
+            <i class="ki ki-bold-arrow-back icon-xs"></i>
+        </a>
+        
+        <!-- Pagina 1 -->
+        <a th:href="@{/coachees?page={id}(id=${1},size=${modelPage.size})}" th:if="${modelPage.number > 1 and modelPage.totalPages > 10}" 
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
+           data-container="body" data-toggle="tooltip" data-placement="top" title="Página 1">1</a> 
+        
+         <!-- Pagina 2 -->
+        <a th:href="@{/coachees?page={id}(id=${2},size=${modelPage.size})}" th:if="${modelPage.number > 2 and modelPage.totalPages > 10}" 
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
+           data-container="body" data-toggle="tooltip" data-placement="top" title="Página 2">2</a> 
+     
+        
+         <!-- Pagina 3 -->
+        <a th:href="@{/coachees?page={id}(id=${3},size=${modelPage.size})}" th:if="${modelPage.number > 3 and modelPage.totalPages > 10}" 
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
+           data-container="body" data-toggle="tooltip" data-placement="top" title="Página 3">3</a> 
+        
+        <!-- Pagina 4 -->
+        <a th:href="@{/coachees?page={id}(id=${4},size=${modelPage.size})}" th:if="${modelPage.number > 4 and modelPage.totalPages > 10}" 
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
+           data-container="body" data-toggle="tooltip" data-placement="top" title="Página 4">4</a> 
+
+        <!-- Pagina 5 -->
+        <a th:href="@{/coachees?page={id}(id=${5},size=${modelPage.size})}" th:if="${modelPage.number > 5 and modelPage.totalPages > 10}" 
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
+           data-container="body" data-toggle="tooltip" data-placement="top" title="Página 5">5</a>    
+
+        <!-- Continuidade -->
+        <a href="#" th:if="${modelPage.number > 1}" 
+           class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 pager-link-disabled">...</a>            
+
+        <!-- Pagina -->
+        <a th:href="@{/coachees?page={id}(id=${i},size=${modelPage.size})}" th:text="${i}"
+           th:title="${'Página '+ i}"  
+           th:classappend="${i eq modelPage.number + 1} ? 'active'"
+           th:each="i : ${#numbers.sequence( modelPage.number + 1, modelPage.totalPages > 10 + modelPage.number ? modelPage.number + 10 : modelPage.totalPages, 1)}"           
+           class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
+           data-container="body" data-toggle="tooltip" data-placement="top">               
+        </a> 
+
+        <!-- Continuidade -->
+        <a href="#" th:if="${modelPage.number + 10 < modelPage.totalPages}" 
+           class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 pager-link-disabled">...</a>        
+
+
+        <!-- Proximo -->
+        <a th:href="@{/coachees?page={id}(id=${modelPage.number + 2},size=${modelPage.size})}" 
+           class="btn btn-icon btn-sm btn-light-primary mr-2 my-1" 
+           th:classappend="${modelPage.number + 1 eq modelPage.totalPages} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Próximo">
+            <i class="ki ki-bold-arrow-next icon-xs"></i>
+        </a>
+
+        <!-- Ultimo -->
+        <a th:href="@{/coachees?page={id}(id=${modelPage.getTotalPages()},size=${modelPage.size})}" 
+           class="btn btn-icon btn-sm btn-light-primary mr-2 my-1" 
+           th:classappend="${modelPage.isLast()} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Último">
+            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+        </a>
+
+    </div>    
+
+
+    <div class="d-flex align-items-center py-3">  
+
+        <div class="datatable-pager-info">
+            <div class="dropdown bootstrap-select datatable-pager-size" style="width: 70px;">
+                <select class="selectpicker datatable-pager-size" title="Select page size" data-width="70px" data-container="body" data-selected="10" tabindex="null">        
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>      
+            </div>
+            <span class="datatable-pager-detail" >Mostrando [[${modelPage.numberOfElements}]] de [[${modelPage.totalElements}]] registros.</span>
+        </div>   
+
+        <!--
+                <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+               
+              
+                <span class="text-muted">Mostrando [[${modelPage.numberOfElements}]] de [[${modelPage.totalElements}]] registros.</span>
+               
+        --> 
+
+    </div>
+
+
+    <nav th:fragment="fragment" aria-label="Pagination" th:if="${modelPage.totalPages gt 0}">
+        <ul class="pagination justify-content-center font-weight-medium">
+
+            <li class="page-item" th:classappend="${modelPage.number eq 0} ? 'disabled'">
+                <a class="page-link svg-icon"
+                   th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number})}"
+                   aria-label="Previous"
+                   title="Previous Page" rel="tooltip">
+                    <span aria-hidden="true" data-feather="chevrons-left" width="20" height="20"><</span>
+                </a>
+            </li>     
+
+            <li class="page-item" th:classappend="${i eq modelPage.number + 1} ? 'active'"
+                th:each="i : ${#numbers.sequence( modelPage.number + 1, modelPage.totalPages > 10 + modelPage.number ? modelPage.number + 10 : modelPage.totalPages, 1)}">
+                <a class="page-link" th:href="@{/coachees?page={id}(id=${i})}" th:text="${i}"
+                   th:title="${'Page '+ i}"
+                   rel="tooltip"></a>
+            </li>
+
+            <li class="page-item disabled" th:if="${modelPage.number + 10 < modelPage.totalPages}">
+                <a class="page-link svg-icon" href="#">
+                    <span data-feather="more-horizontal" width="20" height="20">...</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:classappend="${modelPage.number + 1 eq modelPage.totalPages} ? 'disabled'">
+                <a class="page-link svg-icon" th:href="@{/coachees?page={id}(id=${modelPage.number + 2})}"
+                   aria-label="Next"
+                   title="Next Page" rel="tooltip">
+                    <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">></span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>

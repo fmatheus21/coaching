@@ -1,10 +1,10 @@
 package com.firecode.app.controller.rule;
 
 import com.firecode.app.controller.dto.CoacheeDto;
-import com.firecode.app.controller.service.CoacheeService;
-import com.firecode.app.controller.service.ContactService;
-import com.firecode.app.controller.service.PersonService;
-import com.firecode.app.controller.service.UserService;
+import com.firecode.app.model.service.CoacheeService;
+import com.firecode.app.model.service.ContactService;
+import com.firecode.app.model.service.PersonService;
+import com.firecode.app.model.service.UserService;
 import com.firecode.app.controller.util.AppUtil;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.PathUtil;
@@ -12,12 +12,15 @@ import com.firecode.app.controller.util.UploadMultipartFileUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.PersonEntity;
+import com.firecode.app.model.repository.filter.RepositoryFilter;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,23 +66,24 @@ public class CoacheeRule {
         return pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee();
     }
 
-    public String pathAvatarSystem() {
+    /*  public String pathAvatarSystem() {
         return pathUtil.localPath() + pathUtil.getPathAvatarUserSystem();
     }
 
     private String avatar() {
         return pathUtil.getPathAvatarUserSystem();
-    }
-
+    }*/
     public String create(CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response) {
 
         String redirect = "redirect:/coachees/create";
 
+        /* Verifica se os campos obrigatorios foram preenchidos */
         if (result.hasErrors()) {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorRequired());
             return this.errorRedirect(dto, request, response);
         }
 
+        /* Verifica se o cpf/cnpj ja existe */
         PersonEntity person = personService.findBycpfCnpj(AppUtil.removeSpecialCharacters(dto.getCpf()));
         if (person != null) {
             if (person.getCoacheeEntity() != null) {
@@ -88,6 +92,7 @@ public class CoacheeRule {
             }
         }
 
+        /* Verifica se o email ja esta cadastrado */
         ContactEntity contact = contactService.findByEmail(dto.getEmail());
         if (contact != null) {
             if (contact.getIdPerson().getCoacheeEntity() != null) {
@@ -98,9 +103,9 @@ public class CoacheeRule {
 
         long size = 0;
         long total = pathUtil.getFileSizeTotal();
-        String fileName = "avatar.png";
         MultipartFile[] files = upload.getFileDatas();
 
+        /* Soma o tamanho de todas as imagens anexadas */
         for (MultipartFile multipartFile : files) {
             String name = multipartFile.getOriginalFilename();
             if (name != null && name.length() > 0) {
@@ -108,12 +113,13 @@ public class CoacheeRule {
             }
         }
 
+        /* Verifica se as imagens anexadas ultrapassam o limite de upload informada no arquivo application.properties */
         if (size > total) {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), "Tamanho da imagem exedido. Tamanho máximo de 1MB");
             return this.errorRedirect(dto, request, response);
         }
 
-        fileName = this.saveImage(files);
+        String fileName = this.saveImage(files, dto.getIdGender());
 
         try {
             coacheeDto = new CoacheeDto();
@@ -145,7 +151,7 @@ public class CoacheeRule {
 
         long size = 0;
         long total = pathUtil.getFileSizeTotal();
-        String fileName = "avatar.png";
+        String fileName = null;
         MultipartFile[] files = upload.getFileDatas();
 
         for (MultipartFile multipartFile : files) {
@@ -161,7 +167,7 @@ public class CoacheeRule {
         }
 
         if (size > 0) {
-            fileName = this.saveImage(files);
+            fileName = this.saveImage(files, dto.getIdGender());
         }
 
         try {
@@ -184,8 +190,9 @@ public class CoacheeRule {
         return redirect;
     }
 
-    public List<CoacheeDto> listAll() {
-        return coacheeService.findAll("id").stream().map(CoacheeDto::converterObject).collect(Collectors.toList());
+    public Page<CoacheeDto> findAllPaginator(RepositoryFilter filter, Pageable pageable) {
+        return coacheeService.findAllPaginator(filter, pageable).map(CoacheeDto::converterObject);
+        //return coacheeService.findAll("id").stream().map(CoacheeDto::converterObject).collect(Collectors.toList());
     }
 
     public CoacheeDto findById(int id) {
@@ -218,23 +225,21 @@ public class CoacheeRule {
 
     }
 
-    private String saveImage(MultipartFile[] files) {
+    private String saveImage(MultipartFile[] files, int gender) {
 
-        String fileName;
+        String fileName = null;
         int number = 0;
+
         for (MultipartFile multipartFile : files) {
-
-            number++;
-            fileName = uploadRule.saveFileSingle(pathUtil, multipartFile, this.pathAvatar(), number, 700, 700, false);
-
-            /*String name = multipartFile.getOriginalFilename();
-            if (name != null && name.length() > 0) {
+            if (multipartFile.getSize() == 0) {
+                fileName = uploadRule.copyFile(gender);
+            } else {
                 number++;
-                fileName = uploadRule.saveFileSingle(pathUtil, multipartFile, this.pathAvatar(), number, 700, 700, false);
-                return fileName;
-            }*/
+                fileName = uploadRule.saveFileSingle(multipartFile, this.pathAvatar(), number, 700, 700, false);
+            }
         }
-        return null;
+
+        return fileName;
 
     }
 

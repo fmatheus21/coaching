@@ -1,7 +1,7 @@
 package com.firecode.app.controller.dto;
 
+import com.firecode.app.controller.util.AppUtil;
 import com.firecode.app.controller.util.FormatLocalDatetUtil;
-import com.firecode.app.controller.util.PathUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.GenderEntity;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.json.JSONObject;
 
 public class CoacheeDto {
 
@@ -109,6 +109,14 @@ public class CoacheeDto {
         coachee.setIdCreatedUser(user);
         coachee.setIdUpdatedUser(user);
         coachee.setImage(image);
+        coachee.setSearch(
+                this.converterJson(
+                        dto.getName(),
+                        dto.getCpf(),
+                        dto.getEmail(),
+                        dto.getPhone()
+                )
+        );
         person.setCoacheeEntity(coachee);
 
         contact.setIdPerson(person);
@@ -135,6 +143,14 @@ public class CoacheeDto {
         person.getCoacheeEntity().setUpdatedAt(FormatLocalDatetUtil.currentDateTime());
         person.getCoacheeEntity().setIdCreatedUser(user);
         person.getCoacheeEntity().setIdUpdatedUser(user);
+        person.getCoacheeEntity().setSearch(
+                this.converterJson(
+                        dto.getName(),
+                        dto.getCpf(),
+                        dto.getEmail(),
+                        dto.getPhone()
+                )
+        );
 
         person.getContactEntity().setEmail(dto.getEmail());
         person.getContactEntity().setPhone(dto.getPhone());
@@ -147,7 +163,7 @@ public class CoacheeDto {
 
     public static CoacheeDto converterObject(CoacheeEntity coachee) {
         CoacheeDto dto = new CoacheeDto();
-        String avatar = "/upload/avatar/coachee/" + coachee.getImage();        
+        String avatar = "/upload/avatar/coachee/" + coachee.getImage();
         dto.setId(coachee.getId());
         dto.setName(coachee.getIdPerson().getNameCompanyname());
         dto.setCpf(coachee.getIdPerson().getCpfCnpj());
@@ -166,7 +182,7 @@ public class CoacheeDto {
         return dto;
     }
 
-   public CoacheeDto find(CoacheeEntity coachee, String avatar) {
+    public CoacheeDto find(CoacheeEntity coachee, String avatar) {
 
         CoacheeDto dto = new CoacheeDto();
 
@@ -185,6 +201,15 @@ public class CoacheeDto {
         dto.setTwitter(coachee.getIdPerson().getContactEntity().getTwitter());
 
         return dto;
+    }
+
+    public static String converterJson(String name, String document, String email, String phone) {
+        JSONObject obj = new JSONObject();
+        obj.put("name", AppUtil.convertAllLowercaseCharacters(name));
+        obj.put("document", AppUtil.removeSpecialCharacters(document));
+        obj.put("email", AppUtil.convertAllLowercaseCharacters(email));
+        obj.put("phone", AppUtil.convertAllLowercaseCharacters(phone));
+        return obj.toString();
     }
 
 }

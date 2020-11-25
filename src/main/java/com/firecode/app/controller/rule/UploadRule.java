@@ -8,15 +8,22 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class UploadRule {
 
-    public String saveFileSingle(PathUtil pathUtil, MultipartFile multipartFile, String path, int number, int width,
+    @Autowired
+    private PathUtil pathUtil;
+
+    public String saveFileSingle(MultipartFile multipartFile, String path, int number, int width,
             int height, boolean update) throws NoSuchElementException {
+
         String uploadDirectory = pathUtil.localPath() + pathUtil.getPathStatic() + path;
         long name = FormatLocalDatetUtil.returnsMillisecondsOfDateTime();
         String fileName = String.valueOf(name);
@@ -30,14 +37,44 @@ public class UploadRule {
 
     }
 
+    /* public String saveFileSingle(PathUtil pathUtil, MultipartFile multipartFile, String path, int number, int width,
+            int height, boolean update) throws NoSuchElementException {
+
+        long name = FormatLocalDatetUtil.returnsMillisecondsOfDateTime();
+        String fileName = String.valueOf(name);
+
+        File file = null;
+        String uploadDirectory = null;
+
+        if (multipartFile.isEmpty()) {
+            uploadDirectory = pathUtil.localPath() + pathUtil.getPathStatic() + pathUtil.getPathAvatarUserSystem();
+            AppUtil.createDirectoy(uploadDirectory);
+            file = new File(uploadDirectory);
+        } else {
+            uploadDirectory = pathUtil.localPath() + pathUtil.getPathStatic() + path;
+            AppUtil.createDirectoy(uploadDirectory);
+            file = fileRename(uploadDirectory, fileName + number, false, pathUtil.getExtensionImage());
+        }
+
+        fileName = fileName + number;
+        this.dataSaver(multipartFile, file, width, height);
+        return fileName + pathUtil.getExtensionImage();
+
+    }*/
     private File fileRename(String dir, String name, boolean update, String extension) {
+
         File convertedFile = null;
+        String file = null;
+
         if (update == true) { // Se for uma atualizacao
-            convertedFile = new File(dir + name);
+            convertedFile = new File(file);
+
         } else if (update == false) { // Se nao for uma atualizacao
             convertedFile = new File(dir + name + extension);
         }
+
         AppUtil.deleteFile(convertedFile);
+
         return convertedFile;
     }
 
@@ -66,6 +103,31 @@ public class UploadRule {
 
     private void generate(File origin, File dest, int width, int height) throws IOException {
         Thumbnails.of(origin).size(width, height).outputFormat("png").toFile(dest);
+    }
+
+    public String copyFile(int gender) {
+
+        String avatar = null;
+
+        if (gender == 1) {
+            avatar = pathUtil.getPathAvatarUserMary();
+        } else if (gender == 2) {
+            avatar = pathUtil.getPathAvatarUserDylan();
+        }
+
+        String fileName = String.valueOf(FormatLocalDatetUtil.returnsMillisecondsOfDateTime()) + pathUtil.getExtensionImage();
+        String source = pathUtil.localPath() + pathUtil.getPathStatic().replaceFirst("/", "") + avatar;
+        String destiny = pathUtil.localPath() + pathUtil.getPathStatic().replaceFirst("/", "") + pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee() + fileName;
+
+        try {
+            AppUtil.copyFile(source, destiny);
+            return fileName;
+        } catch (IOException ex) {
+            Logger.getLogger(UploadRule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+
     }
 
 }

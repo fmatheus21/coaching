@@ -13,7 +13,7 @@ public class GlobalRule {
     private PathUtil pathUtil;
 
     public Model model(Model model) {
-        String avatarUserSystem = pathUtil.getPathAvatarUserSystem();
+        String avatarUserSystem = pathUtil.getPathAvatarUserDylan();
         String avatarTeamSystem = pathUtil.getPathAvatarTeamSystem();
         model.addAttribute("avatarUserSystem", avatarUserSystem);
         model.addAttribute("avatarTeamSystem", avatarTeamSystem);

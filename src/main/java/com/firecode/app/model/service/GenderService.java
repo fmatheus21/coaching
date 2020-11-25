@@ -1,4 +1,4 @@
-package com.firecode.app.controller.service;
+package com.firecode.app.model.service;
 
 import com.firecode.app.model.entity.GenderEntity;
 import com.firecode.app.model.repository.dao.GenderDao;

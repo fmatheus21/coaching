@@ -188,3 +188,40 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     list-style-type: none;
     margin-left: -50px;
 }
+
+
+.table td{
+    vertical-align: middle;   
+}
+
+.table thead th,
+.table tbody td,
+.table tbody td span{
+    text-align: center;
+}
+
+.pager-link-disabled{    
+    background-color: #ecf1f6 !important;    
+    pointer-events: none !important;
+}
+
+.pager-link-disabled i{
+    color: #B5B5C3 !important;
+}
+
+.btn.btn-light:not(:disabled):not(.disabled):active:not(.btn-text), 
+.btn.btn-light:not(:disabled):not(.disabled).active, 
+.show > .btn.btn-light.dropdown-toggle, 
+.show .btn.btn-light.btn-dropdown {
+    color: #FFF;
+    background-color: #3699FF;
+    border-color: #3699FF !important;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .table tbody td .symbol{
+        display: none;
+    }
+}
+

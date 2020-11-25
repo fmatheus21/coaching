@@ -11,116 +11,122 @@
 
 
                     <!--begin::Search Form-->
-                    <div class="mb-7">
-                        <div class="row align-items-center">
-                            <div class="col-lg-12 col-xl-12">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 my-2 my-md-0">
-                                        <div class="input-icon">
-                                            <input type="text" class="form-control"
-                                                   placeholder="Pesquisar..." id="kt_datatable_search_query" /> <span><i
-                                                    class="flaticon2-search-1 text-muted"></i></span>
+                    <form th:action="@{/coachees/filter}" method="post">
+                        <div class="mb-7">
+                            <div class="row align-items-center">
+                                <div class="col-lg-12 col-xl-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4 my-2 my-md-0">
+                                            <div class="input-icon">
+                                                <input type="text" th:field="*{modelFilter.filter}" class="form-control"
+                                                       placeholder="Pesquisar..." /> 
+                                                <span><i class="flaticon2-search-1 text-muted"></i></span>
+                                            </div>                                       
+                                        </div>
+                                        <div class="col-md-4 my-2 my-md-0">
+                                            <button type="submit" class="btn btn-light-primary font-weight-bold">                                             
+                                                <i class="fas fa-search"></i>
+                                                Pesquisar
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>                            
+                                </div>                            
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     <!--end::Search Form-->
 
 
                     <!--begin: Datatable-->
-                    <table class="datatable datatable-bordered datatable-head-custom"
-                           id="kt_datatable">
-                        <thead>
-                            <tr>
-                                <th title="Field #1"># ID</th>
-                                <th title="Field #2">Nome</th>
-                                <th title="Field #3">Data de Nascimento</th>
-                                <th title="Field #4">Email</th>
-                                <th title="Field #7">Telefone</th>
-                                <th>Ações</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="even" th:each="coachee : ${listCoachees}">
-                                <td>[[${coachee.id}]]</td>
-                                <td class="sorting_1 dtr-control" tabindex="0">
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-50 flex-shrink-0">
-                                            <img th:src="@{${coachee.avatar}}" alt="avatar">
+                    <div class="table-responsive-lg">
+                        <table class="table">
+                            <thead>
+                            <th scope="col"># ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Data de Nascimento</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Ações</th>  
+                            </thead>
+                            <tbody>
+                                <tr th:each="coachee : ${modelPage}">
+                                    <th scope="row">[[${coachee.id}]]</th>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-50 flex-shrink-0">
+                                                <img th:src="@{${coachee.avatar}}" alt="avatar">
+                                            </div>
+                                            <div class="ml-3">
+                                                <span
+                                                    class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
+                                                    [[${coachee.name}]]</span>
+                                            </div>
                                         </div>
-                                        <div class="ml-3">
-                                            <span
-                                                class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
-                                                [[${coachee.name}]]</span>
+                                    </td>
+                                    <td>[[${coachee.dateBirth}]]</td>
+                                    <td> [[${coachee.email}]]</td>
+                                    <td> [[${coachee.phone}]]</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon"
+                                               data-toggle="dropdown" aria-expanded="false" title="Ações">
+                                                <i class="la la-cog"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                <ul class="nav nav-hoverable flex-column">                                                
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" th:href="@{/coachees/view/__${coachee.id}__}">
+                                                            <i class="nav-icon flaticon-search "></i>
+                                                            <span class="nav-text">Visualizar </span> 
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" th:href="@{/coachees/update/__${coachee.id}__}">
+                                                            <i class="nav-icon flaticon-edit"></i>
+                                                            <span class="nav-text">Editar </span> 
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link"  th:href="@{/coachees/__${coachee.id}__/assessments/reader}">
+                                                            <i class="nav-icon flaticon-edit-1"></i>
+                                                            <span class="nav-text">Avaliações </span> 
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" th:href="@{/coachees/__${coachee.id}__/session/reader}">
+                                                            <i class="nav-icon flaticon2-group"></i>
+                                                            <span class="nav-text">Registro de Sessão</span> 
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#"  data-toggle="modal" data-target="#modalConfirmDelete"
+                                                           th:onclick="'loadDelete('+ ${coachee.id} +')'">
+                                                            <i class="nav-icon far fa-trash-alt"></i>
+                                                            <span class="nav-text">Remover</span> 
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td> [[${coachee.dateBirth}]]</td>
-                                <td> [[${coachee.email}]]</td>
-                                <td class="text-right"> [[${coachee.phone}]]</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon"
-                                           data-toggle="dropdown" aria-expanded="false" title="Ações">
-                                            <i class="la la-cog"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"
-                                             style="display: none;">
-                                            <ul class="nav nav-hoverable flex-column">                                                
+                                    </td>
+                                </tr>                                
+                            </tbody>
 
-                                                <li class="nav-item">
-                                                    <a class="nav-link" th:href="@{/coachees/view/__${coachee.id}__}">
-                                                        <i class="nav-icon flaticon-search "></i>
-                                                        <span class="nav-text">Visualizar </span> 
-                                                    </a>
-                                                </li>
+                        </table>
 
-                                                <li class="nav-item">
-                                                    <a class="nav-link" th:href="@{/coachees/update/__${coachee.id}__}">
-                                                        <i class="nav-icon flaticon-edit"></i>
-                                                        <span class="nav-text">Editar </span> 
-                                                    </a>
-                                                </li>
 
-                                                <li class="nav-item">
-                                                    <a class="nav-link"  th:href="@{/coachees/__${coachee.id}__/assessments/reader}">
-                                                        <i class="nav-icon flaticon-edit-1"></i>
-                                                        <span class="nav-text">Avaliações </span> 
-                                                    </a>
-                                                </li>
+                        <!--begin::Header-->
+                        <div th:replace="app/template/table-paginator :: fragment"></div>
+                        <!--end::Header-->
 
-                                                <li class="nav-item">
-                                                    <a class="nav-link" th:href="@{/coachees/__${coachee.id}__/session/reader}">
-                                                        <i class="nav-icon flaticon2-group"></i>
-                                                        <span class="nav-text">Registro de Sessão</span> 
-                                                    </a>
-                                                </li>
+                    </div>
 
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#"  data-toggle="modal" data-target="#modalConfirmDelete"
-                                                       th:onclick="'loadDelete('+ ${coachee.id} +')'">
-                                                        <i class="nav-icon far fa-trash-alt"></i>
-                                                        <span class="nav-text">Remover</span> 
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span>Registro de Cadastro:</span>
-                                    <ul>
-                                        <li>[[${coachee.createdUser}]]</li>
-                                        <li>[[${coachee.createdAt}]]</li>                                      
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                     <!--end: Datatable-->
 
 
@@ -168,7 +174,7 @@
 
         <script th:src="@{/assets/js/jquery-3.5.1.js}"></script>
         <script th:src="@{/assets/js/mask.js}"></script>
-        <script th:src="@{/assets/js/datatable/coachee.js}"></script>  
+        <!--<script th:src="@{/assets/js/datatable/coachee.js}"></script>-->  
         <script th:src="@{/assets/js/bootstrap-select.js}"></script>
 
 

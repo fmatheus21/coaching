@@ -81,13 +81,13 @@ public class PersonEntity implements Serializable {
     }
 
     public String getCpfCnpj() {
-        if (cpfCnpj != null) {
+       /* if (cpfCnpj != null) {
             if (idPersonType.getId() == 1) {
                 return AppUtil.formatCPF(cpfCnpj);
             } else if (idPersonType.getId() == 2) {
                 return AppUtil.formatCNPJ(cpfCnpj);
             }
-        }
+        }*/
         return cpfCnpj;
     }
 

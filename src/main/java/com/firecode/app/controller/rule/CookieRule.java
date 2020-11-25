@@ -1,7 +1,7 @@
 
 package com.firecode.app.controller.rule;
 
-import com.firecode.app.controller.service.UserService;
+import com.firecode.app.model.service.UserService;
 import com.firecode.app.model.entity.UserEntity;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

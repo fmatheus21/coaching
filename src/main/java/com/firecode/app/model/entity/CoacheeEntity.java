@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -42,8 +43,8 @@ public class CoacheeEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "date_birth", nullable = false)
-    private LocalDate dateBirth; 
-            
+    private LocalDate dateBirth;
+
     @Basic(optional = false)
     @Column(name = "image", nullable = false, length = 50)
     private String image;
@@ -76,6 +77,11 @@ public class CoacheeEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoachee")
     private Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection;
+
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "search", nullable = false, length = 2147483647)
+    private String search;
 
     public CoacheeEntity() {
     }
@@ -118,8 +124,6 @@ public class CoacheeEntity implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-    
-    
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -176,6 +180,14 @@ public class CoacheeEntity implements Serializable {
 
     public void setTeamCoacheeMappingEntityCollection(Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection) {
         this.teamCoacheeMappingEntityCollection = teamCoacheeMappingEntityCollection;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 
     @Override

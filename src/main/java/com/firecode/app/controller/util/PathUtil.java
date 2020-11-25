@@ -25,8 +25,12 @@ public class PathUtil {
     private String pathAvatarCoachee;
 
     @Getter
-    @Value("${path.avatar.user.system}")
-    private String pathAvatarUserSystem;
+    @Value("${path.avatar.user.mary}")
+    private String pathAvatarUserMary;
+    
+     @Getter
+    @Value("${path.avatar.user.dylan}")
+    private String pathAvatarUserDylan;
 
     @Getter
     @Value("${path.avatar.team.system}")
