@@ -1,6 +1,7 @@
 package com.firecode.app.controller.rule;
 
 import com.firecode.app.controller.dto.CoacheeDto;
+import com.firecode.app.controller.security.AppUser;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
 import com.firecode.app.model.service.PersonService;
@@ -13,8 +14,6 @@ import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +54,8 @@ public class CoacheeRule {
     @Autowired
     private PathUtil pathUtil;
 
+    private AppUser appUser;
+
     public CoacheeDto init(HttpServletRequest request, HttpServletResponse response) {
         if (cookieRule.readerCookie(request, response) == null) {
             return coacheeDto = new CoacheeDto();
@@ -66,13 +67,6 @@ public class CoacheeRule {
         return pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee();
     }
 
-    /*  public String pathAvatarSystem() {
-        return pathUtil.localPath() + pathUtil.getPathAvatarUserSystem();
-    }
-
-    private String avatar() {
-        return pathUtil.getPathAvatarUserSystem();
-    }*/
     public String create(CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response) {
 
         String redirect = "redirect:/coachees/create";
@@ -123,7 +117,7 @@ public class CoacheeRule {
 
         try {
             coacheeDto = new CoacheeDto();
-            personService.create(coacheeDto.create(dto, userService.loggedUser(), fileName));
+            personService.create(coacheeDto.create(dto, userService.findByUser("fmatheus").orElse(null), fileName));
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
             cookieRule.deleteCookie(request, response);
         } catch (DataIntegrityViolationException ex) {
@@ -172,7 +166,7 @@ public class CoacheeRule {
 
         try {
             coacheeDto = new CoacheeDto();
-            PersonEntity person = coacheeDto.update(coachee.getIdPerson(), dto, userService.loggedUser());
+            PersonEntity person = coacheeDto.update(coachee.getIdPerson(), dto, userService.findByUser("fmatheus").orElse(null));
             personService.create(person);
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
         } catch (DataIntegrityViolationException ex) {

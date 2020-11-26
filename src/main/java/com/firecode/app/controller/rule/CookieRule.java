@@ -18,7 +18,7 @@ public class CookieRule {
     private UserService userService;
     
     public Cookie readerCookie(HttpServletRequest request, HttpServletResponse response) {
-        UserEntity user = userService.loggedUser();
+        UserEntity user = userService.findByUser("fmatheus").orElse(null);
         String cookieName = user.getUser();
         String cookieValue = user.getUser();
         Cookie[] cookies = request.getCookies();
@@ -35,7 +35,7 @@ public class CookieRule {
 
     public Cookie createCookie(HttpServletRequest request, HttpServletResponse response) {
 
-        UserEntity user = userService.loggedUser();
+        UserEntity user = userService.findByUser("fmatheus").orElse(null);
         Cookie cookie = null;
         String cookieName = user.getUser();
         String cookieValue = user.getUser();
@@ -53,7 +53,7 @@ public class CookieRule {
     }
 
     public Cookie deleteCookie(HttpServletRequest request, HttpServletResponse response) {
-        UserEntity user = userService.loggedUser();
+        UserEntity user = userService.findByUser("fmatheus").orElse(null);
         String cookieName = user.getUser();
         String cookieValue = user.getUser();
         Cookie[] cookies = request.getCookies();

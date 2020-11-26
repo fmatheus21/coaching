@@ -110,7 +110,7 @@ public class CoacheeDto {
         coachee.setIdUpdatedUser(user);
         coachee.setImage(image);
         coachee.setSearch(
-                this.converterJson(
+                CoacheeDto.converterJson(
                         dto.getName(),
                         dto.getCpf(),
                         dto.getEmail(),
@@ -144,7 +144,7 @@ public class CoacheeDto {
         person.getCoacheeEntity().setIdCreatedUser(user);
         person.getCoacheeEntity().setIdUpdatedUser(user);
         person.getCoacheeEntity().setSearch(
-                this.converterJson(
+                CoacheeDto.converterJson(
                         dto.getName(),
                         dto.getCpf(),
                         dto.getEmail(),
@@ -163,7 +163,7 @@ public class CoacheeDto {
 
     public static CoacheeDto converterObject(CoacheeEntity coachee) {
         CoacheeDto dto = new CoacheeDto();
-        String avatar = "/upload/avatar/coachee/" + coachee.getImage();
+        String avatar = "/app/upload/avatar/coachee/" + coachee.getImage();
         dto.setId(coachee.getId());
         dto.setName(coachee.getIdPerson().getNameCompanyname());
         dto.setCpf(coachee.getIdPerson().getCpfCnpj());

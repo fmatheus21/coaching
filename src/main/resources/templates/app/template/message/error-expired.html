@@ -1,0 +1,19 @@
+<div th:fragment="fragment" th:if="${param.expired}"  data-notify="container" class="alert alert-danger animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+    <!--<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 100002;"></button>-->
+    <span data-notify="icon" class="icon fas fa-exclamation fa-2x"></span>
+    <span data-notify="title">Sessão Expirada</span>
+    <span data-notify="message">Esta sessão expirou, possivelmente devido à tentativa de vários logins simultâneos como o mesmo usuário.</span>
+
+
+    <style>
+        .alert[data-notify] {
+            width: 300px;
+            padding: 1rem 1.5rem;
+            right: 15px;
+            position: fixed;
+            top: 15px;
+            transition: all 0.5s ease-in-out 0s;
+        }
+    </style>
+
+</div>

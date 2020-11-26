@@ -4,7 +4,7 @@
     <div class="brand flex-column-auto " id="kt_brand">
         <!-- Logo -->
         <a th:href="@{#}" class="brand-logo"> 
-            <img alt="Logo" class="w-100-percent" th:src="@{/assets/media/logos/logo.png}" />
+            <img alt="Logo" class="w-100-percent" th:src="@{/app/assets/media/logos/logo.png}" />
         </a>
         <!-- Logo -->
     </div>
@@ -22,169 +22,69 @@
             <ul class="menu-nav ">
 
                 <li id="coaches" class="menu-item" aria-haspopup="true"><a
-                        th:href="@{/coachees}" class="menu-link "><i
+                        th:href="@{${coachees}}" class="menu-link "><i
                             class="menu-icon flaticon-users"></i><span
                             class="menu-text">Coachees</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${sessionExperimental}}" class="menu-link "><i
                             class="menu-icon flaticon-edit-1"></i><span
                             class="menu-text">Sessão Experimental</span></a></li>
 
-                            <li id="team-coaching" class="menu-item" aria-haspopup="true"><a
-                        th:href="@{/team/coaching}" class="menu-link "><i
+                <li id="team-coaching" class="menu-item" aria-haspopup="true"><a
+                        th:href="@{${teamCoaching}}" class="menu-link "><i
                             class="menu-icon flaticon2-group"></i><span
                             class="menu-text">Team Coaching</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${schedules}}" class="menu-link "><i
                             class="menu-icon flaticon-calendar-with-a-clock-time-tools"></i><span
                             class="menu-text">Agenda</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${exercises}}" class="menu-link "><i
                             class="menu-icon flaticon-interface-10"></i><span
                             class="menu-text">Exercícios</span></a></li>
 
                 <li id="assessments"class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${assessments}}" class="menu-link "><i
                             class="menu-icon flaticon-statistics"></i><span
                             class="menu-text">Avaliação</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${messages}}" class="menu-link "><i
                             class="menu-icon flaticon-multimedia-2 "></i><span
                             class="menu-text">Mensagens</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${reports}}" class="menu-link "><i
                             class="menu-icon flaticon-graphic"></i><span
                             class="menu-text">Relatórios</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${personalWebsite}}" class="menu-link "><i
                             class="menu-icon flaticon-browser"></i><span
                             class="menu-text">Site Pessoal</span></a></li>			
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${observatories}}" class="menu-link "><i
                             class="menu-icon flaticon-visible "></i><span
                             class="menu-text">Observatório</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${bonus}}" class="menu-link "><i
                             class="menu-icon flaticon2-gift"></i><span
                             class="menu-text">Bônus</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${tutorials}}" class="menu-link "><i
                             class="menu-icon flaticon-questions-circular-button"></i><span
                             class="menu-text">Tutoriais</span></a></li>
 
                 <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
+                        th:href="@{${contactus}}" class="menu-link "><i
                             class="menu-icon flaticon-support"></i><span
                             class="menu-text">Fale Conosco</span></a></li>
-
-                <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
-                            class="menu-icon flaticon-imac"></i><span
-                            class="menu-text">TV Fabracis</span></a></li>
-
-                <li class="menu-item" aria-haspopup="true"><a
-                        th:href="@{#}" class="menu-link "><i
-                            class="menu-icon flaticon2-layers-1"></i><span
-                            class="menu-text">Cis Assessment</span></a></li>
-
-
-                <!-- 	<li class="menu-item  menu-item-submenu" aria-haspopup="true"
-                                data-menu-toggle="hover"><a href="javascript:;"
-                                class="menu-link menu-toggle"><i
-                                        class="menu-icon flaticon2-telegram-logo"></i><span
-                                        class="menu-text">Actions</span><i class="menu-arrow"></i></a>
-                        <div class="menu-submenu ">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                                <li class="menu-item  menu-item-parent" aria-haspopup="true"><span
-                                                        class="menu-link"><span class="menu-text">Actions</span></span></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span
-                                                                class="menu-text">Reports</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span
-                                                                class="menu-text">Messages</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span
-                                                                class="menu-text">Notes</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span
-                                                                class="menu-text">Remarks</span></a></li>
-                                        </ul>
-                                </div></li>
-                        <li class="menu-item  menu-item-submenu" aria-haspopup="true"
-                                data-menu-toggle="hover"><a href="javascript:;"
-                                class="menu-link menu-toggle"><i
-                                        class="menu-icon flaticon2-laptop"></i><span class="menu-text">Pages</span><i
-                                        class="menu-arrow"></i></a>
-                        <div class="menu-submenu ">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                                <li class="menu-item  menu-item-parent" aria-haspopup="true"><span
-                                                        class="menu-link"><span class="menu-text">Pages</span></span></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Reports</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Apps</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Downloads</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Tasks</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Events</span></a></li>
-                                        </ul>
-                                </div></li>
-                        <li class="menu-item  menu-item-submenu" aria-haspopup="true"
-                                data-menu-toggle="hover"><a href="javascript:;"
-                                class="menu-link menu-toggle"><i
-                                        class="menu-icon flaticon2-browser-2"></i><span class="menu-text">Reports</span><i
-                                        class="menu-arrow"></i></a>
-                        <div class="menu-submenu ">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                                <li class="menu-item  menu-item-parent" aria-haspopup="true"><span
-                                                        class="menu-link"><span class="menu-text">Reports</span></span></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Cases</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Messages</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Reports</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">Calendar</span></a></li>
-                                                <li class="menu-item " aria-haspopup="true"><a href="#"
-                                                        class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                                                class="menu-text">FAQ</span></a></li>
-                                        </ul>
-                                </div></li>
-                        <li class="menu-item " aria-haspopup="true"><a
-                                href="javascript:;" class="menu-link "><i
-                                        class="menu-icon flaticon2-console"></i><span class="menu-text">Console</span></a></li>
-                        <li class="menu-item " aria-haspopup="true"><a
-                                href="javascript:;" class="menu-link "><i
-                                        class="menu-icon flaticon2-console"></i><span class="menu-text">System</span></a></li>
-                        <li class="menu-item " aria-haspopup="true"><a href="#"
-                                class="menu-link "><i class="menu-icon flaticon2-graph-1"></i><span
-                                        class="menu-text">Logs</span></a></li>
-                -->
 
             </ul>
             <!-- Menu Nav -->

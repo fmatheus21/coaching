@@ -1,35 +1,253 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{app/template/layout}">
-<div layout:fragment="content">
+      layout:decorate="~{app/template/layout}">
+    <div layout:fragment="content">
 
-	<form class="form">
-		<div class="card-body">
-
-			<div class="form-group">
-				<label>Full Name:</label> <input type="email"
-					class="form-control form-control-solid"
-					placeholder="Enter full name" /> <span class="form-text text-muted">Please
-					enter your full name</span>
-			</div>
-			<div class="form-group">
-				<label>Email address:</label> <input type="email"
-					class="form-control form-control-solid" placeholder="Enter email" />
-				<span class="form-text text-muted">We'll never share your
-					email with anyone else</span>
-			</div>
-
-		</div>
-	</form>
-	
-	
-	<script type="text/javascript">
-		window.addEventListener("load", function(event) {
-			dashboard();
-		});
-	</script>
+        <style>
+            .card.card-custom {               
+                background: transparent;
+                box-shadow: none;
+            }
+            .card.card-custom > .card-header{
+                min-height: 0;
+                border: none;
+            }
+        </style>
 
 
-</div>
+        <div class="row">
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-users fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${coachees}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Coachees
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-edit-1 fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${sessionExperimental}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Sessão Experimental
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon2-group fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${teamCoaching}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Team Coaching
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-calendar-with-a-clock-time-tools fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${schedules}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Agenda
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-interface-10 fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${exercises}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Exercícios
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-statistics fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${assessments}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Avaliação
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-multimedia-2 fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${messages}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Mensagens
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-graphic fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${reports}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Relatórios
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-browser fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${personalWebsite}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Site Pessoal
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-visible fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${observatories}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Observatório
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon2-gift fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${bonus}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Bônus
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-questions-circular-button fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${tutorials}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Tutoriais
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="col-lg-6 col-xl-3 mb-5">           
+                <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center p-5">
+                            <div class="mr-6">                              
+                                <i class="menu-icon flaticon-support fa-5x"></i>                               				
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a th:href="@{${contactus}}" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    Fale Conosco
+                                </a>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+        </div>
+
+
+        <script type="text/javascript">
+            window.addEventListener("load", function (event) {
+                dashboard();
+            });
+        </script>
+
+
+    </div>
 
 </html>
