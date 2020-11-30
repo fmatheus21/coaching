@@ -74,10 +74,6 @@ public class AppUtil {
         return saida;
     }
 
-    public static int countCharacter(String value) {
-        return value.length();
-    }
-
     public static boolean validateCPF(String value) {
         CPFValidator validator = new CPFValidator();
         List<ValidationMessage> erros = validator.invalidMessagesFor(value);
@@ -141,15 +137,50 @@ public class AppUtil {
     }
 
     public static void copyFile(String source, String destiny) throws IOException {
-        InputStream in = new FileInputStream(new File(source));
-        OutputStream out = new FileOutputStream(new File(destiny));
-        byte[] buf = new byte[1024];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
+        OutputStream out;
+        try (InputStream in = new FileInputStream(new File(source))) {
+            out = new FileOutputStream(new File(destiny));
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
         }
-        in.close();
         out.close();
+    }
+
+    public static String returnFirstWord(String texto) {
+        String pattern = "^([a-zA-ZÈ-Úè-ú]+)\\s";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(texto);
+        if (m.find()) {
+            return m.group(0);
+        }
+        return null;
+    }
+
+    public static String returnCharacter(String value, int position) {
+        if (value.length() > position) {
+            return value.substring(0, position);
+        }
+        return value;
+    }
+
+    public static String returnLastCharacters(String value, int position) {
+        return value.substring(value.length() - position);
+        // return value.charAt(value.length() - 1);
+    }
+
+    public static int countCharacter(String value) {
+        return value.length();
+    }
+
+    public static long runtimeStart() {
+        return System.currentTimeMillis();
+    }
+
+    public static long runtimeEnd() {
+        return System.currentTimeMillis();
     }
 
 }

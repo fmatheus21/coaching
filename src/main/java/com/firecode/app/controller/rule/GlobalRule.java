@@ -15,6 +15,9 @@ public class GlobalRule {
     @Autowired
     private PathUtil pathUtil;
 
+    @Autowired
+    private SessionRule sessionRule;
+
     public Model model(Model model) {
         String avatarUserSystem = pathUtil.getPathAvatarUserDylan();
         String avatarTeamSystem = pathUtil.getPathAvatarTeamSystem();
@@ -22,6 +25,7 @@ public class GlobalRule {
         model.addAttribute("avatarTeamSystem", avatarTeamSystem);
         model.addAttribute("footerLink", "https://firecodesystems.com");
         model.addAttribute("footerName", "Firecode Systems");
+        model.addAttribute("loggedUser", sessionRule.storeUser());
         model.addAllAttributes(this.listUrl(model));
         return model;
     }
@@ -41,7 +45,6 @@ public class GlobalRule {
         model.addAttribute("bonus", "/bonus");
         model.addAttribute("tutorials", "/tutorials");
         model.addAttribute("contactus", "/contactus");
-        
 
         list.add(model);
 

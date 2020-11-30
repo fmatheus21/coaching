@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
@@ -79,8 +80,10 @@ public class CoacheeEntity implements Serializable {
     private Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection;
 
     @Basic(optional = false)
+    @NotNull
     @Lob
-    @Column(name = "search", nullable = false, length = 2147483647)
+    @Size(min = 1, max = 1073741824)
+    @Column(name = "search", nullable = false, length = 1073741824)
     private String search;
 
     public CoacheeEntity() {

@@ -222,6 +222,10 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     color: #3699FF;
 }
 
+.table th, .table td {    
+    text-align: center;
+}
+
 
 @media only screen and (max-width: 600px) {
     .table tbody td .symbol{

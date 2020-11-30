@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
@@ -17,60 +12,57 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Fernando Matheus
- */
 @Entity
 @Table(name = "team", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TeamEntity.findAll", query = "SELECT t FROM TeamEntity t"),
-    @NamedQuery(name = "TeamEntity.findById", query = "SELECT t FROM TeamEntity t WHERE t.id = :id"),
-    @NamedQuery(name = "TeamEntity.findByName", query = "SELECT t FROM TeamEntity t WHERE t.name = :name"),
-    @NamedQuery(name = "TeamEntity.findByCreatedAt", query = "SELECT t FROM TeamEntity t WHERE t.createdAt = :createdAt"),
-    @NamedQuery(name = "TeamEntity.findByUpdatedAt", query = "SELECT t FROM TeamEntity t WHERE t.updatedAt = :updatedAt")})
+
 public class TeamEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+
     @Basic(optional = false)
     @Column(name = "name", nullable = false, length = 45)
     private String name;
+
     @Basic(optional = false)
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
     @Basic(optional = false)
     @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
     private Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
     private Collection<EstageCurrentStateEntity> estageCurrentStateEntityCollection;
+
     @JoinColumn(name = "id_coach", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private CoachEntity idCoach;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
     private Collection<TeamSessionMappingEntity> teamSessionMappingEntityCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
     private Collection<EstageContentWeekEntity> estageContentWeekEntityCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
     private Collection<StageExerciseRoomEntity> stageExerciseRoomEntityCollection;
 
@@ -79,13 +71,6 @@ public class TeamEntity implements Serializable {
 
     public TeamEntity(Integer id) {
         this.id = id;
-    }
-
-    public TeamEntity(Integer id, String name, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -187,15 +172,12 @@ public class TeamEntity implements Serializable {
             return false;
         }
         TeamEntity other = (TeamEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.TeamEntity[ id=" + id + " ]";
     }
-    
+
 }

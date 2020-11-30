@@ -1,7 +1,6 @@
 package com.firecode.app.controller.rule;
 
 import com.firecode.app.controller.dto.CoacheeDto;
-import com.firecode.app.controller.security.AppUser;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
 import com.firecode.app.model.service.PersonService;
@@ -48,13 +47,14 @@ public class CoacheeRule {
 
     @Autowired
     private UploadRule uploadRule;
+    
+    @Autowired
+    private SessionRule sessionRule;
 
     private CoacheeDto coacheeDto;
 
     @Autowired
     private PathUtil pathUtil;
-
-    private AppUser appUser;
 
     public CoacheeDto init(HttpServletRequest request, HttpServletResponse response) {
         if (cookieRule.readerCookie(request, response) == null) {
@@ -117,7 +117,7 @@ public class CoacheeRule {
 
         try {
             coacheeDto = new CoacheeDto();
-            personService.create(coacheeDto.create(dto, userService.findByUser("fmatheus").orElse(null), fileName));
+            personService.create(coacheeDto.create(dto, sessionRule.storeUser().getId(), fileName));
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
             cookieRule.deleteCookie(request, response);
         } catch (DataIntegrityViolationException ex) {
@@ -190,12 +190,18 @@ public class CoacheeRule {
     }
 
     public CoacheeDto findById(int id) {
-        coacheeDto = new CoacheeDto();
+
+        System.out.println("ID: " + id);
+
+        CoacheeEntity coachee = coacheeService.findById(id);
+        return coacheeDto.find(coachee, this.pathAvatar());
+
+        /* coacheeDto = new CoacheeDto();
         CoacheeEntity coachee = coacheeService.findById(id);
         if (coachee == null) {
             return null;
         }
-        return coacheeDto.find(coachee, this.pathAvatar());
+        return coacheeDto.find(coachee, this.pathAvatar());*/
     }
 
     public String delete(int id, RedirectAttributes attributes) {
@@ -235,6 +241,16 @@ public class CoacheeRule {
 
         return fileName;
 
+    }
+
+    public String validationRedirect(String redirectSuccess, String redirectFailure, Object object, RedirectAttributes attributes) {
+
+        if (object == null) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
+            return redirectFailure;
+        }
+
+        return redirectSuccess;
     }
 
 }

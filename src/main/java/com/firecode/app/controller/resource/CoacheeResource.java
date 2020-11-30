@@ -4,6 +4,7 @@ import com.firecode.app.controller.dto.CoacheeDto;
 import com.firecode.app.controller.rule.CoacheeRule;
 import com.firecode.app.controller.rule.FilterRule;
 import com.firecode.app.controller.rule.GlobalRule;
+import com.firecode.app.controller.rule.TesteRule;
 import com.firecode.app.model.service.GenderService;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.UploadMultipartFileUtil;
@@ -42,6 +43,9 @@ public class CoacheeResource {
     @Autowired
     private FilterRule filterRule;
 
+    @Autowired
+    private TesteRule testeRule;
+
     @GetMapping
     public String openReader(Model model, RepositoryFilter filter, Pageable pageable) {
         globalRule.model(model);
@@ -57,6 +61,7 @@ public class CoacheeResource {
         model.addAttribute("modelFilter", new RepositoryFilter());
         model.addAttribute("modelUrl", "/coachees?");
 
+        //testeRule.createCoachee();
         return "app/page/reader/coachee";
     }
 
@@ -78,12 +83,13 @@ public class CoacheeResource {
 
     @GetMapping("/update/{id}")
     public String openUpdate(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
-        globalRule.model(model);
+
+        String redirectSuccess = "app/page/update/coachee";
+        String redirectFailure = "redirect:/coachees";
+
         CoacheeDto coachee = coacheeRule.findById(id);
-        if (coachee == null) {
-            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
-            return "redirect:/coachees";
-        }
+
+        globalRule.model(model);
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Editar Coachee");
@@ -94,17 +100,19 @@ public class CoacheeResource {
         model.addAttribute("listGender", genderService.findAll("name"));
         model.addAttribute("modelCoachee", coachee);
         model.addAttribute("upload", new UploadMultipartFileUtil());
-        return "app/page/update/coachee";
+        return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, coachee, attributes);
+
     }
 
     @GetMapping("/view/{id}")
     public String openView(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
-        globalRule.model(model);
+
+        String redirectSuccess = "app/page/view/coachee";
+        String redirectFailure = "redirect:/coachees";
+
         CoacheeDto coachee = coacheeRule.findById(id);
-        if (coachee == null) {
-            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorNotFound());
-            return "redirect:/coachees";
-        }
+
+        globalRule.model(model);
         model.addAttribute("pageTitle", "Coachees");
         model.addAttribute("headerTitle", "Coachees");
         model.addAttribute("formTitle", "Visualizar Coachee");
@@ -113,7 +121,8 @@ public class CoacheeResource {
         model.addAttribute("buttonAdd", true);
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("modelCoachee", coachee);
-        return "app/page/view/coachee";
+        return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, coachee, attributes);
+
     }
 
     @GetMapping("/assessments/view/{id}")
@@ -185,33 +194,4 @@ public class CoacheeResource {
         return "redirect:/coachees" + filterRule.filter(filter);
     }
 
-    /*  private String gerarNome() {
-        // letras maisculas 65 - 90
-        // letras minúsculas 97 - 122
-
-        ThreadLocalRandom gerador = ThreadLocalRandom.current();
-
-        int tamanhoNome = gerador.nextInt(3, 10);
-        int tamanhoSobrenome = gerador.nextInt(3, 10);
-
-        char primeiraLetraNome = (char) gerador.nextInt(65, 90);
-        char primeiraLetraSobreNome = (char) gerador.nextInt(65, 90);
-
-        StringBuilder nome = new StringBuilder().append(primeiraLetraNome);
-        StringBuilder sobreNome = new StringBuilder().append(primeiraLetraNome);
-
-        for (int i = 1; i < tamanhoNome; i++) {
-            char letra = (char) gerador.nextInt(97, 122);
-            nome.append(letra);
-        }
-
-        for (int i = 1; i < tamanhoSobrenome; i++) {
-            char letra = (char) gerador.nextInt(97, 122);
-            sobreNome.append(letra);
-        }
-
-        System.out.println(nome + " " + sobreNome);
-
-        return nome + " " + sobreNome;
-    }*/
 }

@@ -114,7 +114,48 @@
 
 
 
+
+<!--<nav th:fragment="fragment" aria-label="Pagination" th:if="${modelPage.totalPages gt 0}">
+       <ul class="pagination justify-content-center font-weight-medium">
+
+           <li class="page-item" th:classappend="${modelPage.number eq 0} ? 'disabled'">
+               <a class="page-link svg-icon"
+                  th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number})}"
+                  aria-label="Previous"
+                  title="Previous Page" rel="tooltip">
+                   <span aria-hidden="true" data-feather="chevrons-left" width="20" height="20"><</span>
+               </a>
+           </li>     
+
+           <li class="page-item" th:classappend="${i eq modelPage.number + 1} ? 'active'"
+               th:each="i : ${#numbers.sequence( modelPage.number + 1, modelPage.totalPages > 10 + modelPage.number ? modelPage.number + 10 : modelPage.totalPages, 1)}">
+               <a class="page-link" th:href="@{/coachees?page={id}(id=${i})}" th:text="${i}"
+                  th:title="${'Page '+ i}"
+                  rel="tooltip"></a>
+           </li>
+
+           <li class="page-item disabled" th:if="${modelPage.number + 10 < modelPage.totalPages}">
+               <a class="page-link svg-icon" href="#">
+                   <span data-feather="more-horizontal" width="20" height="20">...</span>
+               </a>
+           </li>
+
+           <li class="page-item" th:classappend="${modelPage.number + 1 eq modelPage.totalPages} ? 'disabled'">
+               <a class="page-link svg-icon" th:href="@{/coachees?page={id}(id=${modelPage.number + 2})}"
+                  aria-label="Next"
+                  title="Next Page" rel="tooltip">
+                   <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">></span>
+               </a>
+           </li>
+
+       </ul>
+   </nav>-->
+
+
+
+
 <div th:fragment="fragment" class="d-flex justify-content-between align-items-center flex-wrap" th:if="${modelPage.totalPages gt 0}">
+
     <div class="d-flex flex-wrap py-2 mr-3" >      
 
         <!-- Primeiro -->
@@ -130,26 +171,26 @@
            th:classappend="${modelPage.number eq 0} ? 'pager-link-disabled'" data-container="body" data-toggle="tooltip" data-placement="top" title="Anterior">
             <i class="ki ki-bold-arrow-back icon-xs"></i>
         </a>
-        
+
         <!-- Pagina 1 -->
         <a th:href="@{/coachees?page={id}(id=${1},size=${modelPage.size})}" th:if="${modelPage.number > 1 and modelPage.totalPages > 10}" 
            th:classappend="${i eq modelPage.number + 1} ? 'active'"
            class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
            data-container="body" data-toggle="tooltip" data-placement="top" title="Página 1">1</a> 
-        
-         <!-- Pagina 2 -->
+
+        <!-- Pagina 2 -->
         <a th:href="@{/coachees?page={id}(id=${2},size=${modelPage.size})}" th:if="${modelPage.number > 2 and modelPage.totalPages > 10}" 
            th:classappend="${i eq modelPage.number + 1} ? 'active'"
            class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
            data-container="body" data-toggle="tooltip" data-placement="top" title="Página 2">2</a> 
-     
-        
-         <!-- Pagina 3 -->
+
+
+        <!-- Pagina 3 -->
         <a th:href="@{/coachees?page={id}(id=${3},size=${modelPage.size})}" th:if="${modelPage.number > 3 and modelPage.totalPages > 10}" 
            th:classappend="${i eq modelPage.number + 1} ? 'active'"
            class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"
            data-container="body" data-toggle="tooltip" data-placement="top" title="Página 3">3</a> 
-        
+
         <!-- Pagina 4 -->
         <a th:href="@{/coachees?page={id}(id=${4},size=${modelPage.size})}" th:if="${modelPage.number > 4 and modelPage.totalPages > 10}" 
            th:classappend="${i eq modelPage.number + 1} ? 'active'"
@@ -201,66 +242,39 @@
 
         <div class="datatable-pager-info">
             <div class="dropdown bootstrap-select datatable-pager-size" style="width: 70px;">
-                <select class="selectpicker datatable-pager-size" title="Select page size" data-width="70px" data-container="body" data-selected="10" tabindex="null">        
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                <select id="select" class="selectpicker datatable-pager-size" onchange="location = this.value;" title="Select page size" data-width="70px" data-container="body" data-selected="10" tabindex="null">        
+                    <option th:value="${modelUrl}+'page=1&size=10'">10</option>
+                    <option th:value="${modelUrl}+'page=1&size=20'">20</option>
+                    <option th:value="${modelUrl}+'page=1&size=20'">30</option>
+                    <option th:value="${modelUrl}+'page=1&size=50'">50</option>
+                    <option th:value="${modelUrl}+'page=1&size=100'">100</option>
                 </select>      
             </div>
             <span class="datatable-pager-detail" >Mostrando [[${modelPage.numberOfElements}]] de [[${modelPage.totalElements}]] registros.</span>
-        </div>   
+        </div>    
 
         <!--
-                <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                <select onchange="location = this.value;" class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
+                    <option th:value="${modelUrl}+'page=1&size=10'">10</option>
+                    <option th:value="${modelUrl}+'page=1&size=20'">20</option>
+                    <option th:value="${modelUrl}+'page=1&size=30'">30</option>
+                    <option th:value="${modelUrl}+'page=1&size=50'">50</option>
+                    <option th:value="${modelUrl}+'page=1&size=100'">100</option>
                 </select>
-               
-              
-                <span class="text-muted">Mostrando [[${modelPage.numberOfElements}]] de [[${modelPage.totalElements}]] registros.</span>
-               
         --> 
+
+        <span class="text-muted">Mostrando [[${modelPage.numberOfElements}]] de [[${modelPage.totalElements}]] registros.</span>
+
+
 
     </div>
 
 
-    <nav th:fragment="fragment" aria-label="Pagination" th:if="${modelPage.totalPages gt 0}">
-        <ul class="pagination justify-content-center font-weight-medium">
 
-            <li class="page-item" th:classappend="${modelPage.number eq 0} ? 'disabled'">
-                <a class="page-link svg-icon"
-                   th:href="@{/coachees?page={id}(id=${modelPage.number lt 2 ? 1 : modelPage.number})}"
-                   aria-label="Previous"
-                   title="Previous Page" rel="tooltip">
-                    <span aria-hidden="true" data-feather="chevrons-left" width="20" height="20"><</span>
-                </a>
-            </li>     
 
-            <li class="page-item" th:classappend="${i eq modelPage.number + 1} ? 'active'"
-                th:each="i : ${#numbers.sequence( modelPage.number + 1, modelPage.totalPages > 10 + modelPage.number ? modelPage.number + 10 : modelPage.totalPages, 1)}">
-                <a class="page-link" th:href="@{/coachees?page={id}(id=${i})}" th:text="${i}"
-                   th:title="${'Page '+ i}"
-                   rel="tooltip"></a>
-            </li>
 
-            <li class="page-item disabled" th:if="${modelPage.number + 10 < modelPage.totalPages}">
-                <a class="page-link svg-icon" href="#">
-                    <span data-feather="more-horizontal" width="20" height="20">...</span>
-                </a>
-            </li>
 
-            <li class="page-item" th:classappend="${modelPage.number + 1 eq modelPage.totalPages} ? 'disabled'">
-                <a class="page-link svg-icon" th:href="@{/coachees?page={id}(id=${modelPage.number + 2})}"
-                   aria-label="Next"
-                   title="Next Page" rel="tooltip">
-                    <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">></span>
-                </a>
-            </li>
+</div>
 
-        </ul>
-    </nav>
+
+

@@ -90,11 +90,12 @@ public class CoacheeDto {
     @Setter
     private String avatar;
 
-    public PersonEntity create(CoacheeDto dto, UserEntity user, String image) {
+    public PersonEntity create(CoacheeDto dto, int userId, String image) {
 
         PersonEntity person = new PersonEntity();
         CoacheeEntity coachee = new CoacheeEntity();
         ContactEntity contact = new ContactEntity();
+        UserEntity user = new UserEntity(userId);
 
         person.setIdPersonType(new PersonTypeEntity(1));
         person.setNameCompanyname(dto.getName());

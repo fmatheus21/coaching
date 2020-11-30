@@ -27,7 +27,7 @@ public class TeamCoachingResource {
         return "app/page/reader/team-coaching";
     }
 
-  @GetMapping("/create")
+    @GetMapping("/create")
     public String openCreate(Model model) {
         globalRule.model(model);
         model.addAttribute("pageTitle", "Team Coaching");
@@ -48,8 +48,8 @@ public class TeamCoachingResource {
         model.addAttribute("buttonAddLink", "/team/coaching/create");
         return "app/page/update/team-coaching";
     }
-    
-     @GetMapping("/view/{id}")
+
+    @GetMapping("/view/{id}")
     public String openView(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
         globalRule.model(model);
         model.addAttribute("pageTitle", "Team Coaching");
