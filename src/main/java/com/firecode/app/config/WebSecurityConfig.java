@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private LoggingAccessDeniedHandler accessDeniedHandler;
+    private LoggingAccessDeniedHandler loggingAccessDeniedSecurity;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -70,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/?logout")
+                .logoutSuccessUrl("/authentication?logout")
                 .permitAll()
                 .and()
                 .rememberMe()
@@ -85,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionAuthenticationErrorUrl("/authentication?invalid")
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(this.accessDeniedHandler)
+                .accessDeniedHandler(this.loggingAccessDeniedSecurity)
                 .and()
                 .csrf().disable();
     }

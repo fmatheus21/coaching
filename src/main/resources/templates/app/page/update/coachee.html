@@ -5,7 +5,7 @@
 
 
         <!-- Form -->
-        <form id="form-coache-edit" method="post">
+        <form id="form-coache-edit" th:action="@{/coachees/update/{id}(id=${modelCoachee.id})}" method="post" enctype="multipart/form-data">
             <!-- Card Body -->
             <div class="card-body">
                 <!-- Row -->

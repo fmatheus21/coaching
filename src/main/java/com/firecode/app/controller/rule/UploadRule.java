@@ -29,7 +29,7 @@ public class UploadRule {
         String fileName = String.valueOf(name);
         AppUtil.createDirectoy(uploadDirectory);
 
-        File file = fileRename(uploadDirectory, fileName + number, false, pathUtil.getExtensionImage());
+        File file = fileRename(uploadDirectory, fileName + number, update, pathUtil.getExtensionImage());
 
         fileName = fileName + number;
         this.dataSaver(multipartFile, file, width, height);
@@ -37,30 +37,20 @@ public class UploadRule {
 
     }
 
-    /* public String saveFileSingle(PathUtil pathUtil, MultipartFile multipartFile, String path, int number, int width,
-            int height, boolean update) throws NoSuchElementException {
+    public String saveFileSingleUpdate(MultipartFile multipartFile, String path, String fileName, int number, int width,
+            int height) throws NoSuchElementException {
 
-        long name = FormatLocalDatetUtil.returnsMillisecondsOfDateTime();
-        String fileName = String.valueOf(name);
+        String uploadDirectory = pathUtil.localPath() + pathUtil.getPathStatic() + path; 
+        AppUtil.createDirectoy(uploadDirectory);
 
-        File file = null;
-        String uploadDirectory = null;
-
-        if (multipartFile.isEmpty()) {
-            uploadDirectory = pathUtil.localPath() + pathUtil.getPathStatic() + pathUtil.getPathAvatarUserSystem();
-            AppUtil.createDirectoy(uploadDirectory);
-            file = new File(uploadDirectory);
-        } else {
-            uploadDirectory = pathUtil.localPath() + pathUtil.getPathStatic() + path;
-            AppUtil.createDirectoy(uploadDirectory);
-            file = fileRename(uploadDirectory, fileName + number, false, pathUtil.getExtensionImage());
-        }
+        File file = fileRename(uploadDirectory, fileName + number, true, pathUtil.getExtensionImage());
 
         fileName = fileName + number;
         this.dataSaver(multipartFile, file, width, height);
         return fileName + pathUtil.getExtensionImage();
 
-    }*/
+    }    
+    
     private File fileRename(String dir, String name, boolean update, String extension) {
 
         File convertedFile = null;

@@ -23,6 +23,10 @@ public class PathUtil {
     @Getter
     @Value("${path.avatar.coachee}")
     private String pathAvatarCoachee;
+    
+    @Getter
+    @Value("${path.avatar.user}")
+    private String pathAvatarUser;
 
     @Getter
     @Value("${path.avatar.user.mary}")

@@ -30,7 +30,7 @@ public class SessionRule {
         return pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee();
     }
 
-    public UserDto storeUser() {
+    /*public UserDto storeUser() {
 
         if (list == null) {
             list = new ArrayList<>();
@@ -51,7 +51,7 @@ public class SessionRule {
 
         return dto;
 
-    }
+    }*/
 
     private UserDto readerUser(String userSession) {
 

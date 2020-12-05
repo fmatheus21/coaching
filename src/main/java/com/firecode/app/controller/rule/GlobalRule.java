@@ -1,5 +1,6 @@
 package com.firecode.app.controller.rule;
 
+import com.firecode.app.controller.security.AppUserSecurity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -15,17 +16,14 @@ public class GlobalRule {
     @Autowired
     private PathUtil pathUtil;
 
-    @Autowired
-    private SessionRule sessionRule;
-
-    public Model model(Model model) {
+    public Model model(Model model, AppUserSecurity appUserSecurity) {
         String avatarUserSystem = pathUtil.getPathAvatarUserDylan();
         String avatarTeamSystem = pathUtil.getPathAvatarTeamSystem();
         model.addAttribute("avatarUserSystem", avatarUserSystem);
         model.addAttribute("avatarTeamSystem", avatarTeamSystem);
         model.addAttribute("footerLink", "https://firecodesystems.com");
         model.addAttribute("footerName", "Firecode Systems");
-        model.addAttribute("loggedUser", sessionRule.storeUser());
+        model.addAttribute("loggedUser", appUserSecurity);
         model.addAllAttributes(this.listUrl(model));
         return model;
     }

@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 public class CoacheeDto {
 
+    
     @Getter
     @Setter
     @NotNull
@@ -90,12 +91,11 @@ public class CoacheeDto {
     @Setter
     private String avatar;
 
-    public PersonEntity create(CoacheeDto dto, int userId, String image) {
+    public PersonEntity create(CoacheeDto dto, UserEntity user, String image) {
 
         PersonEntity person = new PersonEntity();
         CoacheeEntity coachee = new CoacheeEntity();
-        ContactEntity contact = new ContactEntity();
-        UserEntity user = new UserEntity(userId);
+        ContactEntity contact = new ContactEntity();       
 
         person.setIdPersonType(new PersonTypeEntity(1));
         person.setNameCompanyname(dto.getName());

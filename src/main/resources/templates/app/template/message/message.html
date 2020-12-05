@@ -1,0 +1,55 @@
+<div th:fragment="fragment">
+
+    <div th:if="${not #strings.isEmpty(success)}"  data-notify="container" class="alert alert-success animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+        <!--<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 100002;"></button>-->
+        <span data-notify="icon" class="icon far fa-check-circle fa-2x"></span>
+        <span data-notify="title">Sucesso!</span>
+        <span data-notify="message">[[${success}]]</span>
+    </div>
+
+    <div th:if="${not #strings.isEmpty(error)}"  data-notify="container" class="alert alert-danger animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+        <!--<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 100002;"></button>-->
+        <span data-notify="icon" class="icon fas fa-exclamation fa-2x"></span>
+        <span data-notify="title">Erro</span>
+        <span data-notify="message">[[${error}]]</span>
+    </div>
+
+    <div th:if="${param.expired}"  data-notify="container" class="alert alert-danger animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+        <span data-notify="icon" class="icon fas fa-exclamation fa-2x"></span>
+        <span data-notify="title">Sessão Expirada</span>
+        <span data-notify="message">Esta sessão expirou, possivelmente devido a tentativa de vários logins simultâneos como o mesmo usuário ou tempo ocioso.</span>
+    </div>
+
+    <div th:if="${param.invalid}"  data-notify="container" class="alert alert-danger animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+        <!--<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 100002;"></button>-->
+        <span data-notify="icon" class="icon fas fa-exclamation fa-2x"></span>
+        <span data-notify="title">Sessão Inválida</span>
+        <span data-notify="message">Esta sessão está inválida, possivelmente devido a atualização no servidor.</span>
+    </div>
+
+    <div th:if="${param.error}"  data-notify="container" class="alert alert-danger animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+        <span data-notify="icon" class="icon fas fa-exclamation fa-2x"></span>
+        <span data-notify="title">Erro</span>  
+        <span data-notify="message">Usuário e/ou senha incorretos.</span>
+    </div>
+
+    <div th:if="${param.logout}" data-notify="container" class="alert alert-success animate__animated animate__fadeInLeftBig message" role="alert" data-notify-position="top-right">
+        <span data-notify="icon" class="icon far fa-check-circle fa-2x"></span>
+        <span data-notify="title">Sucesso</span>
+        <span data-notify="message">Logout realizado com sucesso</span>
+    </div>
+
+    <style>
+        .alert[data-notify] {
+            width: 300px;
+            padding: 1rem 1.5rem;
+            right: 15px;
+            position: fixed;
+            top: 15px;
+            transition: all 0.5s ease-in-out 0s;
+        }
+    </style>
+
+</div>
+
+

@@ -28,7 +28,7 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> optional = userService.findByUser(username);
         UserEntity user = optional.orElseThrow(() -> new UsernameNotFoundException(null));
-        return new AppUser(user, this.authorities(user));
+        return new AppUserSecurity(user, this.authorities(user));
     }
 
     private Collection<? extends GrantedAuthority> authorities(UserEntity user) {

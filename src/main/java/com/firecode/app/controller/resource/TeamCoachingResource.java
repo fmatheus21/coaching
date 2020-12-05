@@ -1,7 +1,9 @@
 package com.firecode.app.controller.resource;
 
 import com.firecode.app.controller.rule.GlobalRule;
+import com.firecode.app.controller.security.AppUserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,8 @@ public class TeamCoachingResource {
     private GlobalRule globalRule;
 
     @GetMapping
-    public String openReader(Model model) {
-        globalRule.model(model);
+    public String openReader(Model model, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
+        globalRule.model(model, appUserSecurity);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", false);
@@ -28,8 +30,8 @@ public class TeamCoachingResource {
     }
 
     @GetMapping("/create")
-    public String openCreate(Model model) {
-        globalRule.model(model);
+    public String openCreate(Model model, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
+        globalRule.model(model, appUserSecurity);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", true);
@@ -39,8 +41,8 @@ public class TeamCoachingResource {
     }
 
     @GetMapping("/update/{id}")
-    public String openUpdate(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
-        globalRule.model(model);
+    public String openUpdate(@PathVariable("id") int id, RedirectAttributes attributes, Model model, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
+        globalRule.model(model, appUserSecurity);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", true);
@@ -50,8 +52,8 @@ public class TeamCoachingResource {
     }
 
     @GetMapping("/view/{id}")
-    public String openView(@PathVariable("id") int id, RedirectAttributes attributes, Model model) {
-        globalRule.model(model);
+    public String openView(@PathVariable("id") int id, RedirectAttributes attributes, Model model, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
+        globalRule.model(model, appUserSecurity);
         model.addAttribute("pageTitle", "Team Coaching");
         model.addAttribute("headerTitle", "Team Coaching");
         model.addAttribute("buttonBack", true);

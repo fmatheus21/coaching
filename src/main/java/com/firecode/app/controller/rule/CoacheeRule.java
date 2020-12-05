@@ -1,6 +1,7 @@
 package com.firecode.app.controller.rule;
 
 import com.firecode.app.controller.dto.CoacheeDto;
+import com.firecode.app.controller.security.AppUserSecurity;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
 import com.firecode.app.model.service.PersonService;
@@ -12,6 +13,7 @@ import com.firecode.app.controller.util.UploadMultipartFileUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.PersonEntity;
+import com.firecode.app.model.entity.UserEntity;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +49,7 @@ public class CoacheeRule {
 
     @Autowired
     private UploadRule uploadRule;
-    
+
     @Autowired
     private SessionRule sessionRule;
 
@@ -67,7 +69,7 @@ public class CoacheeRule {
         return pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee();
     }
 
-    public String create(CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response) {
+    public String create(CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response, AppUserSecurity appUserSecurity) {
 
         String redirect = "redirect:/coachees/create";
 
@@ -97,7 +99,7 @@ public class CoacheeRule {
 
         long size = 0;
         long total = pathUtil.getFileSizeTotal();
-        MultipartFile[] files = upload.getFileDatas();
+        MultipartFile[] files = upload.getFileDatas();       
 
         /* Soma o tamanho de todas as imagens anexadas */
         for (MultipartFile multipartFile : files) {
@@ -113,11 +115,11 @@ public class CoacheeRule {
             return this.errorRedirect(dto, request, response);
         }
 
-        String fileName = this.saveImage(files, dto.getIdGender());
+        String fileName = this.saveImage(files, dto.getIdGender(), false);
 
         try {
             coacheeDto = new CoacheeDto();
-            personService.create(coacheeDto.create(dto, sessionRule.storeUser().getId(), fileName));
+            personService.create(coacheeDto.create(dto, new UserEntity(appUserSecurity.getIdUser()), fileName));
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
             cookieRule.deleteCookie(request, response);
         } catch (DataIntegrityViolationException ex) {
@@ -128,7 +130,7 @@ public class CoacheeRule {
 
     }
 
-    public String update(int id, CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response) {
+    public String update(int id, CoacheeDto dto, BindingResult result, RedirectAttributes attributes, UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response, AppUserSecurity appUserSecurity) {
 
         String redirect = "redirect:/coachees/update/" + id;
 
@@ -161,12 +163,12 @@ public class CoacheeRule {
         }
 
         if (size > 0) {
-            fileName = this.saveImage(files, dto.getIdGender());
+            fileName = this.saveImage(files, dto.getIdGender(), true);
         }
 
         try {
             coacheeDto = new CoacheeDto();
-            PersonEntity person = coacheeDto.update(coachee.getIdPerson(), dto, userService.findByUser("fmatheus").orElse(null));
+            PersonEntity person = coacheeDto.update(coachee.getIdPerson(), dto, new UserEntity(appUserSecurity.getIdUser()));
             personService.create(person);
             attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCreate());
         } catch (DataIntegrityViolationException ex) {
@@ -191,17 +193,14 @@ public class CoacheeRule {
 
     public CoacheeDto findById(int id) {
 
-        System.out.println("ID: " + id);
-
         CoacheeEntity coachee = coacheeService.findById(id);
-        return coacheeDto.find(coachee, this.pathAvatar());
 
-        /* coacheeDto = new CoacheeDto();
-        CoacheeEntity coachee = coacheeService.findById(id);
         if (coachee == null) {
             return null;
         }
-        return coacheeDto.find(coachee, this.pathAvatar());*/
+
+        return CoacheeDto.converterObject(coachee);
+
     }
 
     public String delete(int id, RedirectAttributes attributes) {
@@ -225,17 +224,19 @@ public class CoacheeRule {
 
     }
 
-    private String saveImage(MultipartFile[] files, int gender) {
+    private String saveImage(MultipartFile[] files, int gender, boolean update) {
 
         String fileName = null;
         int number = 0;
 
         for (MultipartFile multipartFile : files) {
             if (multipartFile.getSize() == 0) {
+                System.out.println(" entrou no if");
                 fileName = uploadRule.copyFile(gender);
             } else {
+                System.out.println(" entrou no else");
                 number++;
-                fileName = uploadRule.saveFileSingle(multipartFile, this.pathAvatar(), number, 700, 700, false);
+                fileName = uploadRule.saveFileSingle(multipartFile, this.pathAvatar(), number, 700, 700, update);
             }
         }
 

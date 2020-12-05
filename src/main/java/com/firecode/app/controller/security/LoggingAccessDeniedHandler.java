@@ -30,7 +30,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
                     + " was trying to access protected resource: " + request.getRequestURI());
         }
 
-        response.sendRedirect(request.getContextPath() + "/error/403");
+        response.sendRedirect(request.getContextPath() + "/dashboard?denied");
 
     }
 }

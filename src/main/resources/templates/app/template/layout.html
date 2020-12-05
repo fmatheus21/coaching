@@ -17,7 +17,7 @@
         <link th:href="@{/app/assets/css/style.bundle.css?v=0.0.1}" rel="stylesheet" type="text/css" />
         <link th:href="@{/app/assets/css/custom.css?v=0.0.1}" rel="stylesheet" type="text/css" />        
         <!-- Global Theme Styles(used by all pages) -->
-        
+
         <link rel="icon" type="image/png" th:href="@{/app/assets/media/logos/favicon.png}"/>
 
 
@@ -81,14 +81,10 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            
-                                                <!-- Mensagem de Sucesso -->
-                                            <div th:replace="app/template/message/success :: mensagem"></div>
-                                            <!-- Mensagem de Sucesso -->
-                                            
-                                              <!-- Mensagem de Erro -->
-                                            <div th:replace="app/template/message/error :: mensagem"></div>
-                                            <!-- Mensagem de Erro -->
+
+                                            <!-- Mensagem -->
+                                            <div class="message" th:replace="app/template/message/message :: fragment"></div>
+                                            <!-- Mensagem -->
 
                                             <!-- Content Fragment -->
                                             <div layout:fragment="content"></div>
@@ -220,7 +216,7 @@
 
         <!-- Impedir a tecla enter dentro do form -->
         <script>
-            
+
             $(document).ready(function () {
                 $(window).keydown(function (event) {
                     if ((event.keyCode === 13) && !$(document.activeElement).is('textarea')) {
@@ -229,11 +225,11 @@
                     }
                 });
             });
-            
+
             $(".message").delay(10000).hide(1000);
-            
+
         </script>
-   
+
     </body>
     <!-- Body -->
 
