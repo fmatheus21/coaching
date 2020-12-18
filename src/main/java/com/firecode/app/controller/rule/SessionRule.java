@@ -29,29 +29,7 @@ public class SessionRule {
     private String pathAvatar() {
         return pathUtil.getPathUpload() + pathUtil.getPathAvatarCoachee();
     }
-
-    /*public UserDto storeUser() {
-
-        if (list == null) {
-            list = new ArrayList<>();
-            System.out.println("Iniciando lista.....");
-        }
-
-        UserEntity user = null;
-        String userSession = userSessionRule.authentication();
-        UserDto dto = this.readerUser(userSession);
-
-        if (dto == null) {
-            user = userService.findByUser(userSession).orElse(null);
-            if (user != null) {
-                dto = UserDto.converterObject(user, this.pathAvatar());
-                list.add(dto);
-            }
-        }
-
-        return dto;
-
-    }*/
+    
 
     private UserDto readerUser(String userSession) {
 
