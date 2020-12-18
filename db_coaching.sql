@@ -167,7 +167,7 @@ CREATE TABLE `coachee` (
   CONSTRAINT `fk_id_created_user` FOREIGN KEY (`id_created_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_id_updated_user` FOREIGN KEY (`id_updated_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_person_coachee` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 DELAY_KEY_WRITE=1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 DELAY_KEY_WRITE=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `coachee` (
 
 LOCK TABLES `coachee` WRITE;
 /*!40000 ALTER TABLE `coachee` DISABLE KEYS */;
-INSERT INTO `coachee` VALUES (1,'SANDRA','1948-02-17','16067580601231.png','2020-11-30 17:41:00','2020-11-30 17:41:00',2,1,1,2013,'{\"name\": \"sandra giovanna peixoto\", \"email\": \"sandra@domain.com\", \"phone\": \"(51) 9952-8357\", \"document\": \"49971528975\"}'),(2,'ISABELA','1944-04-17','1606758132482.png','2020-11-30 17:42:13','2020-11-30 17:42:13',1,1,1,2014,'{\"name\": \"isabela vera sales\", \"email\": \"isabela@domain.com\", \"phone\": \"(92) 9834-9165\", \"document\": \"65021815547\"}'),(3,'ALEXANDRE','1942-06-14','16067584057211.png','2020-11-30 17:46:46','2020-11-30 17:46:46',2,1,1,2015,'{\"name\": \"alexandre gustavo da cunha\", \"email\": \"alexandre@domain.com\", \"phone\": \"(86) 9889-6707\", \"document\": \"79703098363\"}'),(4,'RAIMUNDO','1965-03-20','1606758516387.png','2020-11-30 17:48:36','2020-11-30 17:48:36',2,1,1,2016,'{\"name\": \"raimundo luís pereira\", \"email\": \"raimundo@domain.com\", \"phone\": \"(85) 9814-1656\", \"document\": \"31205619240\"}');
+INSERT INTO `coachee` VALUES (1,'SANDRA','1948-02-17','16067580601231.png','2020-11-30 17:41:00','2020-11-30 17:41:00',2,1,1,2013,'{\"name\": \"sandra giovanna peixoto\", \"email\": \"sandra@domain.com\", \"phone\": \"(51) 9952-8357\", \"document\": \"49971528975\"}'),(2,'ISABELA','1944-04-17','1606758132482.png','2020-12-05 22:14:32','2020-12-05 22:14:32',1,1,1,2014,'{\"name\": \"isabela vera sales\", \"email\": \"isabela@domain.com\", \"phone\": \"(92) 9834-9165\", \"document\": \"65021815547\"}'),(3,'ALEXANDRE','1942-06-14','16067584057211.png','2020-12-05 01:15:28','2020-12-05 01:15:28',2,1,1,2015,'{\"name\": \"alexandre gustavo da cunha peres\", \"email\": \"alexandre@domain.com\", \"phone\": \"(86) 9889-6707\", \"document\": \"79703098363\"}'),(4,'RAIMUNDO','1965-03-20','1606758516387.png','2020-11-30 17:48:36','2020-11-30 17:48:36',2,1,1,2016,'{\"name\": \"raimundo luís pereira\", \"email\": \"raimundo@domain.com\", \"phone\": \"(85) 9814-1656\", \"document\": \"31205619240\"}'),(5,'ELOÁ','1959-10-16','1607129719345.png','2020-12-05 00:55:20','2020-12-05 00:55:20',1,1,1,2017,'{\"name\": \"eloá teresinha baptista\", \"email\": \"eloa@domain.com\", \"phone\": \"(87) 9948-7029\", \"document\": \"72539791840\"}'),(6,'TOMAS','1979-02-23','1607129982134.png','2020-12-05 00:59:42','2020-12-05 00:59:42',2,1,1,2018,'{\"name\": \"tomás lucca ricardo costa\", \"email\": \"tomas@domain.com\", \"phone\": \"(11) 2809-0068\", \"document\": \"58630124121\"}'),(7,'VERA','1990-07-06','1607130700576.png','2020-12-05 01:11:41','2020-12-05 01:11:41',1,1,1,2019,'{\"name\": \"vera lorena andrea nascimento\", \"email\": \"vera@domain.com\", \"phone\": \"(79) 2789-3139\", \"document\": \"14048584154\"}');
 /*!40000 ALTER TABLE `coachee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +200,7 @@ CREATE TABLE `contact` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_person_UNIQUE` (`id_person`),
   CONSTRAINT `fk_person_contact` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2012 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2015 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,8 +209,34 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (1,'FERNANDO.MATHEUSS@HOTMAIL.COM','21981964019',NULL,NULL,NULL,1),(2008,'SANDRA@DOMAIN.COM','5199528357','','','',2013),(2009,'ISABELA@DOMAIN.COM','9298349165','','','',2014),(2010,'ALEXANDRE@DOMAIN.COM','8698896707','','','',2015),(2011,'RAIMUNDO@DOMAIN.COM','8598141656','','','',2016);
+INSERT INTO `contact` VALUES (1,'FERNANDO.MATHEUSS@HOTMAIL.COM','21981964019',NULL,NULL,NULL,1),(2008,'SANDRA@DOMAIN.COM','5199528357','','','',2013),(2009,'ISABELA@DOMAIN.COM','9298349165','','','',2014),(2010,'ALEXANDRE@DOMAIN.COM','8698896707','','','',2015),(2011,'RAIMUNDO@DOMAIN.COM','8598141656','','','',2016),(2012,'ELOA@DOMAIN.COM','8799487029','','','',2017),(2013,'TOMAS@DOMAIN.COM','1128090068','','','',2018),(2014,'VERA@DOMAIN.COM','7927893139','','','',2019);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cycle`
+--
+
+DROP TABLE IF EXISTS `cycle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cycle` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cycle`
+--
+
+LOCK TABLES `cycle` WRITE;
+/*!40000 ALTER TABLE `cycle` DISABLE KEYS */;
+INSERT INTO `cycle` VALUES (1,'Ciclo 1'),(10,'Ciclo 10'),(2,'Ciclo 2'),(3,'Ciclo 3'),(4,'Ciclo 4'),(5,'Ciclo 5'),(6,'Ciclo 6'),(7,'Ciclo 7'),(8,'Ciclo 8'),(9,'Ciclo 9');
+/*!40000 ALTER TABLE `cycle` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -372,7 +398,7 @@ CREATE TABLE `person` (
   UNIQUE KEY `Cpf_Cnpj_UNIQUE` (`cpf_cnpj`),
   KEY `fk_tipo_pessoa_idx` (`id_person_type`),
   CONSTRAINT `fk_persontype` FOREIGN KEY (`id_person_type`) REFERENCES `person_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2017 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2020 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,7 +407,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,1,'FERNANDO BRAGA MATHEUS','11569191708'),(2013,1,'SANDRA GIOVANNA PEIXOTO','49971528975'),(2014,1,'ISABELA VERA SALES','65021815547'),(2015,1,'ALEXANDRE GUSTAVO DA CUNHA','79703098363'),(2016,1,'RAIMUNDO LUÍS PEREIRA','31205619240');
+INSERT INTO `person` VALUES (1,1,'FERNANDO BRAGA MATHEUS','11569191708'),(2013,1,'SANDRA GIOVANNA PEIXOTO','49971528975'),(2014,1,'ISABELA VERA SALES','65021815547'),(2015,1,'ALEXANDRE GUSTAVO DA CUNHA PERES','79703098363'),(2016,1,'RAIMUNDO LUÍS PEREIRA','31205619240'),(2017,1,'ELOÁ TERESINHA BAPTISTA','72539791840'),(2018,1,'TOMÁS LUCCA RICARDO COSTA','58630124121'),(2019,1,'VERA LORENA ANDREA NASCIMENTO','14048584154');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,6 +464,37 @@ INSERT INTO `session` VALUES (1,'SESSÃO 1'),(10,'SESSÃO 10'),(2,'SESSÃO 2'),(
 UNLOCK TABLES;
 
 --
+-- Table structure for table `session_stap_mapping`
+--
+
+DROP TABLE IF EXISTS `session_stap_mapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `session_stap_mapping` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_session` int NOT NULL,
+  `id_step` int NOT NULL,
+  `order` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_session_mapping_idx` (`id_session`),
+  KEY `fk_step_mapping_idx` (`id_step`),
+  CONSTRAINT `fk_session_mapping` FOREIGN KEY (`id_session`) REFERENCES `session` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_step_mapping` FOREIGN KEY (`id_step`) REFERENCES `step` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `session_stap_mapping`
+--
+
+LOCK TABLES `session_stap_mapping` WRITE;
+/*!40000 ALTER TABLE `session_stap_mapping` DISABLE KEYS */;
+INSERT INTO `session_stap_mapping` VALUES (1,1,1,1),(2,1,2,2),(3,1,3,3),(4,1,4,4),(5,1,5,5),(6,1,6,6),(7,1,7,7),(8,1,8,8),(9,2,9,1),(10,2,10,2),(11,2,11,3),(12,2,12,4),(13,2,3,5),(14,2,4,6),(15,2,5,7),(16,2,6,8),(17,2,7,9),(18,2,8,10),(19,2,2,11),(20,3,9,1),(21,3,10,2),(22,3,11,3),(23,3,12,4),(24,3,2,5),(25,3,4,6),(26,3,5,7),(27,3,6,8),(28,3,7,9),(29,3,8,10),(30,3,3,11),(31,4,9,1),(32,4,10,2),(33,4,11,3),(34,4,12,4),(35,4,3,5),(36,4,4,6),(37,4,5,7),(38,4,6,8),(39,4,7,9),(40,4,8,10),(41,4,2,11),(42,5,9,1),(43,5,10,2),(44,5,11,3),(45,5,12,4),(46,5,2,5),(47,5,4,6),(48,5,5,7),(49,5,6,8),(50,5,7,9),(51,5,8,10),(52,5,3,11),(53,6,9,1),(54,6,10,2),(55,6,11,3),(56,6,12,4),(57,6,3,5),(58,6,4,6),(59,6,5,7),(60,6,6,8),(61,6,7,9),(62,6,8,10),(63,6,2,11),(64,7,9,1),(65,7,10,2),(66,7,11,3),(67,7,12,4),(68,7,2,5),(69,7,4,6),(70,7,5,7),(71,7,6,8),(72,7,7,9),(73,7,8,10),(74,7,3,11),(75,8,9,1),(76,8,10,2),(77,8,11,3),(78,8,12,4),(79,8,3,5),(80,8,4,6),(81,8,5,7),(82,8,6,8),(83,8,7,9),(84,8,8,10),(85,8,2,11),(86,9,9,1),(87,9,10,2),(88,9,11,3),(89,9,12,4),(90,9,2,5),(91,9,4,6),(92,9,5,7),(93,9,6,8),(94,9,7,9),(95,9,8,10),(96,9,3,11),(97,10,9,1),(98,10,10,2),(99,10,11,3),(100,10,12,4),(101,10,3,5),(102,10,4,6),(103,10,5,7),(104,10,6,8),(105,10,7,9),(106,10,8,10),(107,10,2,11);
+/*!40000 ALTER TABLE `session_stap_mapping` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `stage_exercise_room`
 --
 
@@ -467,6 +524,32 @@ CREATE TABLE `stage_exercise_room` (
 LOCK TABLES `stage_exercise_room` WRITE;
 /*!40000 ALTER TABLE `stage_exercise_room` DISABLE KEYS */;
 /*!40000 ALTER TABLE `stage_exercise_room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `step`
+--
+
+DROP TABLE IF EXISTS `step`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `step` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `step`
+--
+
+LOCK TABLES `step` WRITE;
+/*!40000 ALTER TABLE `step` DISABLE KEYS */;
+INSERT INTO `step` VALUES (7,'Anotações para o Coahee'),(12,'Checar Pontuais'),(11,'Checar Rotineiros'),(1,'Estado Atual'),(6,'Exercício de Casa - Pontuais'),(5,'Exercício de Casa - Rotineiros'),(4,'Exercício de Sala'),(10,'Ganhos'),(8,'Histórico Fotográfico'),(2,'MAAS'),(9,'Mindfulness'),(3,'Objetivos e Metas');
+/*!40000 ALTER TABLE `step` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -626,4 +709,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-30 20:45:20
+-- Dump completed on 2020-12-08 13:44:36
