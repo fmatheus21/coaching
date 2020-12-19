@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -24,11 +23,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author fmatheus
  */
 @Entity
-@Table(name = "coach", catalog = "coaching", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"id_person"}),
+@Table(name = "cycle_generate", catalog = "coaching", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"cycle_coache"}),
     @UniqueConstraint(columnNames = {"id"})})
 
-public class CoachEntity implements Serializable {
+public class CycleGenerateEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,6 +39,11 @@ public class CoachEntity implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Column(name = "cycle_coache", nullable = false)
+    private int cycleCoache;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -48,15 +52,18 @@ public class CoachEntity implements Serializable {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoach")
-    private Collection<ClassEntity> classEntityCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "done", nullable = false)
+    private boolean done;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoach")
-    private Collection<TeamEntity> teamEntityCollection;
+    @JoinColumn(name = "id_coachee", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private CoacheeEntity idCoachee;
 
-    @JoinColumn(name = "id_person", referencedColumnName = "id", nullable = false)
-    @OneToOne(optional = false)
-    private PersonEntity idPerson;
+    @JoinColumn(name = "id_cycle", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private CycleEntity idCycle;
 
     @JoinColumn(name = "id_created_user", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
@@ -66,10 +73,13 @@ public class CoachEntity implements Serializable {
     @ManyToOne(optional = false)
     private UserEntity idUpdatedUser;
 
-    public CoachEntity() {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCycleGenerate")
+    private Collection<CycleSessionEntity> cycleSessionEntityCollection;
+
+    public CycleGenerateEntity() {
     }
 
-    public CoachEntity(Integer id) {
+    public CycleGenerateEntity(Integer id) {
         this.id = id;
     }
 
@@ -79,6 +89,14 @@ public class CoachEntity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getCycleCoache() {
+        return cycleCoache;
+    }
+
+    public void setCycleCoache(int cycleCoache) {
+        this.cycleCoache = cycleCoache;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -97,30 +115,28 @@ public class CoachEntity implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    @XmlTransient
-    public Collection<ClassEntity> getClassEntityCollection() {
-        return classEntityCollection;
+    public boolean getDone() {
+        return done;
     }
 
-    public void setClassEntityCollection(Collection<ClassEntity> classEntityCollection) {
-        this.classEntityCollection = classEntityCollection;
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
-    @XmlTransient
-    public Collection<TeamEntity> getTeamEntityCollection() {
-        return teamEntityCollection;
+    public CoacheeEntity getIdCoachee() {
+        return idCoachee;
     }
 
-    public void setTeamEntityCollection(Collection<TeamEntity> teamEntityCollection) {
-        this.teamEntityCollection = teamEntityCollection;
+    public void setIdCoachee(CoacheeEntity idCoachee) {
+        this.idCoachee = idCoachee;
     }
 
-    public PersonEntity getIdPerson() {
-        return idPerson;
+    public CycleEntity getIdCycle() {
+        return idCycle;
     }
 
-    public void setIdPerson(PersonEntity idPerson) {
-        this.idPerson = idPerson;
+    public void setIdCycle(CycleEntity idCycle) {
+        this.idCycle = idCycle;
     }
 
     public UserEntity getIdCreatedUser() {
@@ -139,6 +155,15 @@ public class CoachEntity implements Serializable {
         this.idUpdatedUser = idUpdatedUser;
     }
 
+    @XmlTransient
+    public Collection<CycleSessionEntity> getCycleSessionEntityCollection() {
+        return cycleSessionEntityCollection;
+    }
+
+    public void setCycleSessionEntityCollection(Collection<CycleSessionEntity> cycleSessionEntityCollection) {
+        this.cycleSessionEntityCollection = cycleSessionEntityCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -149,16 +174,16 @@ public class CoachEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CoachEntity)) {
+        if (!(object instanceof CycleGenerateEntity)) {
             return false;
         }
-        CoachEntity other = (CoachEntity) object;
+        CycleGenerateEntity other = (CycleGenerateEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.CoachEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.CycleGenerateEntity[ id=" + id + " ]";
     }
 
 }

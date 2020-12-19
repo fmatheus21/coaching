@@ -60,61 +60,74 @@
                                             <div class="ml-3">
                                                 <span
                                                     class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">
-                                                    [[${coachee.name}]]</span>
+                                                    [[${coachee.name}]]
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>[[${coachee.dateBirth}]]</td>
                                     <td> [[${coachee.email}]]</td>
                                     <td> [[${coachee.phone}]]</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon"
-                                               data-toggle="dropdown" aria-expanded="false" title="Ações">
-                                                <i class="la la-cog"></i>
+                                    <td>                                
+                                        <div data-placement="top" data-toggle="tooltip" title="Visualizar">
+                                            <a href="javascript:;" data-toggle="modal" data-target="#modalView" 
+                                               th:onclick="'consultCoachee('+ ${coachee.id} +')'" 
+                                               class="btn btn-sm btn-clean btn-icon mr-2">	 
+                                                <i class="nav-icon flaticon-search "></i>
                                             </a>
-                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                <ul class="nav nav-hoverable flex-column">                                                
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" th:href="@{/coachees/view/__${coachee.id}__}">
-                                                            <i class="nav-icon flaticon-search "></i>
-                                                            <span class="nav-text">Visualizar </span> 
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" th:href="@{/coachees/update/__${coachee.id}__}">
-                                                            <i class="nav-icon flaticon-edit"></i>
-                                                            <span class="nav-text">Editar </span> 
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link"  th:href="@{/coachees/__${coachee.id}__/assessments/reader}">
-                                                            <i class="nav-icon flaticon-edit-1"></i>
-                                                            <span class="nav-text">Avaliações </span> 
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" th:href="@{/coachees/__${coachee.id}__/session/reader}">
-                                                            <i class="nav-icon flaticon2-group"></i>
-                                                            <span class="nav-text">Registro de Sessão</span> 
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="#"  data-toggle="modal" data-target="#modalConfirmDelete"
-                                                           th:onclick="'loadDelete('+ ${coachee.id} +')'">
-                                                            <i class="nav-icon far fa-trash-alt"></i>
-                                                            <span class="nav-text">Remover</span> 
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
                                         </div>
+
+                                        <!--   <div class="dropdown">
+                                               <a href="javascript:;" class="btn btn-sm btn-clean btn-icon"
+                                                  data-toggle="dropdown" aria-expanded="false" title="Ações">
+                                                   <i class="la la-cog"></i>
+                                               </a>
+                                               <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                   <ul class="nav nav-hoverable flex-column">                                                
+   
+                                                       <li class="nav-item">
+                                                           <a class="nav-link" href="javascript();" data-toggle="modal" data-target="#modalView"
+                                                              th:onclick="'consultCoachee('+ ${coachee.id} +')'" >
+                                                               <i class="nav-icon flaticon-search "></i>
+                                                               <span class="nav-text">Visualizar </span> 
+                                                           </a>
+                                                       </li>
+   
+                                                       <li class="nav-item">
+                                                           <a class="nav-link" th:href="@{/coachees/update/__${coachee.id}__}">
+                                                               <i class="nav-icon flaticon-edit"></i>
+                                                               <span class="nav-text">Editar </span> 
+                                                           </a>
+                                                       </li>
+   
+                                                       <li class="nav-item">
+                                                           <a class="nav-link" th:href="@{/coachees/__${coachee.id}__/assessments/reader}">
+                                                               <i class="nav-icon flaticon-edit-1"></i>
+                                                               <span class="nav-text">Avaliações </span> 
+                                                           </a>
+                                                       </li>
+   
+                                                       <li class="nav-item">
+                                                           <a class="nav-link" th:href="@{/coachees/__${coachee.id}__/session/reader}">
+                                                               <i class="nav-icon flaticon2-group"></i>
+                                                               <span class="nav-text">Registro de Sessão</span> 
+                                                           </a>
+                                                       </li>
+   
+                                                       <li class="nav-item">
+                                                           <a class="nav-link" href="#" data-toggle="modal" data-target="#modalConfirmDelete"
+                                                              th:onclick="'loadDelete('+ ${coachee.id} +')'">
+                                                               <i class="nav-icon far fa-trash-alt"></i>
+                                                               <span class="nav-text">Remover</span> 
+                                                           </a>
+                                                       </li>
+   
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                        -->
+
+
                                     </td>
                                 </tr>                                
                             </tbody>
@@ -141,17 +154,20 @@
         <!-- Card Body -->
 
 
+        <!-- Modal View -->
+        <div th:replace="app/page/fragment/modal/view-coachee :: fragment"></div>
+        <!-- Modal View -->
 
 
 
         <!-- Modal Confirm Delete -->
-        <div id="modalConfirmDelete"  class="modal fade" data-backdrop="static"
+        <div id="modalConfirmDelete" class="modal fade" data-backdrop="static"
              tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmar Exlusão #ID <span id="id-delete"></span></h5>
+                        <h5 class="modal-title">Confirmar Exlusão #ID <span id="parameterModal"></span></h5>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
@@ -167,7 +183,7 @@
                                 data-dismiss="modal">
                             <i class="fas fa-minus-circle"></i>Cancelar
                         </button>
-                        <button type="button" onclick="deleteCoachee();"
+                        <button type="button" onclick="deleteCoachee(parameter);"
                                 class="btn btn-light-primary font-weight-bold">
                             <i class="far fa-check-circle"></i>Confirmar
                         </button>
@@ -176,13 +192,44 @@
             </div>
         </div>
         <!-- Modal Confirm Delete -->
+        
+        
+          <!-- Modal Novo Ciclo -->
+        <div id="modalNewCycle" class="modal fade" data-backdrop="static"
+             tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Novo Ciclo</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Mensagem de Confirmação -->
+                        <div th:replace="app/template/message/confirmation :: fragment"></div>
+                        <!-- Mensagem de Confirmação -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold"
+                                data-dismiss="modal">
+                            <i class="fas fa-minus-circle"></i>Cancelar
+                        </button>
+                        <button type="button" onclick="createCycle(parameter);"
+                                class="btn btn-light-primary font-weight-bold">
+                            <i class="far fa-check-circle"></i>Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Novo Ciclo -->
 
 
 
 
-       
- 
-       
 
 
         <script type="text/javascript">

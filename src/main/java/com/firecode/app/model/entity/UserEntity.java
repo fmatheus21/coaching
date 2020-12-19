@@ -1,5 +1,7 @@
 package com.firecode.app.model.entity;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +23,15 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "user", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id_person"}),
     @UniqueConstraint(columnNames = {"id"}),
-    @UniqueConstraint(columnNames = {"user"})})
+    @UniqueConstraint(columnNames = {"username"})})
 
 public class UserEntity implements Serializable {
 
@@ -38,14 +44,20 @@ public class UserEntity implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
-    @Column(name = "user", nullable = false, length = 45)
-    private String user;
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "username", nullable = false, length = 45)
+    private String username;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
     @Column(name = "avatar", nullable = false, length = 30)
     private String avatar;
 
@@ -54,6 +66,17 @@ public class UserEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUpdatedUser")
     private Collection<CoacheeEntity> coacheeEntityCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCreatedUser")
+    private Collection<CycleGenerateEntity> cycleGenerateEntityCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUpdatedUser")
+    private Collection<CycleGenerateEntity> cycleGenerateEntityCollection1;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCreatedUser")
+    private Collection<CycleSessionEntity> cycleSessionEntityCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUpdatedUser")
+    private Collection<CycleSessionEntity> cycleSessionEntityCollection1;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUser")
     private UserPermissionMappingEntity userPermissionMappingEntity;
@@ -92,12 +115,12 @@ public class UserEntity implements Serializable {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -132,6 +155,42 @@ public class UserEntity implements Serializable {
 
     public void setCoacheeEntityCollection1(Collection<CoacheeEntity> coacheeEntityCollection1) {
         this.coacheeEntityCollection1 = coacheeEntityCollection1;
+    }
+
+    @XmlTransient
+    public Collection<CycleGenerateEntity> getCycleGenerateEntityCollection() {
+        return cycleGenerateEntityCollection;
+    }
+
+    public void setCycleGenerateEntityCollection(Collection<CycleGenerateEntity> cycleGenerateEntityCollection) {
+        this.cycleGenerateEntityCollection = cycleGenerateEntityCollection;
+    }
+
+    @XmlTransient
+    public Collection<CycleGenerateEntity> getCycleGenerateEntityCollection1() {
+        return cycleGenerateEntityCollection1;
+    }
+
+    public void setCycleGenerateEntityCollection1(Collection<CycleGenerateEntity> cycleGenerateEntityCollection1) {
+        this.cycleGenerateEntityCollection1 = cycleGenerateEntityCollection1;
+    }
+
+    @XmlTransient
+    public Collection<CycleSessionEntity> getCycleSessionEntityCollection() {
+        return cycleSessionEntityCollection;
+    }
+
+    public void setCycleSessionEntityCollection(Collection<CycleSessionEntity> cycleSessionEntityCollection) {
+        this.cycleSessionEntityCollection = cycleSessionEntityCollection;
+    }
+
+    @XmlTransient
+    public Collection<CycleSessionEntity> getCycleSessionEntityCollection1() {
+        return cycleSessionEntityCollection1;
+    }
+
+    public void setCycleSessionEntityCollection1(Collection<CycleSessionEntity> cycleSessionEntityCollection1) {
+        this.cycleSessionEntityCollection1 = cycleSessionEntityCollection1;
     }
 
     public UserPermissionMappingEntity getUserPermissionMappingEntity() {

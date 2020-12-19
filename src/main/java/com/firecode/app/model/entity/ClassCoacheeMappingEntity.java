@@ -8,22 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author fmatheus
  */
 @Entity
-@Table(name = "estage_content_week", catalog = "coaching", schema = "", uniqueConstraints = {
+@Table(name = "class_coachee_mapping", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
 
-public class EstageContentWeekEntity implements Serializable {
+public class ClassCoacheeMappingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,25 +30,18 @@ public class EstageContentWeekEntity implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "description", nullable = false, length = 2147483647)
-    private String description;
-
     @JoinColumn(name = "id_class", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private ClassEntity idClass;
 
-    @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_coachee", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private SessionEntity idSession;
+    private CoacheeEntity idCoachee;
 
-    public EstageContentWeekEntity() {
+    public ClassCoacheeMappingEntity() {
     }
 
-    public EstageContentWeekEntity(Integer id) {
+    public ClassCoacheeMappingEntity(Integer id) {
         this.id = id;
     }
 
@@ -63,14 +53,6 @@ public class EstageContentWeekEntity implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public ClassEntity getIdClass() {
         return idClass;
     }
@@ -79,12 +61,12 @@ public class EstageContentWeekEntity implements Serializable {
         this.idClass = idClass;
     }
 
-    public SessionEntity getIdSession() {
-        return idSession;
+    public CoacheeEntity getIdCoachee() {
+        return idCoachee;
     }
 
-    public void setIdSession(SessionEntity idSession) {
-        this.idSession = idSession;
+    public void setIdCoachee(CoacheeEntity idCoachee) {
+        this.idCoachee = idCoachee;
     }
 
     @Override
@@ -97,16 +79,16 @@ public class EstageContentWeekEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EstageContentWeekEntity)) {
+        if (!(object instanceof ClassCoacheeMappingEntity)) {
             return false;
         }
-        EstageContentWeekEntity other = (EstageContentWeekEntity) object;
+        ClassCoacheeMappingEntity other = (ClassCoacheeMappingEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.EstageContentWeekEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.ClassCoacheeMappingEntity[ id=" + id + " ]";
     }
 
 }

@@ -23,8 +23,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "coachee", catalog = "coaching", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"id_person"}),
     @UniqueConstraint(columnNames = {"id"})})
 
 public class CoacheeEntity implements Serializable {
@@ -38,6 +43,8 @@ public class CoacheeEntity implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "casual_name", nullable = false, length = 50)
     private String casualName;
 
@@ -47,6 +54,8 @@ public class CoacheeEntity implements Serializable {
     private LocalDate dateBirth;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "image", nullable = false, length = 50)
     private String image;
 
@@ -60,9 +69,20 @@ public class CoacheeEntity implements Serializable {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 1073741824)
+    @Column(name = "search", nullable = false, length = 1073741824)
+    private String search;
+
     @JoinColumn(name = "id_gender", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private GenderEntity idGender;
+
+    @JoinColumn(name = "id_person", referencedColumnName = "id", nullable = false)
+    @OneToOne(optional = false)
+    private PersonEntity idPerson;
 
     @JoinColumn(name = "id_created_user", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
@@ -72,19 +92,14 @@ public class CoacheeEntity implements Serializable {
     @ManyToOne(optional = false)
     private UserEntity idUpdatedUser;
 
-    @JoinColumn(name = "id_person", referencedColumnName = "id", nullable = false)
-    @OneToOne(optional = false)
-    private PersonEntity idPerson;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoachee")
+    private Collection<CycleGenerateEntity> cycleGenerateEntityCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoachee")
     private Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection;
 
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 1073741824)
-    @Column(name = "search", nullable = false, length = 1073741824)
-    private String search;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCoachee")
+    private Collection<ClassCoacheeMappingEntity> classCoacheeMappingEntityCollection;
 
     public CoacheeEntity() {
     }
@@ -144,6 +159,14 @@ public class CoacheeEntity implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
     public GenderEntity getIdGender() {
         return idGender;
     }
@@ -177,6 +200,15 @@ public class CoacheeEntity implements Serializable {
     }
 
     @XmlTransient
+    public Collection<CycleGenerateEntity> getCycleGenerateEntityCollection() {
+        return cycleGenerateEntityCollection;
+    }
+
+    public void setCycleGenerateEntityCollection(Collection<CycleGenerateEntity> cycleGenerateEntityCollection) {
+        this.cycleGenerateEntityCollection = cycleGenerateEntityCollection;
+    }
+
+    @XmlTransient
     public Collection<TeamCoacheeMappingEntity> getTeamCoacheeMappingEntityCollection() {
         return teamCoacheeMappingEntityCollection;
     }
@@ -185,12 +217,13 @@ public class CoacheeEntity implements Serializable {
         this.teamCoacheeMappingEntityCollection = teamCoacheeMappingEntityCollection;
     }
 
-    public String getSearch() {
-        return search;
+    @XmlTransient
+    public Collection<ClassCoacheeMappingEntity> getClassCoacheeMappingEntityCollection() {
+        return classCoacheeMappingEntityCollection;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
+    public void setClassCoacheeMappingEntityCollection(Collection<ClassCoacheeMappingEntity> classCoacheeMappingEntityCollection) {
+        this.classCoacheeMappingEntityCollection = classCoacheeMappingEntityCollection;
     }
 
     @Override

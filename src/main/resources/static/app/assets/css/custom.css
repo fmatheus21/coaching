@@ -226,6 +226,17 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     text-align: center;
 }
 
+.btn-group .btn {
+    border: solid 1px #fff;
+}
+
+.btn-group .btn:hover {
+    border-color: #fff !important;
+}
+
+.modal-open .modal{
+    background: rgba(0, 0, 0, 0.70);
+}
 
 @media only screen and (max-width: 600px) {
     .table tbody td .symbol{

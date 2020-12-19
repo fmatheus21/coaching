@@ -93,7 +93,7 @@ public class CoacheeResource {
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("listGender", genderService.findAll("name"));
         model.addAttribute("modelCoachee", coachee);
-         model.addAttribute("upload", new UploadMultipartFileUtil());
+        model.addAttribute("upload", new UploadMultipartFileUtil());
         return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, coachee, attributes);
 
     }
@@ -175,7 +175,7 @@ public class CoacheeResource {
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable("id") int id, @Valid CoacheeDto dto, BindingResult result, RedirectAttributes attributes, @ModelAttribute("upload") UploadMultipartFileUtil upload, HttpServletRequest request, HttpServletResponse response, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
-        return coacheeRule.update(id, dto, result, attributes,upload, request, response, appUserSecurity);
+        return coacheeRule.update(id, dto, result, attributes, upload, request, response, appUserSecurity);
     }
 
     @PostMapping("/delete/{id}")
@@ -186,6 +186,12 @@ public class CoacheeResource {
     @PostMapping("/filter")
     public String filter(RepositoryFilter filter) {
         return "redirect:/coachees" + filterRule.filter(filter);
+    }
+
+    @PostMapping("/{id}/cycle")
+    public String create(@PathVariable("id") int id, RedirectAttributes attributes, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
+        coacheeRule.createCycle(id, attributes, appUserSecurity);
+        return "redirect:/coachees";
     }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
@@ -15,23 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author Fernando Matheus
+ * @author fmatheus
  */
 @Entity
 @Table(name = "stage_exercise_room", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"Id"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "StageExerciseRoomEntity.findAll", query = "SELECT s FROM StageExerciseRoomEntity s"),
-    @NamedQuery(name = "StageExerciseRoomEntity.findById", query = "SELECT s FROM StageExerciseRoomEntity s WHERE s.id = :id")})
+
 public class StageExerciseRoomEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,35 +31,39 @@ public class StageExerciseRoomEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "Id", nullable = false)
     private Integer id;
+
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 2147483647)
     @Column(name = "learning", nullable = false, length = 2147483647)
     private String learning;
+
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 2147483647)
     @Column(name = "decision", nullable = false, length = 2147483647)
     private String decision;
+
     @Lob
+    @Size(max = 2147483647)
     @Column(name = "observation", length = 2147483647)
     private String observation;
+
+    @JoinColumn(name = "id_class", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private ClassEntity idClass;
+
     @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private SessionEntity idSession;
-    @JoinColumn(name = "id_team", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private TeamEntity idTeam;
 
     public StageExerciseRoomEntity() {
     }
 
     public StageExerciseRoomEntity(Integer id) {
         this.id = id;
-    }
-
-    public StageExerciseRoomEntity(Integer id, String learning, String decision) {
-        this.id = id;
-        this.learning = learning;
-        this.decision = decision;
     }
 
     public Integer getId() {
@@ -103,20 +98,20 @@ public class StageExerciseRoomEntity implements Serializable {
         this.observation = observation;
     }
 
+    public ClassEntity getIdClass() {
+        return idClass;
+    }
+
+    public void setIdClass(ClassEntity idClass) {
+        this.idClass = idClass;
+    }
+
     public SessionEntity getIdSession() {
         return idSession;
     }
 
     public void setIdSession(SessionEntity idSession) {
         this.idSession = idSession;
-    }
-
-    public TeamEntity getIdTeam() {
-        return idTeam;
-    }
-
-    public void setIdTeam(TeamEntity idTeam) {
-        this.idTeam = idTeam;
     }
 
     @Override
@@ -133,15 +128,12 @@ public class StageExerciseRoomEntity implements Serializable {
             return false;
         }
         StageExerciseRoomEntity other = (StageExerciseRoomEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.StageExerciseRoomEntity[ id=" + id + " ]";
     }
-    
+
 }

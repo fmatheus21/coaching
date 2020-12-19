@@ -13,7 +13,7 @@ public class AppUserSecurity extends User {
     private final UserEntity user;
 
     public AppUserSecurity(UserEntity user, Collection<? extends GrantedAuthority> authorities) {
-        super(user.getUser(), user.getPassword(), authorities);
+        super(user.getUsername(), user.getPassword(), authorities);
         this.user = user;
     }
 

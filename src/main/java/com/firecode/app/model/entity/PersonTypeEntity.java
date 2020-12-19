@@ -12,8 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "person_type", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"}),
@@ -30,6 +36,8 @@ public class PersonTypeEntity implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 

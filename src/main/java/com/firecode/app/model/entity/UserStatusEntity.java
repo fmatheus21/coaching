@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
@@ -14,38 +9,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Fernando Matheus
+ * @author fmatheus
  */
 @Entity
 @Table(name = "user_status", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"}),
     @UniqueConstraint(columnNames = {"status"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "UserStatusEntity.findAll", query = "SELECT u FROM UserStatusEntity u"),
-    @NamedQuery(name = "UserStatusEntity.findById", query = "SELECT u FROM UserStatusEntity u WHERE u.id = :id"),
-    @NamedQuery(name = "UserStatusEntity.findByStatus", query = "SELECT u FROM UserStatusEntity u WHERE u.status = :status")})
+
 public class UserStatusEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "status", nullable = false, length = 45)
     private String status;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStatus")
     private Collection<UserEntity> userEntityCollection;
 
@@ -54,11 +49,6 @@ public class UserStatusEntity implements Serializable {
 
     public UserStatusEntity(Integer id) {
         this.id = id;
-    }
-
-    public UserStatusEntity(Integer id, String status) {
-        this.id = id;
-        this.status = status;
     }
 
     public Integer getId() {
@@ -100,15 +90,12 @@ public class UserStatusEntity implements Serializable {
             return false;
         }
         UserStatusEntity other = (UserStatusEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.UserStatusEntity[ id=" + id + " ]";
     }
-    
+
 }

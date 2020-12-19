@@ -12,7 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "contact", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id_person"}),
@@ -30,19 +36,26 @@ public class ContactEntity implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "phone", nullable = false, length = 20)
     private String phone;
 
+    @Size(max = 255)
     @Column(name = "facebook", length = 255)
     private String facebook;
 
+    @Size(max = 255)
     @Column(name = "instagram", length = 255)
     private String instagram;
 
+    @Size(max = 255)
     @Column(name = "twitter", length = 255)
     private String twitter;
 

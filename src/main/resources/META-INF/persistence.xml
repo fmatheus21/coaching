@@ -20,6 +20,14 @@
     <class>com.firecode.app.model.entity.EstageCurrentStateEntity</class>
     <class>com.firecode.app.model.entity.EstageContentWeekEntity</class>
     <class>com.firecode.app.model.entity.TeamCoacheeMappingEntity</class>
+    <class>com.firecode.app.model.entity.SessionStepMappingEntity</class>
+    <class>com.firecode.app.model.entity.CycleGenerateEntity</class>
+    <class>com.firecode.app.model.entity.ClassSessionMappingEntity</class>
+    <class>com.firecode.app.model.entity.StepEntity</class>
+    <class>com.firecode.app.model.entity.CycleEntity</class>
+    <class>com.firecode.app.model.entity.ClassEntity</class>
+    <class>com.firecode.app.model.entity.ClassCoacheeMappingEntity</class>
+    <class>com.firecode.app.model.entity.CycleSessionEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/coaching?serverTimezone=UTC&amp;useLegacyDatetimeCode=true"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

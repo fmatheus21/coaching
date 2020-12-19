@@ -1,6 +1,7 @@
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -21,11 +24,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author fmatheus
  */
 @Entity
-@Table(name = "session", catalog = "coaching", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"name"}),
+@Table(name = "class", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
 
-public class SessionEntity implements Serializable {
+public class ClassEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,25 +43,39 @@ public class SessionEntity implements Serializable {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
     private Collection<EstageCurrentStateEntity> estageCurrentStateEntityCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
-    private Collection<SessionStepMappingEntity> sessionStepMappingEntityCollection;
+    @JoinColumn(name = "id_coach", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private CoachEntity idCoach;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
     private Collection<StageExerciseRoomEntity> stageExerciseRoomEntityCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
     private Collection<ClassSessionMappingEntity> classSessionMappingEntityCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
+    private Collection<ClassCoacheeMappingEntity> classCoacheeMappingEntityCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
     private Collection<EstageContentWeekEntity> estageContentWeekEntityCollection;
 
-    public SessionEntity() {
+    public ClassEntity() {
     }
 
-    public SessionEntity(Integer id) {
+    public ClassEntity(Integer id) {
         this.id = id;
     }
 
@@ -79,6 +95,22 @@ public class SessionEntity implements Serializable {
         this.name = name;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @XmlTransient
     public Collection<EstageCurrentStateEntity> getEstageCurrentStateEntityCollection() {
         return estageCurrentStateEntityCollection;
@@ -88,13 +120,12 @@ public class SessionEntity implements Serializable {
         this.estageCurrentStateEntityCollection = estageCurrentStateEntityCollection;
     }
 
-    @XmlTransient
-    public Collection<SessionStepMappingEntity> getSessionStepMappingEntityCollection() {
-        return sessionStepMappingEntityCollection;
+    public CoachEntity getIdCoach() {
+        return idCoach;
     }
 
-    public void setSessionStepMappingEntityCollection(Collection<SessionStepMappingEntity> sessionStepMappingEntityCollection) {
-        this.sessionStepMappingEntityCollection = sessionStepMappingEntityCollection;
+    public void setIdCoach(CoachEntity idCoach) {
+        this.idCoach = idCoach;
     }
 
     @XmlTransient
@@ -116,6 +147,15 @@ public class SessionEntity implements Serializable {
     }
 
     @XmlTransient
+    public Collection<ClassCoacheeMappingEntity> getClassCoacheeMappingEntityCollection() {
+        return classCoacheeMappingEntityCollection;
+    }
+
+    public void setClassCoacheeMappingEntityCollection(Collection<ClassCoacheeMappingEntity> classCoacheeMappingEntityCollection) {
+        this.classCoacheeMappingEntityCollection = classCoacheeMappingEntityCollection;
+    }
+
+    @XmlTransient
     public Collection<EstageContentWeekEntity> getEstageContentWeekEntityCollection() {
         return estageContentWeekEntityCollection;
     }
@@ -134,16 +174,16 @@ public class SessionEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SessionEntity)) {
+        if (!(object instanceof ClassEntity)) {
             return false;
         }
-        SessionEntity other = (SessionEntity) object;
+        ClassEntity other = (ClassEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.SessionEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.ClassEntity[ id=" + id + " ]";
     }
 
 }

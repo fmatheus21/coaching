@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
@@ -15,52 +10,49 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author Fernando Matheus
+ * @author fmatheus
  */
 @Entity
 @Table(name = "estage_current_state", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "EstageCurrentStateEntity.findAll", query = "SELECT e FROM EstageCurrentStateEntity e"),
-    @NamedQuery(name = "EstageCurrentStateEntity.findById", query = "SELECT e FROM EstageCurrentStateEntity e WHERE e.id = :id")})
+
 public class EstageCurrentStateEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 2147483647)
     @Column(name = "description", nullable = false, length = 2147483647)
     private String description;
+
+    @JoinColumn(name = "id_class", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private ClassEntity idClass;
+
     @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private SessionEntity idSession;
-    @JoinColumn(name = "id_team", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private TeamEntity idTeam;
 
     public EstageCurrentStateEntity() {
     }
 
     public EstageCurrentStateEntity(Integer id) {
         this.id = id;
-    }
-
-    public EstageCurrentStateEntity(Integer id, String description) {
-        this.id = id;
-        this.description = description;
     }
 
     public Integer getId() {
@@ -79,20 +71,20 @@ public class EstageCurrentStateEntity implements Serializable {
         this.description = description;
     }
 
+    public ClassEntity getIdClass() {
+        return idClass;
+    }
+
+    public void setIdClass(ClassEntity idClass) {
+        this.idClass = idClass;
+    }
+
     public SessionEntity getIdSession() {
         return idSession;
     }
 
     public void setIdSession(SessionEntity idSession) {
         this.idSession = idSession;
-    }
-
-    public TeamEntity getIdTeam() {
-        return idTeam;
-    }
-
-    public void setIdTeam(TeamEntity idTeam) {
-        this.idTeam = idTeam;
     }
 
     @Override
@@ -109,15 +101,12 @@ public class EstageCurrentStateEntity implements Serializable {
             return false;
         }
         EstageCurrentStateEntity other = (EstageCurrentStateEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.EstageCurrentStateEntity[ id=" + id + " ]";
     }
-    
+
 }

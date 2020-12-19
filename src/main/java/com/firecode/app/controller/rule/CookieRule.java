@@ -28,7 +28,7 @@ public class CookieRule {
         String userSession = this.userSessionRule.authentication();
         UserEntity user = userService.findByUser(userSession).orElse(null);
         Cookie cookie = null;
-        String cookieName = user.getUser();
+        String cookieName = user.getUsername();
         String cookieValue = String.valueOf(user.getId());
 
         if (this.readerCookie(request, response) == null) {

@@ -1,8 +1,8 @@
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,11 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "team", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
@@ -34,37 +38,27 @@ public class TeamEntity implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
     private Collection<TeamCoacheeMappingEntity> teamCoacheeMappingEntityCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
-    private Collection<EstageCurrentStateEntity> estageCurrentStateEntityCollection;
-
     @JoinColumn(name = "id_coach", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private CoachEntity idCoach;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
-    private Collection<TeamSessionMappingEntity> teamSessionMappingEntityCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
-    private Collection<EstageContentWeekEntity> estageContentWeekEntityCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTeam")
-    private Collection<StageExerciseRoomEntity> stageExerciseRoomEntityCollection;
 
     public TeamEntity() {
     }
@@ -89,19 +83,19 @@ public class TeamEntity implements Serializable {
         this.name = name;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -114,48 +108,12 @@ public class TeamEntity implements Serializable {
         this.teamCoacheeMappingEntityCollection = teamCoacheeMappingEntityCollection;
     }
 
-    @XmlTransient
-    public Collection<EstageCurrentStateEntity> getEstageCurrentStateEntityCollection() {
-        return estageCurrentStateEntityCollection;
-    }
-
-    public void setEstageCurrentStateEntityCollection(Collection<EstageCurrentStateEntity> estageCurrentStateEntityCollection) {
-        this.estageCurrentStateEntityCollection = estageCurrentStateEntityCollection;
-    }
-
     public CoachEntity getIdCoach() {
         return idCoach;
     }
 
     public void setIdCoach(CoachEntity idCoach) {
         this.idCoach = idCoach;
-    }
-
-    @XmlTransient
-    public Collection<TeamSessionMappingEntity> getTeamSessionMappingEntityCollection() {
-        return teamSessionMappingEntityCollection;
-    }
-
-    public void setTeamSessionMappingEntityCollection(Collection<TeamSessionMappingEntity> teamSessionMappingEntityCollection) {
-        this.teamSessionMappingEntityCollection = teamSessionMappingEntityCollection;
-    }
-
-    @XmlTransient
-    public Collection<EstageContentWeekEntity> getEstageContentWeekEntityCollection() {
-        return estageContentWeekEntityCollection;
-    }
-
-    public void setEstageContentWeekEntityCollection(Collection<EstageContentWeekEntity> estageContentWeekEntityCollection) {
-        this.estageContentWeekEntityCollection = estageContentWeekEntityCollection;
-    }
-
-    @XmlTransient
-    public Collection<StageExerciseRoomEntity> getStageExerciseRoomEntityCollection() {
-        return stageExerciseRoomEntityCollection;
-    }
-
-    public void setStageExerciseRoomEntityCollection(Collection<StageExerciseRoomEntity> stageExerciseRoomEntityCollection) {
-        this.stageExerciseRoomEntityCollection = stageExerciseRoomEntityCollection;
     }
 
     @Override

@@ -1,29 +1,31 @@
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author fmatheus
  */
 @Entity
-@Table(name = "estage_content_week", catalog = "coaching", schema = "", uniqueConstraints = {
+@Table(name = "session_step_mapping", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
 
-public class EstageContentWeekEntity implements Serializable {
+public class SessionStepMappingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,23 +37,24 @@ public class EstageContentWeekEntity implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "description", nullable = false, length = 2147483647)
-    private String description;
+    @Column(name = "order", nullable = false)
+    private int order;
 
-    @JoinColumn(name = "id_class", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private ClassEntity idClass;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSessionStepMapping")
+    private Collection<CycleSessionEntity> cycleSessionEntityCollection;
 
     @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private SessionEntity idSession;
 
-    public EstageContentWeekEntity() {
+    @JoinColumn(name = "id_step", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private StepEntity idStep;
+
+    public SessionStepMappingEntity() {
     }
 
-    public EstageContentWeekEntity(Integer id) {
+    public SessionStepMappingEntity(Integer id) {
         this.id = id;
     }
 
@@ -63,20 +66,21 @@ public class EstageContentWeekEntity implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public int getOrder() {
+        return order;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setOrder(int order) {
+        this.order = order;
     }
 
-    public ClassEntity getIdClass() {
-        return idClass;
+    @XmlTransient
+    public Collection<CycleSessionEntity> getCycleSessionEntityCollection() {
+        return cycleSessionEntityCollection;
     }
 
-    public void setIdClass(ClassEntity idClass) {
-        this.idClass = idClass;
+    public void setCycleSessionEntityCollection(Collection<CycleSessionEntity> cycleSessionEntityCollection) {
+        this.cycleSessionEntityCollection = cycleSessionEntityCollection;
     }
 
     public SessionEntity getIdSession() {
@@ -85,6 +89,14 @@ public class EstageContentWeekEntity implements Serializable {
 
     public void setIdSession(SessionEntity idSession) {
         this.idSession = idSession;
+    }
+
+    public StepEntity getIdStep() {
+        return idStep;
+    }
+
+    public void setIdStep(StepEntity idStep) {
+        this.idStep = idStep;
     }
 
     @Override
@@ -97,16 +109,16 @@ public class EstageContentWeekEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EstageContentWeekEntity)) {
+        if (!(object instanceof SessionStepMappingEntity)) {
             return false;
         }
-        EstageContentWeekEntity other = (EstageContentWeekEntity) object;
+        SessionStepMappingEntity other = (SessionStepMappingEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.EstageContentWeekEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.SessionStepMappingEntity[ id=" + id + " ]";
     }
 
 }

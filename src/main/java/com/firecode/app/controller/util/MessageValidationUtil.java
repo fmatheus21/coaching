@@ -63,4 +63,14 @@ public class MessageValidationUtil {
     @Value("${error.delete.register.exist}")
     private String errorDeleteRegisterExist;
 
+    @Getter
+    @Setter
+    @Value("${error.cycle.closed}")
+    private String errorCycleClosed;
+
+    @Getter
+    @Setter
+    @Value("${success.cycle.create}")
+    private String successCycleCreate;
+
 }

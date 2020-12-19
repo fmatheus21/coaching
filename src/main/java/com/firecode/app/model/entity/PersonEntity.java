@@ -14,7 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "person", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"}),
@@ -31,28 +37,32 @@ public class PersonEntity implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "name_companyname", nullable = false, length = 100)
     private String nameCompanyname;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "cpf_cnpj", nullable = false, length = 20)
     private String cpfCnpj;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPerson")
+    private CoacheeEntity coacheeEntity;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPerson")
+    private ContactEntity contactEntity;
 
     @JoinColumn(name = "id_person_type", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private PersonTypeEntity idPersonType;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPerson")
-    private ContactEntity contactEntity;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPerson")
     private CoachEntity coachEntity;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPerson")
     private UserEntity userEntity;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPerson")
-    private CoacheeEntity coacheeEntity;
 
     public PersonEntity() {
     }
@@ -81,13 +91,13 @@ public class PersonEntity implements Serializable {
     }
 
     public String getCpfCnpj() {
-       /* if (cpfCnpj != null) {
+        if (cpfCnpj != null) {
             if (idPersonType.getId() == 1) {
                 return AppUtil.formatCPF(cpfCnpj);
             } else if (idPersonType.getId() == 2) {
                 return AppUtil.formatCNPJ(cpfCnpj);
             }
-        }*/
+        }
         return cpfCnpj;
     }
 
@@ -95,12 +105,12 @@ public class PersonEntity implements Serializable {
         this.cpfCnpj = AppUtil.removeSpecialCharacters(cpfCnpj);
     }
 
-    public PersonTypeEntity getIdPersonType() {
-        return idPersonType;
+    public CoacheeEntity getCoacheeEntity() {
+        return coacheeEntity;
     }
 
-    public void setIdPersonType(PersonTypeEntity idPersonType) {
-        this.idPersonType = idPersonType;
+    public void setCoacheeEntity(CoacheeEntity coacheeEntity) {
+        this.coacheeEntity = coacheeEntity;
     }
 
     public ContactEntity getContactEntity() {
@@ -109,6 +119,14 @@ public class PersonEntity implements Serializable {
 
     public void setContactEntity(ContactEntity contactEntity) {
         this.contactEntity = contactEntity;
+    }
+
+    public PersonTypeEntity getIdPersonType() {
+        return idPersonType;
+    }
+
+    public void setIdPersonType(PersonTypeEntity idPersonType) {
+        this.idPersonType = idPersonType;
     }
 
     public CoachEntity getCoachEntity() {
@@ -125,14 +143,6 @@ public class PersonEntity implements Serializable {
 
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
-    }
-
-    public CoacheeEntity getCoacheeEntity() {
-        return coacheeEntity;
-    }
-
-    public void setCoacheeEntity(CoacheeEntity coacheeEntity) {
-        this.coacheeEntity = coacheeEntity;
     }
 
     @Override

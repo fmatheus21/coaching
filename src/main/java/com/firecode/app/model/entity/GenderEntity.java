@@ -13,9 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "gender", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"}),
@@ -24,17 +29,19 @@ import javax.xml.bind.annotation.XmlTransient;
 public class GenderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
+
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "name", nullable = false, length = 20)
     private String name;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGender")
     private Collection<CoacheeEntity> coacheeEntityCollection;
 
@@ -43,11 +50,6 @@ public class GenderEntity implements Serializable {
 
     public GenderEntity(Integer id) {
         this.id = id;
-    }
-
-    public GenderEntity(Integer id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Integer getId() {
@@ -59,7 +61,7 @@ public class GenderEntity implements Serializable {
     }
 
     public String getName() {
-        if(name!=null){
+        if (name != null) {
             return AppUtil.convertFirstUppercaseCharacter(name);
         }
         return name;
@@ -99,5 +101,5 @@ public class GenderEntity implements Serializable {
     public String toString() {
         return "com.firecode.app.model.entity.GenderEntity[ id=" + id + " ]";
     }
-    
+
 }

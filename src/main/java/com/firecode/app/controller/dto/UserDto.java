@@ -30,7 +30,7 @@ public class UserDto {
         UserDto dto = new UserDto();
         String name = user.getIdPerson().getNameCompanyname();
         dto.setId(user.getId());
-        dto.setUserName(user.getUser());
+        dto.setUserName(user.getUsername());
         dto.setFirstName(AppUtil.returnFirstWord(name));
         dto.setFirstCaracter(AppUtil.returnCharacter(name, 1));
         dto.setEmail(user.getIdPerson().getContactEntity().getEmail());

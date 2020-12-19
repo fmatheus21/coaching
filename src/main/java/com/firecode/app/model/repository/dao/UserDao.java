@@ -41,7 +41,7 @@ public class UserDao implements GenericDao<UserEntity> {
     }
 
     public Optional<UserEntity> findByUser(String value) {
-        return repository.findByUser(value);
+        return repository.findByUsername(value);
     }
 
 }

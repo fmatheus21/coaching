@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
@@ -12,15 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author Fernando Matheus
+ * @author fmatheus
  */
 @Entity
 @Table(name = "exercise", catalog = "coaching", schema = "", uniqueConstraints = {
@@ -28,28 +22,32 @@ import javax.xml.bind.annotation.XmlRootElement;
     @UniqueConstraint(columnNames = {"name"}),
     @UniqueConstraint(columnNames = {"id"}),
     @UniqueConstraint(columnNames = {"media"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ExerciseEntity.findAll", query = "SELECT e FROM ExerciseEntity e"),
-    @NamedQuery(name = "ExerciseEntity.findById", query = "SELECT e FROM ExerciseEntity e WHERE e.id = :id"),
-    @NamedQuery(name = "ExerciseEntity.findByName", query = "SELECT e FROM ExerciseEntity e WHERE e.name = :name"),
-    @NamedQuery(name = "ExerciseEntity.findByFile", query = "SELECT e FROM ExerciseEntity e WHERE e.file = :file"),
-    @NamedQuery(name = "ExerciseEntity.findByMedia", query = "SELECT e FROM ExerciseEntity e WHERE e.media = :media")})
+
 public class ExerciseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "name", nullable = false, length = 50)
     private String name;
+
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "file", nullable = false, length = 20)
     private String file;
+
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "media", nullable = false, length = 20)
     private String media;
 
@@ -58,13 +56,6 @@ public class ExerciseEntity implements Serializable {
 
     public ExerciseEntity(Integer id) {
         this.id = id;
-    }
-
-    public ExerciseEntity(Integer id, String name, String file, String media) {
-        this.id = id;
-        this.name = name;
-        this.file = file;
-        this.media = media;
     }
 
     public Integer getId() {
@@ -113,15 +104,12 @@ public class ExerciseEntity implements Serializable {
             return false;
         }
         ExerciseEntity other = (ExerciseEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.ExerciseEntity[ id=" + id + " ]";
     }
-    
+
 }

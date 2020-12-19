@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
@@ -14,25 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Fernando Matheus
+ * @author fmatheus
  */
 @Entity
 @Table(name = "user_permission_mapping", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id_user"}),
     @UniqueConstraint(columnNames = {"id"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "UserPermissionMappingEntity.findAll", query = "SELECT u FROM UserPermissionMappingEntity u"),
-    @NamedQuery(name = "UserPermissionMappingEntity.findById", query = "SELECT u FROM UserPermissionMappingEntity u WHERE u.id = :id")})
+
 public class UserPermissionMappingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,9 +30,11 @@ public class UserPermissionMappingEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+
     @JoinColumn(name = "id_permission", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private PermissionEntity idPermission;
+
     @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
     private UserEntity idUser;
@@ -93,15 +84,12 @@ public class UserPermissionMappingEntity implements Serializable {
             return false;
         }
         UserPermissionMappingEntity other = (UserPermissionMappingEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.firecode.app.model.entity.UserPermissionMappingEntity[ id=" + id + " ]";
     }
-    
+
 }

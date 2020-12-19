@@ -21,11 +21,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author fmatheus
  */
 @Entity
-@Table(name = "permission", catalog = "coaching", schema = "", uniqueConstraints = {
+@Table(name = "step", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"}),
     @UniqueConstraint(columnNames = {"id"})})
 
-public class PermissionEntity implements Serializable {
+public class StepEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,23 +37,17 @@ public class PermissionEntity implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "name", nullable = false, length = 45)
+    @Size(min = 1, max = 30)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "description", nullable = false, length = 45)
-    private String description;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStep")
+    private Collection<SessionStepMappingEntity> sessionStepMappingEntityCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPermission")
-    private Collection<UserPermissionMappingEntity> userPermissionMappingEntityCollection;
-
-    public PermissionEntity() {
+    public StepEntity() {
     }
 
-    public PermissionEntity(Integer id) {
+    public StepEntity(Integer id) {
         this.id = id;
     }
 
@@ -73,21 +67,13 @@ public class PermissionEntity implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @XmlTransient
-    public Collection<UserPermissionMappingEntity> getUserPermissionMappingEntityCollection() {
-        return userPermissionMappingEntityCollection;
+    public Collection<SessionStepMappingEntity> getSessionStepMappingEntityCollection() {
+        return sessionStepMappingEntityCollection;
     }
 
-    public void setUserPermissionMappingEntityCollection(Collection<UserPermissionMappingEntity> userPermissionMappingEntityCollection) {
-        this.userPermissionMappingEntityCollection = userPermissionMappingEntityCollection;
+    public void setSessionStepMappingEntityCollection(Collection<SessionStepMappingEntity> sessionStepMappingEntityCollection) {
+        this.sessionStepMappingEntityCollection = sessionStepMappingEntityCollection;
     }
 
     @Override
@@ -100,16 +86,16 @@ public class PermissionEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PermissionEntity)) {
+        if (!(object instanceof StepEntity)) {
             return false;
         }
-        PermissionEntity other = (PermissionEntity) object;
+        StepEntity other = (StepEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.PermissionEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.StepEntity[ id=" + id + " ]";
     }
 
 }

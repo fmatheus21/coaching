@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ *
+ * @author fmatheus
+ */
 @Entity
 @Table(name = "team_coachee_mapping", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
@@ -19,17 +23,17 @@ import javax.persistence.UniqueConstraint;
 public class TeamCoacheeMappingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
+
     @JoinColumn(name = "id_coachee", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private CoacheeEntity idCoachee;
-    
+
     @JoinColumn(name = "id_team", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private TeamEntity idTeam;
@@ -86,5 +90,5 @@ public class TeamCoacheeMappingEntity implements Serializable {
     public String toString() {
         return "com.firecode.app.model.entity.TeamCoacheeMappingEntity[ id=" + id + " ]";
     }
-    
+
 }

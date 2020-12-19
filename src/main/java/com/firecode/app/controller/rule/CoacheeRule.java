@@ -7,14 +7,19 @@ import com.firecode.app.model.service.ContactService;
 import com.firecode.app.model.service.PersonService;
 import com.firecode.app.model.service.UserService;
 import com.firecode.app.controller.util.AppUtil;
+import com.firecode.app.controller.util.FormatLocalDatetUtil;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.PathUtil;
 import com.firecode.app.controller.util.UploadMultipartFileUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
+import com.firecode.app.model.entity.CycleEntity;
+import com.firecode.app.model.entity.CycleGenerateEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.entity.UserEntity;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
+import com.firecode.app.model.service.CycleGenerateService;
+import com.firecode.app.model.service.CycleService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +30,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class CoacheeRule {
+
+    private static final Logger log = LoggerFactory.getLogger(CoacheeRule.class);
 
     @Autowired
     private PersonService personService;
@@ -57,6 +66,12 @@ public class CoacheeRule {
 
     @Autowired
     private PathUtil pathUtil;
+
+    @Autowired
+    private CycleService cycleService;
+
+    @Autowired
+    private CycleGenerateService cycleGenerateService;
 
     public CoacheeDto init(HttpServletRequest request, HttpServletResponse response) {
         if (cookieRule.readerCookie(request, response) == null) {
@@ -99,7 +114,7 @@ public class CoacheeRule {
 
         long size = 0;
         long total = pathUtil.getFileSizeTotal();
-        MultipartFile[] files = upload.getFileDatas();       
+        MultipartFile[] files = upload.getFileDatas();
 
         /* Soma o tamanho de todas as imagens anexadas */
         for (MultipartFile multipartFile : files) {
@@ -188,7 +203,6 @@ public class CoacheeRule {
 
     public Page<CoacheeDto> findAllPaginator(RepositoryFilter filter, Pageable pageable) {
         return coacheeService.findAllPaginator(filter, pageable).map(CoacheeDto::converterObject);
-        //return coacheeService.findAll("id").stream().map(CoacheeDto::converterObject).collect(Collectors.toList());
     }
 
     public CoacheeDto findById(int id) {
@@ -220,6 +234,51 @@ public class CoacheeRule {
         } catch (DataIntegrityViolationException ex) {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), ex.getMessage());
         }
+        return redirect;
+
+    }
+
+    public String createCycle(int id, RedirectAttributes attributes, AppUserSecurity appUserSecurity) {
+
+        String redirect = "redirect:/coachees";
+
+        int numberCycle = 0;
+
+        for (CycleEntity cycle : cycleService.findAll("id")) {
+            var generate = cycleGenerateService.findByCycleCoache(cycle.getId() + id);
+            if (generate != null) {
+                numberCycle = generate.getIdCycle().getId();
+            }
+        }
+
+        if (numberCycle == 10) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorCycleClosed());
+            return redirect;
+        }
+
+        int newCycle = numberCycle + 1;
+        var user = new UserEntity(appUserSecurity.getIdUser());
+        String cycleCoache = String.valueOf(newCycle) + String.valueOf(id);
+
+        var cycleGenerate = new CycleGenerateEntity();
+        cycleGenerate.setIdCycle(new CycleEntity(newCycle));
+        cycleGenerate.setIdCoachee(new CoacheeEntity(id));
+        cycleGenerate.setCycleCoache(Integer.parseInt(cycleCoache));
+        cycleGenerate.setIdCreatedUser(user);
+        cycleGenerate.setIdUpdatedUser(user);
+        cycleGenerate.setCreatedAt(FormatLocalDatetUtil.currentDateTime());
+        cycleGenerate.setUpdatedAt(FormatLocalDatetUtil.currentDateTime());
+        cycleGenerate.setDone(false);
+
+        try {
+            cycleGenerateService.create(cycleGenerate);
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeSuccess(), messageValidationUtil.getSuccessCycleCreate());
+            log.info(messageValidationUtil.getSuccessCycleCreate());
+        } catch (DataIntegrityViolationException ex) {
+            attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), ex.getMessage());
+            log.error(ex.getMessage());
+        }
+
         return redirect;
 
     }

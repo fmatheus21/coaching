@@ -1,6 +1,8 @@
 package com.firecode.app.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,22 +10,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author fmatheus
  */
 @Entity
-@Table(name = "estage_content_week", catalog = "coaching", schema = "", uniqueConstraints = {
+@Table(name = "class_session_mapping", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
 
-public class EstageContentWeekEntity implements Serializable {
+public class ClassSessionMappingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,10 +35,13 @@ public class EstageContentWeekEntity implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "description", nullable = false, length = 2147483647)
-    private String description;
+    @Column(name = "session_date", nullable = false)
+    private LocalDate sessionDate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "session_hour", nullable = false)
+    private LocalDateTime sessionHour;
 
     @JoinColumn(name = "id_class", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
@@ -48,10 +51,10 @@ public class EstageContentWeekEntity implements Serializable {
     @ManyToOne(optional = false)
     private SessionEntity idSession;
 
-    public EstageContentWeekEntity() {
+    public ClassSessionMappingEntity() {
     }
 
-    public EstageContentWeekEntity(Integer id) {
+    public ClassSessionMappingEntity(Integer id) {
         this.id = id;
     }
 
@@ -63,12 +66,20 @@ public class EstageContentWeekEntity implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public LocalDate getSessionDate() {
+        return sessionDate;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSessionDate(LocalDate sessionDate) {
+        this.sessionDate = sessionDate;
+    }
+
+    public LocalDateTime getSessionHour() {
+        return sessionHour;
+    }
+
+    public void setSessionHour(LocalDateTime sessionHour) {
+        this.sessionHour = sessionHour;
     }
 
     public ClassEntity getIdClass() {
@@ -97,16 +108,16 @@ public class EstageContentWeekEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EstageContentWeekEntity)) {
+        if (!(object instanceof ClassSessionMappingEntity)) {
             return false;
         }
-        EstageContentWeekEntity other = (EstageContentWeekEntity) object;
+        ClassSessionMappingEntity other = (ClassSessionMappingEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.EstageContentWeekEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.ClassSessionMappingEntity[ id=" + id + " ]";
     }
 
 }
