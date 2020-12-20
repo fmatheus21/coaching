@@ -244,11 +244,9 @@ public class CoacheeRule {
 
         int numberCycle = 0;
 
-        for (CycleEntity cycle : cycleService.findAll("id")) {
-            var generate = cycleGenerateService.findByCycleCoache(cycle.getId() + id);
-            if (generate != null) {
-                numberCycle = generate.getIdCycle().getId();
-            }
+        for (CycleGenerateEntity cycleGenerate : cycleGenerateService.findByIdCoachee(new CoacheeEntity(id))) {
+            System.out.println("Listando: " + cycleGenerate.getCycleCoache());
+            numberCycle = cycleGenerate.getIdCycle().getId();            
         }
 
         if (numberCycle == 10) {
@@ -258,7 +256,7 @@ public class CoacheeRule {
 
         int newCycle = numberCycle + 1;
         var user = new UserEntity(appUserSecurity.getIdUser());
-        String cycleCoache = String.valueOf(newCycle) + String.valueOf(id);
+        String cycleCoache = String.valueOf(newCycle) + String.valueOf(id);        
 
         var cycleGenerate = new CycleGenerateEntity();
         cycleGenerate.setIdCycle(new CycleEntity(newCycle));

@@ -59,7 +59,8 @@ function consultCoachee(id) {
 }
 
 function fillCoachee(json) {
-    console.log(json.casualName);
+
+    document.getElementById("timeline-items").innerHTML = '';
     document.getElementById('parameter').value = json.id;
     document.getElementById('parameterModal').innerHTML = json.id;
     document.querySelector('input[name="casualName"]').value = json.casualName;
@@ -72,6 +73,33 @@ function fillCoachee(json) {
     document.getElementById('editar').href = "/coachees/update/" + json.id;
     document.getElementById('registroSessao').href = "/coachees/" + json.id + "/session/reader";
     document.getElementById('avaliacao').href = "/coachees/" + json.id + "/assessments/reader";
+
+    if (json.listCycleGenerateDto.length > 0) {
+
+        $.each(json.listCycleGenerateDto, function (idx, value) {
+            var newdiv = $(
+                    `<div class="timeline-item">
+                 <div class="timeline-media">
+                 <i class="flaticon2-layers text-warning"></i>
+                 </div>
+                 <div class="timeline-content">
+                 <div class="d-flex align-items-center justify-content-between mb-3">
+                 <div class="mr-2">
+                 <span class="label label-light-warning font-weight-bolder label-inline ml-2">` + value.cycle + `</span>                                                
+                 <span class="text-muted ml-2"> `
+                    + value.createdAt +
+                    `</span>                                                
+                 </div>                                            
+                 </div>                                        
+                 </div>
+                 </div>`
+                    , {class: 'result', text: value});
+
+            $('#timeline-items').append(newdiv);
+        });
+
+    }
+
 }
 
 function deleteCoachee(parameter) {

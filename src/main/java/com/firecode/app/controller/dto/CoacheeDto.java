@@ -8,6 +8,8 @@ import com.firecode.app.model.entity.GenderEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.entity.PersonTypeEntity;
 import com.firecode.app.model.entity.UserEntity;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -90,6 +92,9 @@ public class CoacheeDto {
     @Getter
     @Setter
     private String avatar;
+    @Getter
+    @Setter
+    private List<CycleGenerateDto> listCycleGenerateDto;
 
     public PersonEntity create(CoacheeDto dto, UserEntity user, String image) {
 
@@ -180,6 +185,9 @@ public class CoacheeDto {
         dto.setFacebook(coachee.getIdPerson().getContactEntity().getFacebook());
         dto.setInstagram(coachee.getIdPerson().getContactEntity().getInstagram());
         dto.setTwitter(coachee.getIdPerson().getContactEntity().getTwitter());
+        
+        dto.setListCycleGenerateDto(coachee.getCycleGenerateEntityCollection().stream().map(CycleGenerateDto::converterObject).collect(Collectors.toList()));
+        
         return dto;
     }
 

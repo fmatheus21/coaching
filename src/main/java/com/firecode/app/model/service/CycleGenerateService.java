@@ -1,7 +1,9 @@
 package com.firecode.app.model.service;
 
+import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.CycleGenerateEntity;
 import com.firecode.app.model.repository.dao.CycleGenerateDao;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,10 @@ public class CycleGenerateService {
 
     public CycleGenerateEntity findByCycleCoache(int value) {
         return dao.findByCycleCoache(value);
+    }
+
+    public List<CycleGenerateEntity> findByIdCoachee(CoacheeEntity t) {
+        return dao.findByIdCoachee(t);
     }
 
 }

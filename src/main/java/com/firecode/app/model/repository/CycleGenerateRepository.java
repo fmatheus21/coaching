@@ -1,6 +1,8 @@
 package com.firecode.app.model.repository;
 
+import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.CycleGenerateEntity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,6 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CycleGenerateRepository extends JpaRepository<CycleGenerateEntity, Integer> {
 
-    public CycleGenerateEntity findByCycleCoache(int value);
+    CycleGenerateEntity findByCycleCoache(int value);
+
+    List<CycleGenerateEntity> findByIdCoachee(CoacheeEntity t);
 
 }

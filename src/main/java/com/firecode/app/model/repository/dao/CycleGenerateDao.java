@@ -1,5 +1,6 @@
 package com.firecode.app.model.repository.dao;
 
+import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.CycleGenerateEntity;
 import com.firecode.app.model.repository.CycleGenerateRepository;
 import java.util.List;
@@ -43,6 +44,10 @@ public class CycleGenerateDao implements GenericDao<CycleGenerateEntity> {
 
     public CycleGenerateEntity findByCycleCoache(int value) {
         return repository.findByCycleCoache(value);
+    }
+
+    public List<CycleGenerateEntity> findByIdCoachee(CoacheeEntity t) {
+        return repository.findByIdCoachee(t);
     }
 
 }
