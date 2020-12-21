@@ -39,9 +39,6 @@ public class CycleGenerateDto {
     @Getter
     @Setter
     private String urlCycle;
-    @Getter
-    @Setter
-    private List<SessionDto> listSessions;
 
     public static CycleGenerateDto converterObject(CycleGenerateEntity cycleGenerate) {
 
@@ -53,11 +50,6 @@ public class CycleGenerateDto {
             generate.setDone("Fechado");
         } else if (cycleGenerate.getDone() == false) {
             generate.setDone("Aberto");
-        }
-
-        for (SessionGenerateEntity session : cycleGenerate.getSessionGenerateEntityCollection()) {
-            var sessionDto = groupSession(session);
-            generate.setListSessions(Arrays.asList(sessionDto));
         }
 
         generate.setUrlCycle("/coachees/" + cycleGenerate.getIdCoachee().getId() + "/cycle/" + cycleGenerate.getIdCycle().getId() + "/view");
@@ -94,19 +86,6 @@ public class CycleGenerateDto {
         cycleGenerate.setSessionGenerateEntityCollection(listSessionGenerate);
 
         return cycleGenerate;
-    }
-
-    private static SessionDto groupSession(SessionGenerateEntity session) {
-
-        var sessionDto = new SessionDto();
-
-        if (session.getIdSessionStepMapping().getIdSession().getId() == 1) {
-            sessionDto.setId(session.getIdSessionStepMapping().getIdSession().getId());
-            sessionDto.setName(session.getIdSessionStepMapping().getIdSession().getName());
-            System.out.println("session: " + session.getIdSessionStepMapping().getIdSession().getName());
-        }
-
-        return sessionDto;
     }
 
 }
