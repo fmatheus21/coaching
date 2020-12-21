@@ -1,6 +1,7 @@
 package com.firecode.app.model.service;
 
 import com.firecode.app.model.entity.CoacheeEntity;
+import com.firecode.app.model.entity.CycleEntity;
 import com.firecode.app.model.entity.CycleGenerateEntity;
 import com.firecode.app.model.repository.dao.CycleGenerateDao;
 import java.util.List;
@@ -27,6 +28,10 @@ public class CycleGenerateService {
 
     public List<CycleGenerateEntity> findByIdCoachee(CoacheeEntity t) {
         return dao.findByIdCoachee(t);
+    }
+
+    public CycleGenerateEntity findByIdCoacheeAndIdCycle(CoacheeEntity coachee, CycleEntity cycle) {
+        return dao.findByIdCoacheeAndIdCycle(coachee, cycle);
     }
 
 }

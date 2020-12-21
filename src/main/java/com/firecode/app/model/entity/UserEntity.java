@@ -73,10 +73,10 @@ public class UserEntity implements Serializable {
     private Collection<CycleGenerateEntity> cycleGenerateEntityCollection1;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCreatedUser")
-    private Collection<CycleSessionEntity> cycleSessionEntityCollection;
+    private Collection<SessionGenerateEntity> sessionGenerateEntityCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUpdatedUser")
-    private Collection<CycleSessionEntity> cycleSessionEntityCollection1;
+    private Collection<SessionGenerateEntity> sessionGenerateEntityCollection1;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUser")
     private UserPermissionMappingEntity userPermissionMappingEntity;
@@ -176,21 +176,21 @@ public class UserEntity implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CycleSessionEntity> getCycleSessionEntityCollection() {
-        return cycleSessionEntityCollection;
+    public Collection<SessionGenerateEntity> getSessionGenerateEntityCollection() {
+        return sessionGenerateEntityCollection;
     }
 
-    public void setCycleSessionEntityCollection(Collection<CycleSessionEntity> cycleSessionEntityCollection) {
-        this.cycleSessionEntityCollection = cycleSessionEntityCollection;
+    public void setSessionGenerateEntityCollection(Collection<SessionGenerateEntity> sessionGenerateEntityCollection) {
+        this.sessionGenerateEntityCollection = sessionGenerateEntityCollection;
     }
 
     @XmlTransient
-    public Collection<CycleSessionEntity> getCycleSessionEntityCollection1() {
-        return cycleSessionEntityCollection1;
+    public Collection<SessionGenerateEntity> getSessionGenerateEntityCollection1() {
+        return sessionGenerateEntityCollection1;
     }
 
-    public void setCycleSessionEntityCollection1(Collection<CycleSessionEntity> cycleSessionEntityCollection1) {
-        this.cycleSessionEntityCollection1 = cycleSessionEntityCollection1;
+    public void setSessionGenerateEntityCollection1(Collection<SessionGenerateEntity> sessionGenerateEntityCollection1) {
+        this.sessionGenerateEntityCollection1 = sessionGenerateEntityCollection1;
     }
 
     public UserPermissionMappingEntity getUserPermissionMappingEntity() {

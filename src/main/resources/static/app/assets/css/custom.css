@@ -238,6 +238,15 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     background: rgba(0, 0, 0, 0.70);
 }
 
+.btn-group .btn.btn-primary.disabled, 
+.btn-group .btn.btn-primary:disabled {
+    color: #FFFFFF;
+    background-color: #BDBFC1;
+    border-color: #3699FF;
+    border: solid 1px #FFF;
+    cursor: no-drop;
+}
+
 @media only screen and (max-width: 600px) {
     .table tbody td .symbol{
         display: none;

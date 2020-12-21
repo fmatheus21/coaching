@@ -27,7 +27,7 @@
     <class>com.firecode.app.model.entity.CycleEntity</class>
     <class>com.firecode.app.model.entity.ClassEntity</class>
     <class>com.firecode.app.model.entity.ClassCoacheeMappingEntity</class>
-    <class>com.firecode.app.model.entity.CycleSessionEntity</class>
+    <class>com.firecode.app.model.entity.SessionGenerateEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/coaching?serverTimezone=UTC&amp;useLegacyDatetimeCode=true"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

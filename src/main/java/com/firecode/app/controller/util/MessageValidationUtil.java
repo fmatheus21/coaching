@@ -73,4 +73,9 @@ public class MessageValidationUtil {
     @Value("${success.cycle.create}")
     private String successCycleCreate;
 
+    @Getter
+    @Setter
+    @Value("${error.cycle.open}")
+    private String errorCycleOpen;
+
 }

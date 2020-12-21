@@ -325,7 +325,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 // Initialize KTApp class on document ready
 $(document).ready(function () {
-    KTApp.init(KTAppSettings);
+    //KTApp.init(KTAppSettings);
 });
 
 "use strict";

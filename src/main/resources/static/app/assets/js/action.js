@@ -73,6 +73,7 @@ function fillCoachee(json) {
     document.getElementById('editar').href = "/coachees/update/" + json.id;
     document.getElementById('registroSessao').href = "/coachees/" + json.id + "/session/reader";
     document.getElementById('avaliacao').href = "/coachees/" + json.id + "/assessments/reader";
+    document.getElementById("buttonNewCycle").disabled = json.buttonNewCycle;
 
     if (json.listCycleGenerateDto.length > 0) {
 
@@ -80,12 +81,14 @@ function fillCoachee(json) {
             var newdiv = $(
                     `<div class="timeline-item">
                  <div class="timeline-media">
-                 <i class="flaticon2-layers text-warning"></i>
+                 <i class="flaticon2-layers text-primary"></i>
                  </div>
                  <div class="timeline-content">
                  <div class="d-flex align-items-center justify-content-between mb-3">
                  <div class="mr-2">
-                 <span class="label label-light-warning font-weight-bolder label-inline ml-2">` + value.cycle + `</span>                                                
+                <a id="urlCycle" href="`+ value.urlCycle +`">
+                 <span class="label label-light-primary font-weight-bolder label-inline ml-2">` + value.cycle + `</span>    
+                <a>
                  <span class="text-muted ml-2"> `
                     + value.createdAt +
                     `</span>                                                
@@ -94,6 +97,8 @@ function fillCoachee(json) {
                  </div>
                  </div>`
                     , {class: 'result', text: value});
+
+            //  document.getElementById('urlCycle').href = json.urlCycle;
 
             $('#timeline-items').append(newdiv);
         });

@@ -4,6 +4,7 @@ import com.firecode.app.controller.util.AppUtil;
 import com.firecode.app.controller.util.FormatLocalDatetUtil;
 import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
+import com.firecode.app.model.entity.CycleGenerateEntity;
 import com.firecode.app.model.entity.GenderEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.entity.PersonTypeEntity;
@@ -19,7 +20,6 @@ import org.json.JSONObject;
 
 public class CoacheeDto {
 
-    
     @Getter
     @Setter
     @NotNull
@@ -94,13 +94,19 @@ public class CoacheeDto {
     private String avatar;
     @Getter
     @Setter
+    private boolean buttonNewCycle;
+    @Getter
+    @Setter
+    private String statusCycle;    
+    @Getter
+    @Setter
     private List<CycleGenerateDto> listCycleGenerateDto;
 
     public PersonEntity create(CoacheeDto dto, UserEntity user, String image) {
 
         PersonEntity person = new PersonEntity();
         CoacheeEntity coachee = new CoacheeEntity();
-        ContactEntity contact = new ContactEntity();       
+        ContactEntity contact = new ContactEntity();
 
         person.setIdPersonType(new PersonTypeEntity(1));
         person.setNameCompanyname(dto.getName());
@@ -185,9 +191,21 @@ public class CoacheeDto {
         dto.setFacebook(coachee.getIdPerson().getContactEntity().getFacebook());
         dto.setInstagram(coachee.getIdPerson().getContactEntity().getInstagram());
         dto.setTwitter(coachee.getIdPerson().getContactEntity().getTwitter());
-        
+
+        if (coachee.getCycleGenerateEntityCollection() != null) {
+            for (CycleGenerateEntity c : coachee.getCycleGenerateEntityCollection()) {
+                if (c.getDone() == false) {
+                    dto.setButtonNewCycle(true);
+                    dto.setStatusCycle("Aberto");
+                    break;                    
+                }
+                dto.setButtonNewCycle(false);
+                dto.setStatusCycle("Fechado");                
+            }
+        }
+
         dto.setListCycleGenerateDto(coachee.getCycleGenerateEntityCollection().stream().map(CycleGenerateDto::converterObject).collect(Collectors.toList()));
-        
+
         return dto;
     }
 

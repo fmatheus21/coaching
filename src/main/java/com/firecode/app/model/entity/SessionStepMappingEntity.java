@@ -41,7 +41,7 @@ public class SessionStepMappingEntity implements Serializable {
     private int order;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSessionStepMapping")
-    private Collection<CycleSessionEntity> cycleSessionEntityCollection;
+    private Collection<SessionGenerateEntity> sessionGenerateEntityCollection;
 
     @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
@@ -75,12 +75,12 @@ public class SessionStepMappingEntity implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CycleSessionEntity> getCycleSessionEntityCollection() {
-        return cycleSessionEntityCollection;
+    public Collection<SessionGenerateEntity> getSessionGenerateEntityCollection() {
+        return sessionGenerateEntityCollection;
     }
 
-    public void setCycleSessionEntityCollection(Collection<CycleSessionEntity> cycleSessionEntityCollection) {
-        this.cycleSessionEntityCollection = cycleSessionEntityCollection;
+    public void setSessionGenerateEntityCollection(Collection<SessionGenerateEntity> sessionGenerateEntityCollection) {
+        this.sessionGenerateEntityCollection = sessionGenerateEntityCollection;
     }
 
     public SessionEntity getIdSession() {

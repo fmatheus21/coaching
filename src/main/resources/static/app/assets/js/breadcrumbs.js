@@ -41,6 +41,15 @@ function team_coaching() {
 }
 
 
+function coachee_cycle() {
+    var breadcrumbs = `
+<li class="breadcrumb-item"><a href="/dashboard" class="text-muted">Dashboard</a></li> 
+<li class="breadcrumb-item"><a href="" class="text-muted">Ciclo</a></li>`;
+    document.getElementById("breadcrumb").innerHTML = breadcrumbs;
+    $('#coaches').addClass("menu-item-active");
+}
+
+
 
 
 

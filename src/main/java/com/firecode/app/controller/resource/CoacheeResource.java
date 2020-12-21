@@ -55,7 +55,6 @@ public class CoacheeResource {
         model.addAttribute("modelFilter", new RepositoryFilter());
         model.addAttribute("modelUrl", "/coachees?");
 
-        //testeRule.createCoachee();
         return "app/page/reader/coachee";
     }
 
@@ -119,6 +118,32 @@ public class CoacheeResource {
 
     }
 
+    @GetMapping("/{idCoachee}/cycle/{idCycle}/view")
+    public String viewCycle(
+            @PathVariable("idCoachee") int idCoachee,
+            @PathVariable("idCycle") int idCycle,
+            RedirectAttributes attributes, Model model,
+            @AuthenticationPrincipal AppUserSecurity appUserSecurity
+    ) {
+
+        String redirectSuccess = "app/page/view/coachee-cycle";
+        String redirectFailure = "redirect:/coachees";
+
+        var cycleGenerate = coacheeRule.findCycleByCoachee(idCoachee, idCycle, attributes);
+
+        globalRule.model(model, appUserSecurity);
+        model.addAttribute("pageTitle", "Sessões");
+        model.addAttribute("headerTitle", "Sessões");
+        model.addAttribute("formTitle", "Visualizar Ciclo");
+        model.addAttribute("buttonBack", false);
+        model.addAttribute("buttonBackLink", "/coachees");
+        model.addAttribute("buttonAdd", false);
+        model.addAttribute("buttonAddLink", "/coachees/create");
+
+        return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, cycleGenerate, attributes);
+
+    }
+
     @GetMapping("/assessments/view/{id}")
     public String viewCoacheAssessments(@PathVariable("id") int id, RedirectAttributes attributes, Model model, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
         globalRule.model(model, appUserSecurity);
@@ -153,19 +178,6 @@ public class CoacheeResource {
         model.addAttribute("buttonBack", true);
         model.addAttribute("buttonBackLink", "/coachees");
         return "app/page/reader/coachee-assessment";
-    }
-
-    @GetMapping("/{id}/session/reader")
-    public String viewCoacheSession(@PathVariable("id") int id, RedirectAttributes attributes, Model model, @AuthenticationPrincipal AppUserSecurity appUserSecurity) {
-        globalRule.model(model, appUserSecurity);
-        model.addAttribute("pageTitle", "Sessões");
-        model.addAttribute("headerTitle", "Sessões");
-        model.addAttribute("formTitle", "Visualizar Sessões");
-        model.addAttribute("buttonBack", false);
-        model.addAttribute("buttonBackLink", "/coachees");
-        model.addAttribute("buttonAdd", false);
-        model.addAttribute("buttonAddLink", "/coachees/create");
-        return "app/page/view/coache-session";
     }
 
     @PostMapping("/create")

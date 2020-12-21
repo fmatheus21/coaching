@@ -74,7 +74,7 @@ public class CycleGenerateEntity implements Serializable {
     private UserEntity idUpdatedUser;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCycleGenerate")
-    private Collection<CycleSessionEntity> cycleSessionEntityCollection;
+    private Collection<SessionGenerateEntity> sessionGenerateEntityCollection;
 
     public CycleGenerateEntity() {
     }
@@ -156,12 +156,12 @@ public class CycleGenerateEntity implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CycleSessionEntity> getCycleSessionEntityCollection() {
-        return cycleSessionEntityCollection;
+    public Collection<SessionGenerateEntity> getSessionGenerateEntityCollection() {
+        return sessionGenerateEntityCollection;
     }
 
-    public void setCycleSessionEntityCollection(Collection<CycleSessionEntity> cycleSessionEntityCollection) {
-        this.cycleSessionEntityCollection = cycleSessionEntityCollection;
+    public void setSessionGenerateEntityCollection(Collection<SessionGenerateEntity> sessionGenerateEntityCollection) {
+        this.sessionGenerateEntityCollection = sessionGenerateEntityCollection;
     }
 
     @Override

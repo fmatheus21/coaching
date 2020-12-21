@@ -19,10 +19,10 @@ import javax.validation.constraints.NotNull;
  * @author fmatheus
  */
 @Entity
-@Table(name = "cycle_session", catalog = "coaching", schema = "", uniqueConstraints = {
+@Table(name = "session_generate", catalog = "coaching", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"id"})})
 
-public class CycleSessionEntity implements Serializable {
+public class SessionGenerateEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,10 +63,10 @@ public class CycleSessionEntity implements Serializable {
     @ManyToOne(optional = false)
     private UserEntity idUpdatedUser;
 
-    public CycleSessionEntity() {
+    public SessionGenerateEntity() {
     }
 
-    public CycleSessionEntity(Integer id) {
+    public SessionGenerateEntity(Integer id) {
         this.id = id;
     }
 
@@ -144,16 +144,16 @@ public class CycleSessionEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CycleSessionEntity)) {
+        if (!(object instanceof SessionGenerateEntity)) {
             return false;
         }
-        CycleSessionEntity other = (CycleSessionEntity) object;
+        SessionGenerateEntity other = (SessionGenerateEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.firecode.app.model.entity.CycleSessionEntity[ id=" + id + " ]";
+        return "com.firecode.app.model.entity.SessionGenerateEntity[ id=" + id + " ]";
     }
 
 }

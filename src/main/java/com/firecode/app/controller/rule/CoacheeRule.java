@@ -1,13 +1,13 @@
 package com.firecode.app.controller.rule;
 
 import com.firecode.app.controller.dto.CoacheeDto;
+import com.firecode.app.controller.dto.CycleGenerateDto;
 import com.firecode.app.controller.security.AppUserSecurity;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
 import com.firecode.app.model.service.PersonService;
 import com.firecode.app.model.service.UserService;
 import com.firecode.app.controller.util.AppUtil;
-import com.firecode.app.controller.util.FormatLocalDatetUtil;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.PathUtil;
 import com.firecode.app.controller.util.UploadMultipartFileUtil;
@@ -16,10 +16,14 @@ import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.CycleEntity;
 import com.firecode.app.model.entity.CycleGenerateEntity;
 import com.firecode.app.model.entity.PersonEntity;
+import com.firecode.app.model.entity.SessionEntity;
+import com.firecode.app.model.entity.SessionStepMappingEntity;
 import com.firecode.app.model.entity.UserEntity;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
 import com.firecode.app.model.service.CycleGenerateService;
 import com.firecode.app.model.service.CycleService;
+import com.firecode.app.model.service.SessionStepMappingService;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +58,7 @@ public class CoacheeRule {
     private CookieRule cookieRule;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private UploadRule uploadRule;
-
-    @Autowired
-    private SessionRule sessionRule;
 
     private CoacheeDto coacheeDto;
 
@@ -68,7 +66,7 @@ public class CoacheeRule {
     private PathUtil pathUtil;
 
     @Autowired
-    private CycleService cycleService;
+    private SessionStepMappingService sessionStepMappingService;
 
     @Autowired
     private CycleGenerateService cycleGenerateService;
@@ -238,35 +236,37 @@ public class CoacheeRule {
 
     }
 
-    public String createCycle(int id, RedirectAttributes attributes, AppUserSecurity appUserSecurity) {
+    public String createCycle(int idCoachee, RedirectAttributes attributes, AppUserSecurity appUserSecurity) {
 
         String redirect = "redirect:/coachees";
 
         int numberCycle = 0;
 
-        for (CycleGenerateEntity cycleGenerate : cycleGenerateService.findByIdCoachee(new CoacheeEntity(id))) {
-            System.out.println("Listando: " + cycleGenerate.getCycleCoache());
-            numberCycle = cycleGenerate.getIdCycle().getId();            
+        /* Lista os ciclos do coachee e verifica se existe algum aberto. */
+        for (CycleGenerateEntity cycleGenerate : cycleGenerateService.findByIdCoachee(new CoacheeEntity(idCoachee))) {
+            /* Se houver um ciclo nao concluido */
+            if (cycleGenerate.getDone() == false) {
+                attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorCycleOpen());
+                return redirect;
+            }
+
+            /* Se os ciclos listados estiverem concluidos, atribui o id do cliclo a variavel numberCycle */
+            numberCycle = cycleGenerate.getIdCycle().getId();
         }
 
+        /* Se houver o ciclo 10 gera um erro */
         if (numberCycle == 10) {
             attributes.addFlashAttribute(messageValidationUtil.getAttributeError(), messageValidationUtil.getErrorCycleClosed());
             return redirect;
         }
 
+        /* Se nao houver o ciclo 10, pega o ultimo ciclo e adiciona mais 1 */
         int newCycle = numberCycle + 1;
         var user = new UserEntity(appUserSecurity.getIdUser());
-        String cycleCoache = String.valueOf(newCycle) + String.valueOf(id);        
+        String cycleCoache = String.valueOf(newCycle) + String.valueOf(idCoachee);
 
-        var cycleGenerate = new CycleGenerateEntity();
-        cycleGenerate.setIdCycle(new CycleEntity(newCycle));
-        cycleGenerate.setIdCoachee(new CoacheeEntity(id));
-        cycleGenerate.setCycleCoache(Integer.parseInt(cycleCoache));
-        cycleGenerate.setIdCreatedUser(user);
-        cycleGenerate.setIdUpdatedUser(user);
-        cycleGenerate.setCreatedAt(FormatLocalDatetUtil.currentDateTime());
-        cycleGenerate.setUpdatedAt(FormatLocalDatetUtil.currentDateTime());
-        cycleGenerate.setDone(false);
+        List<SessionStepMappingEntity> listSessionStep = sessionStepMappingService.findByIdSession(new SessionEntity(1));
+        var cycleGenerate = new CycleGenerateDto().createCycle(listSessionStep, new CoacheeEntity(idCoachee), newCycle, Integer.parseInt(cycleCoache), user);
 
         try {
             cycleGenerateService.create(cycleGenerate);
@@ -278,6 +278,18 @@ public class CoacheeRule {
         }
 
         return redirect;
+
+    }
+
+    public CycleGenerateDto findCycleByCoachee(int idCoachee, int idCycle, RedirectAttributes attributes) {
+     
+        var cycleGenerate = cycleGenerateService.findByIdCoacheeAndIdCycle(new CoacheeEntity(idCoachee), new CycleEntity(idCycle));
+
+        if (cycleGenerate == null) {
+            return null;
+        }
+
+        return CycleGenerateDto.converterObject(cycleGenerate);
 
     }
 
