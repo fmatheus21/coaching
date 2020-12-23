@@ -63,6 +63,10 @@ public class SessionGenerateEntity implements Serializable {
     @ManyToOne(optional = false)
     private UserEntity idUpdatedUser;
 
+    @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private SessionEntity idSession;
+
     public SessionGenerateEntity() {
     }
 
@@ -132,6 +136,14 @@ public class SessionGenerateEntity implements Serializable {
 
     public void setIdUpdatedUser(UserEntity idUpdatedUser) {
         this.idUpdatedUser = idUpdatedUser;
+    }
+
+    public SessionEntity getIdSession() {
+        return idSession;
+    }
+
+    public void setIdSession(SessionEntity idSession) {
+        this.idSession = idSession;
     }
 
     @Override

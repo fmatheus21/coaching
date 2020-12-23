@@ -118,10 +118,11 @@ public class CoacheeResource {
 
     }
 
-    @GetMapping("/{idCoachee}/cycle/{idCycle}/view")
+    @GetMapping("/{idCoachee}/cycle/{idCycle}/session/{idSession}/view")
     public String viewCycle(
             @PathVariable("idCoachee") int idCoachee,
             @PathVariable("idCycle") int idCycle,
+            @PathVariable("idSession") int idSession,
             RedirectAttributes attributes, Model model,
             @AuthenticationPrincipal AppUserSecurity appUserSecurity
     ) {
@@ -139,6 +140,7 @@ public class CoacheeResource {
         model.addAttribute("buttonBackLink", "/coachees");
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
+        model.addAttribute("modelCycleGenerate", cycleGenerate);
 
         return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, cycleGenerate, attributes);
 

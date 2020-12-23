@@ -4,14 +4,14 @@ import java.util.List;
 
 public interface GenericDao<T> {
 
-    void create(T t);
+    abstract void create(T t);
 
-    void update(T t);
+    abstract void update(T t);
 
-    List<T> findAll(String orderBy);
+    abstract List<T> findAll(String orderBy);
 
-    T findById(int id);
+    abstract T findById(int id);
 
-    void deleteById(int id);
+    abstract void deleteById(int id);
 
 }

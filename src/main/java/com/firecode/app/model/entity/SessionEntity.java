@@ -1,5 +1,6 @@
 package com.firecode.app.model.entity;
 
+import com.firecode.app.controller.util.AppUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -56,6 +57,9 @@ public class SessionEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
     private Collection<EstageContentWeekEntity> estageContentWeekEntityCollection;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSession")
+    private Collection<SessionGenerateEntity> sessionGenerateEntityCollection;
+
     public SessionEntity() {
     }
 
@@ -72,6 +76,9 @@ public class SessionEntity implements Serializable {
     }
 
     public String getName() {
+        if (name != null) {
+            return AppUtil.convertFirstUppercaseCharacter(name);
+        }
         return name;
     }
 
@@ -122,6 +129,14 @@ public class SessionEntity implements Serializable {
 
     public void setEstageContentWeekEntityCollection(Collection<EstageContentWeekEntity> estageContentWeekEntityCollection) {
         this.estageContentWeekEntityCollection = estageContentWeekEntityCollection;
+    }
+
+    public Collection<SessionGenerateEntity> getSessionGenerateEntityCollection() {
+        return sessionGenerateEntityCollection;
+    }
+
+    public void setSessionGenerateEntityCollection(Collection<SessionGenerateEntity> sessionGenerateEntityCollection) {
+        this.sessionGenerateEntityCollection = sessionGenerateEntityCollection;
     }
 
     @Override

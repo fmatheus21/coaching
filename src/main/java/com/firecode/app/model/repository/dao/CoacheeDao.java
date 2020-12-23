@@ -18,7 +18,7 @@ public class CoacheeDao implements GenericDao<CoacheeEntity> {
     private CoacheeRepository repository;
 
     @Override
-    public CoacheeEntity findById(int id) {
+    public  CoacheeEntity findById(int id) {
         return repository.findById(id).orElse(null);
     }
 

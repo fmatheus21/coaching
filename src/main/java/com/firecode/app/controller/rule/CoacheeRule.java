@@ -6,7 +6,6 @@ import com.firecode.app.controller.security.AppUserSecurity;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
 import com.firecode.app.model.service.PersonService;
-import com.firecode.app.model.service.UserService;
 import com.firecode.app.controller.util.AppUtil;
 import com.firecode.app.controller.util.MessageValidationUtil;
 import com.firecode.app.controller.util.PathUtil;
@@ -21,7 +20,6 @@ import com.firecode.app.model.entity.SessionStepMappingEntity;
 import com.firecode.app.model.entity.UserEntity;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
 import com.firecode.app.model.service.CycleGenerateService;
-import com.firecode.app.model.service.CycleService;
 import com.firecode.app.model.service.SessionStepMappingService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -281,6 +279,7 @@ public class CoacheeRule {
 
     }
 
+    /* Busca o registro da tabela cycle_generate pelo idCoachee e idCycle */
     public CycleGenerateDto findCycleByCoachee(int idCoachee, int idCycle, RedirectAttributes attributes) {
      
         var cycleGenerate = cycleGenerateService.findByIdCoacheeAndIdCycle(new CoacheeEntity(idCoachee), new CycleEntity(idCycle));

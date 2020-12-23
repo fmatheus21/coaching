@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `coaching` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `coaching`;
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
 -- Host: localhost    Database: coaching
@@ -26,7 +24,7 @@ DROP TABLE IF EXISTS `class`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `class` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `name` varchar(45) CHARACTER SET utf8 NOT NULL,
   `id_coach` int NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -34,7 +32,7 @@ CREATE TABLE `class` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_coach_idx` (`id_coach`),
   CONSTRAINT `fk_coach` FOREIGN KEY (`id_coach`) REFERENCES `coach` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +61,7 @@ CREATE TABLE `class_coachee_mapping` (
   KEY `fk_class_idx` (`id_class`),
   CONSTRAINT `fk_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_coachee` FOREIGN KEY (`id_coachee`) REFERENCES `coachee` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,8 +90,9 @@ CREATE TABLE `class_session_mapping` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_class_idx` (`id_class`),
   KEY `fk_session_idx` (`id_session`),
+  CONSTRAINT `fk_class_session` FOREIGN KEY (`id_class`) REFERENCES `class` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_session` FOREIGN KEY (`id_session`) REFERENCES `session` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,18 +114,19 @@ DROP TABLE IF EXISTS `coach`;
 CREATE TABLE `coach` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_person` int NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
   `id_created_user` int NOT NULL,
   `id_updated_user` int NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `id_person_UNIQUE` (`id_person`),
   KEY `fk_created_user_idx` (`id_created_user`),
   KEY `fk_user_updated_idx` (`id_updated_user`),
   CONSTRAINT `fk_created_user` FOREIGN KEY (`id_created_user`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_person_coach` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`),
   CONSTRAINT `fk_updated_user` FOREIGN KEY (`id_updated_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,15 +147,15 @@ DROP TABLE IF EXISTS `coachee`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `coachee` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `casual_name` varchar(50) NOT NULL,
+  `id_person` int NOT NULL,
+  `id_gender` int NOT NULL,
+  `casual_name` varchar(50) CHARACTER SET utf8 NOT NULL,
   `date_birth` date NOT NULL,
-  `image` varchar(50) NOT NULL,
+  `image` varchar(50) CHARACTER SET utf8 NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `id_gender` int NOT NULL,
   `id_created_user` int NOT NULL,
   `id_updated_user` int NOT NULL,
-  `id_person` int NOT NULL,
   `search` json NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Id_UNIQUE` (`id`),
@@ -167,7 +167,7 @@ CREATE TABLE `coachee` (
   CONSTRAINT `fk_id_created_user` FOREIGN KEY (`id_created_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_id_updated_user` FOREIGN KEY (`id_updated_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_person_coachee` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 DELAY_KEY_WRITE=1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci DELAY_KEY_WRITE=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `coachee` (
 
 LOCK TABLES `coachee` WRITE;
 /*!40000 ALTER TABLE `coachee` DISABLE KEYS */;
-INSERT INTO `coachee` VALUES (1,'SANDRA','1948-02-17','16067580601231.png','2020-11-30 17:41:00','2020-11-30 17:41:00',2,1,1,2013,'{\"name\": \"sandra giovanna peixoto\", \"email\": \"sandra@domain.com\", \"phone\": \"(51) 9952-8357\", \"document\": \"49971528975\"}'),(2,'ISABELA','1944-04-17','1606758132482.png','2020-12-05 22:14:32','2020-12-05 22:14:32',1,1,1,2014,'{\"name\": \"isabela vera sales\", \"email\": \"isabela@domain.com\", \"phone\": \"(92) 9834-9165\", \"document\": \"65021815547\"}'),(3,'ALEXANDRE','1942-06-14','16067584057211.png','2020-12-05 01:15:28','2020-12-05 01:15:28',2,1,1,2015,'{\"name\": \"alexandre gustavo da cunha peres\", \"email\": \"alexandre@domain.com\", \"phone\": \"(86) 9889-6707\", \"document\": \"79703098363\"}'),(4,'RAIMUNDO','1965-03-20','1606758516387.png','2020-11-30 17:48:36','2020-11-30 17:48:36',2,1,1,2016,'{\"name\": \"raimundo luís pereira\", \"email\": \"raimundo@domain.com\", \"phone\": \"(85) 9814-1656\", \"document\": \"31205619240\"}'),(5,'ELOÁ','1959-10-16','1607129719345.png','2020-12-05 00:55:20','2020-12-05 00:55:20',1,1,1,2017,'{\"name\": \"eloá teresinha baptista\", \"email\": \"eloa@domain.com\", \"phone\": \"(87) 9948-7029\", \"document\": \"72539791840\"}'),(6,'TOMAS','1979-02-23','1607129982134.png','2020-12-05 00:59:42','2020-12-05 00:59:42',2,1,1,2018,'{\"name\": \"tomás lucca ricardo costa\", \"email\": \"tomas@domain.com\", \"phone\": \"(11) 2809-0068\", \"document\": \"58630124121\"}'),(7,'VERA','1990-07-06','1607130700576.png','2020-12-05 01:11:41','2020-12-05 01:11:41',1,1,1,2019,'{\"name\": \"vera lorena andrea nascimento\", \"email\": \"vera@domain.com\", \"phone\": \"(79) 2789-3139\", \"document\": \"14048584154\"}');
+INSERT INTO `coachee` VALUES (1,2013,2,'SANDRA','1948-02-17','16067580601231.png','2020-11-30 17:41:00','2020-11-30 17:41:00',1,1,'{\"name\": \"sandra giovanna peixoto\", \"email\": \"sandra@domain.com\", \"phone\": \"(51) 9952-8357\", \"document\": \"49971528975\"}'),(2,2014,1,'ISABELA','1944-04-17','1606758132482.png','2020-12-05 22:14:32','2020-12-05 22:14:32',1,1,'{\"name\": \"isabela vera sales\", \"email\": \"isabela@domain.com\", \"phone\": \"(92) 9834-9165\", \"document\": \"65021815547\"}'),(3,2015,2,'ALEXANDRE','1942-06-14','16067584057211.png','2020-12-05 01:15:28','2020-12-05 01:15:28',1,1,'{\"name\": \"alexandre gustavo da cunha peres\", \"email\": \"alexandre@domain.com\", \"phone\": \"(86) 9889-6707\", \"document\": \"79703098363\"}'),(4,2016,2,'RAIMUNDO','1965-03-20','1606758516387.png','2020-11-30 17:48:36','2020-11-30 17:48:36',1,1,'{\"name\": \"raimundo luís pereira\", \"email\": \"raimundo@domain.com\", \"phone\": \"(85) 9814-1656\", \"document\": \"31205619240\"}'),(5,2017,1,'ELOÁ','1959-10-16','1607129719345.png','2020-12-05 00:55:20','2020-12-05 00:55:20',1,1,'{\"name\": \"eloá teresinha baptista\", \"email\": \"eloa@domain.com\", \"phone\": \"(87) 9948-7029\", \"document\": \"72539791840\"}'),(6,2018,2,'TOMAS','1979-02-23','1607129982134.png','2020-12-05 00:59:42','2020-12-05 00:59:42',1,1,'{\"name\": \"tomás lucca ricardo costa\", \"email\": \"tomas@domain.com\", \"phone\": \"(11) 2809-0068\", \"document\": \"58630124121\"}');
 /*!40000 ALTER TABLE `coachee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,18 +189,18 @@ DROP TABLE IF EXISTS `contact`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contact` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `facebook` varchar(255) DEFAULT NULL,
-  `instagram` varchar(255) DEFAULT NULL,
-  `twitter` varchar(255) DEFAULT NULL,
   `id_person` int NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `phone` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `facebook` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `instagram` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `twitter` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_person_UNIQUE` (`id_person`),
   CONSTRAINT `fk_person_contact` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2015 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2015 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (1,'FERNANDO.MATHEUSS@HOTMAIL.COM','21981964019',NULL,NULL,NULL,1),(2008,'SANDRA@DOMAIN.COM','5199528357','','','',2013),(2009,'ISABELA@DOMAIN.COM','9298349165','','','',2014),(2010,'ALEXANDRE@DOMAIN.COM','8698896707','','','',2015),(2011,'RAIMUNDO@DOMAIN.COM','8598141656','','','',2016),(2012,'ELOA@DOMAIN.COM','8799487029','','','',2017),(2013,'TOMAS@DOMAIN.COM','1128090068','','','',2018),(2014,'VERA@DOMAIN.COM','7927893139','','','',2019);
+INSERT INTO `contact` VALUES (1,1,'FERNANDO.MATHEUSS@HOTMAIL.COM','21981964019',NULL,NULL,NULL),(2008,2013,'SANDRA@DOMAIN.COM','5199528357','','',''),(2009,2014,'ISABELA@DOMAIN.COM','9298349165','','',''),(2010,2015,'ALEXANDRE@DOMAIN.COM','8698896707','','',''),(2011,2016,'RAIMUNDO@DOMAIN.COM','8598141656','','',''),(2012,2017,'ELOA@DOMAIN.COM','8799487029','','',''),(2013,2018,'TOMAS@DOMAIN.COM','1128090068','','','');
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,6 +237,47 @@ LOCK TABLES `cycle` WRITE;
 /*!40000 ALTER TABLE `cycle` DISABLE KEYS */;
 INSERT INTO `cycle` VALUES (1,'Ciclo 1'),(10,'Ciclo 10'),(2,'Ciclo 2'),(3,'Ciclo 3'),(4,'Ciclo 4'),(5,'Ciclo 5'),(6,'Ciclo 6'),(7,'Ciclo 7'),(8,'Ciclo 8'),(9,'Ciclo 9');
 /*!40000 ALTER TABLE `cycle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cycle_generate`
+--
+
+DROP TABLE IF EXISTS `cycle_generate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cycle_generate` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cycle` int NOT NULL,
+  `id_coachee` int NOT NULL,
+  `cycle_coache` int NOT NULL COMMENT 'Juncao dos campos id_cycle e id_coache',
+  `id_created_user` int NOT NULL,
+  `id_updated_user` int NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `done` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `idcycle_idcoache_UNIQUE` (`cycle_coache`),
+  KEY `fk_cycle_generate_idx` (`id_cycle`),
+  KEY `fk_coachee_generate_idx` (`id_coachee`),
+  KEY `fk_user1_cycle_idx` (`id_created_user`),
+  KEY `fk_user2_cycle_idx` (`id_updated_user`),
+  CONSTRAINT `fk_coachee_generate` FOREIGN KEY (`id_coachee`) REFERENCES `coachee` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_cycle_generate` FOREIGN KEY (`id_cycle`) REFERENCES `cycle` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `fk_user1_cycle` FOREIGN KEY (`id_created_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `fk_user2_cycle` FOREIGN KEY (`id_updated_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cycle_generate`
+--
+
+LOCK TABLES `cycle_generate` WRITE;
+/*!40000 ALTER TABLE `cycle_generate` DISABLE KEYS */;
+INSERT INTO `cycle_generate` VALUES (31,1,2,12,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0);
+/*!40000 ALTER TABLE `cycle_generate` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -407,7 +448,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,1,'FERNANDO BRAGA MATHEUS','11569191708'),(2013,1,'SANDRA GIOVANNA PEIXOTO','49971528975'),(2014,1,'ISABELA VERA SALES','65021815547'),(2015,1,'ALEXANDRE GUSTAVO DA CUNHA PERES','79703098363'),(2016,1,'RAIMUNDO LUÍS PEREIRA','31205619240'),(2017,1,'ELOÁ TERESINHA BAPTISTA','72539791840'),(2018,1,'TOMÁS LUCCA RICARDO COSTA','58630124121'),(2019,1,'VERA LORENA ANDREA NASCIMENTO','14048584154');
+INSERT INTO `person` VALUES (1,1,'FERNANDO BRAGA MATHEUS','11569191708'),(2013,1,'SANDRA GIOVANNA PEIXOTO','49971528975'),(2014,1,'ISABELA VERA SALES','65021815547'),(2015,1,'ALEXANDRE GUSTAVO DA CUNHA PERES','79703098363'),(2016,1,'RAIMUNDO LUÍS PEREIRA','31205619240'),(2017,1,'ELOÁ TERESINHA BAPTISTA','72539791840'),(2018,1,'TOMÁS LUCCA RICARDO COSTA','58630124121');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,13 +505,52 @@ INSERT INTO `session` VALUES (1,'SESSÃO 1'),(10,'SESSÃO 10'),(2,'SESSÃO 2'),(
 UNLOCK TABLES;
 
 --
--- Table structure for table `session_stap_mapping`
+-- Table structure for table `session_generate`
 --
 
-DROP TABLE IF EXISTS `session_stap_mapping`;
+DROP TABLE IF EXISTS `session_generate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `session_stap_mapping` (
+CREATE TABLE `session_generate` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cycle_generate` int NOT NULL,
+  `id_session_step_mapping` int NOT NULL,
+  `id_created_user` int NOT NULL,
+  `id_updated_user` int NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `done` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_session_stap_mapping_idx` (`id_session_step_mapping`),
+  KEY `fk_created_cycle_idx` (`id_created_user`),
+  KEY `fk_updated_cycle_idx` (`id_updated_user`),
+  KEY `fk_cycle_generate_idx` (`id_cycle_generate`),
+  CONSTRAINT `fk_created_cycle` FOREIGN KEY (`id_created_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `fk_cycle_generate_session` FOREIGN KEY (`id_cycle_generate`) REFERENCES `cycle_generate` (`id`),
+  CONSTRAINT `fk_session_step_mapping` FOREIGN KEY (`id_session_step_mapping`) REFERENCES `session_step_mapping` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `fk_updated_cycle` FOREIGN KEY (`id_updated_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `session_generate`
+--
+
+LOCK TABLES `session_generate` WRITE;
+/*!40000 ALTER TABLE `session_generate` DISABLE KEYS */;
+INSERT INTO `session_generate` VALUES (1,31,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(2,31,2,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(3,31,3,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(4,31,4,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(5,31,5,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(6,31,6,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(7,31,7,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(8,31,8,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0);
+/*!40000 ALTER TABLE `session_generate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `session_step_mapping`
+--
+
+DROP TABLE IF EXISTS `session_step_mapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `session_step_mapping` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_session` int NOT NULL,
   `id_step` int NOT NULL,
@@ -485,13 +565,13 @@ CREATE TABLE `session_stap_mapping` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `session_stap_mapping`
+-- Dumping data for table `session_step_mapping`
 --
 
-LOCK TABLES `session_stap_mapping` WRITE;
-/*!40000 ALTER TABLE `session_stap_mapping` DISABLE KEYS */;
-INSERT INTO `session_stap_mapping` VALUES (1,1,1,1),(2,1,2,2),(3,1,3,3),(4,1,4,4),(5,1,5,5),(6,1,6,6),(7,1,7,7),(8,1,8,8),(9,2,9,1),(10,2,10,2),(11,2,11,3),(12,2,12,4),(13,2,3,5),(14,2,4,6),(15,2,5,7),(16,2,6,8),(17,2,7,9),(18,2,8,10),(19,2,2,11),(20,3,9,1),(21,3,10,2),(22,3,11,3),(23,3,12,4),(24,3,2,5),(25,3,4,6),(26,3,5,7),(27,3,6,8),(28,3,7,9),(29,3,8,10),(30,3,3,11),(31,4,9,1),(32,4,10,2),(33,4,11,3),(34,4,12,4),(35,4,3,5),(36,4,4,6),(37,4,5,7),(38,4,6,8),(39,4,7,9),(40,4,8,10),(41,4,2,11),(42,5,9,1),(43,5,10,2),(44,5,11,3),(45,5,12,4),(46,5,2,5),(47,5,4,6),(48,5,5,7),(49,5,6,8),(50,5,7,9),(51,5,8,10),(52,5,3,11),(53,6,9,1),(54,6,10,2),(55,6,11,3),(56,6,12,4),(57,6,3,5),(58,6,4,6),(59,6,5,7),(60,6,6,8),(61,6,7,9),(62,6,8,10),(63,6,2,11),(64,7,9,1),(65,7,10,2),(66,7,11,3),(67,7,12,4),(68,7,2,5),(69,7,4,6),(70,7,5,7),(71,7,6,8),(72,7,7,9),(73,7,8,10),(74,7,3,11),(75,8,9,1),(76,8,10,2),(77,8,11,3),(78,8,12,4),(79,8,3,5),(80,8,4,6),(81,8,5,7),(82,8,6,8),(83,8,7,9),(84,8,8,10),(85,8,2,11),(86,9,9,1),(87,9,10,2),(88,9,11,3),(89,9,12,4),(90,9,2,5),(91,9,4,6),(92,9,5,7),(93,9,6,8),(94,9,7,9),(95,9,8,10),(96,9,3,11),(97,10,9,1),(98,10,10,2),(99,10,11,3),(100,10,12,4),(101,10,3,5),(102,10,4,6),(103,10,5,7),(104,10,6,8),(105,10,7,9),(106,10,8,10),(107,10,2,11);
-/*!40000 ALTER TABLE `session_stap_mapping` ENABLE KEYS */;
+LOCK TABLES `session_step_mapping` WRITE;
+/*!40000 ALTER TABLE `session_step_mapping` DISABLE KEYS */;
+INSERT INTO `session_step_mapping` VALUES (1,1,1,1),(2,1,2,2),(3,1,3,3),(4,1,4,4),(5,1,5,5),(6,1,6,6),(7,1,7,7),(8,1,8,8),(9,2,9,1),(10,2,10,2),(11,2,11,3),(12,2,12,4),(13,2,3,5),(14,2,4,6),(15,2,5,7),(16,2,6,8),(17,2,7,9),(18,2,8,10),(19,2,2,11),(20,3,9,1),(21,3,10,2),(22,3,11,3),(23,3,12,4),(24,3,2,5),(25,3,4,6),(26,3,5,7),(27,3,6,8),(28,3,7,9),(29,3,8,10),(30,3,3,11),(31,4,9,1),(32,4,10,2),(33,4,11,3),(34,4,12,4),(35,4,3,5),(36,4,4,6),(37,4,5,7),(38,4,6,8),(39,4,7,9),(40,4,8,10),(41,4,2,11),(42,5,9,1),(43,5,10,2),(44,5,11,3),(45,5,12,4),(46,5,2,5),(47,5,4,6),(48,5,5,7),(49,5,6,8),(50,5,7,9),(51,5,8,10),(52,5,3,11),(53,6,9,1),(54,6,10,2),(55,6,11,3),(56,6,12,4),(57,6,3,5),(58,6,4,6),(59,6,5,7),(60,6,6,8),(61,6,7,9),(62,6,8,10),(63,6,2,11),(64,7,9,1),(65,7,10,2),(66,7,11,3),(67,7,12,4),(68,7,2,5),(69,7,4,6),(70,7,5,7),(71,7,6,8),(72,7,7,9),(73,7,8,10),(74,7,3,11),(75,8,9,1),(76,8,10,2),(77,8,11,3),(78,8,12,4),(79,8,3,5),(80,8,4,6),(81,8,5,7),(82,8,6,8),(83,8,7,9),(84,8,8,10),(85,8,2,11),(86,9,9,1),(87,9,10,2),(88,9,11,3),(89,9,12,4),(90,9,2,5),(91,9,4,6),(92,9,5,7),(93,9,6,8),(94,9,7,9),(95,9,8,10),(96,9,3,11),(97,10,9,1),(98,10,10,2),(99,10,11,3),(100,10,12,4),(101,10,3,5),(102,10,4,6),(103,10,5,7),(104,10,6,8),(105,10,7,9),(106,10,8,10),(107,10,2,11);
+/*!40000 ALTER TABLE `session_step_mapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -561,10 +641,10 @@ DROP TABLE IF EXISTS `team`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `team` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `id_coach` int NOT NULL,
   `name` varchar(45) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `id_coach` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_coach_idx` (`id_coach`),
@@ -619,14 +699,14 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user` varchar(45) NOT NULL,
+  `id_person` int NOT NULL,
+  `id_status` int NOT NULL,
+  `username` varchar(45) NOT NULL,
   `password` varchar(100) NOT NULL,
   `avatar` varchar(30) NOT NULL,
-  `id_status` int NOT NULL,
-  `id_person` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Id_UNIQUE` (`id`),
-  UNIQUE KEY `Usuario_UNIQUE` (`user`),
+  UNIQUE KEY `Usuario_UNIQUE` (`username`),
   UNIQUE KEY `Id_Pessoa_UNIQUE` (`id_person`),
   KEY `fk_status_usuario_idx` (`id_status`),
   CONSTRAINT `fk_person` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`) ON DELETE CASCADE,
@@ -640,7 +720,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'FMATHEUS','$2a$10$CsVz6cKsdfWBtXu0Ulzp2.vfL0tVRXiEJ9ANOA1WXjYOxpYeqIu.C','5442147.png',1,1);
+INSERT INTO `user` VALUES (1,1,1,'FMATHEUS','$2a$10$CsVz6cKsdfWBtXu0Ulzp2.vfL0tVRXiEJ9ANOA1WXjYOxpYeqIu.C','5442147.png');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -709,4 +789,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-08 13:44:36
+-- Dump completed on 2020-12-21 20:05:27
