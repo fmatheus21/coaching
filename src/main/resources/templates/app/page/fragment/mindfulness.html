@@ -1,4 +1,37 @@
-<div id="nine" th:fragment="fragment"  class="tab-pane fade" role="tabpanel" aria-labelledby="nine-tab">
+<div id="ref-9" th:fragment="fragment" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-9">
+
+    <div class="form-group row">
+        <div class="col-sm-12 col-md-8 col-lg-8 form-group-sub">
+            <label class="form-control-label">Mindfulness<span
+                    class="asterisco">*</span></label>
+            <div class="input-group input-group-solid">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i
+                            class="flaticon-edit-1 icon-lg"></i></span>
+                </div>
+                <select class="form-control selectpicker"
+                        data-size="7" data-live-search="true">
+                    <option value="0">Selecione</option>
+                    <option th:each="oject : ${listExerciseMindfulness}"
+                            th:value="${oject.id}" 
+                            th:text="${oject.name}" 
+                            selected> 
+                    </option>
+                </select>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-light-primary font-weight-bold">
+                        <i class="fas fa-plus-circle"></i>Adicionar
+                    </button>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+
+
+</div>
+
+<!--<div id="nine" th:fragment="fragment"  class="tab-pane fade" role="tabpanel" aria-labelledby="nine-tab">
     
     <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="accordionMindfulness">
 
@@ -101,3 +134,4 @@
 </div>
 
 
+-->

@@ -2,6 +2,7 @@ package com.firecode.app.controller.rule;
 
 import com.firecode.app.controller.dto.CoacheeDto;
 import com.firecode.app.controller.dto.CycleGenerateDto;
+import com.firecode.app.controller.dto.SessionGenerateDto;
 import com.firecode.app.controller.security.AppUserSecurity;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
@@ -14,12 +15,14 @@ import com.firecode.app.model.entity.CoacheeEntity;
 import com.firecode.app.model.entity.ContactEntity;
 import com.firecode.app.model.entity.CycleEntity;
 import com.firecode.app.model.entity.CycleGenerateEntity;
+import com.firecode.app.model.entity.ExerciseMindfulnessEntity;
 import com.firecode.app.model.entity.PersonEntity;
 import com.firecode.app.model.entity.SessionEntity;
 import com.firecode.app.model.entity.SessionStepMappingEntity;
 import com.firecode.app.model.entity.UserEntity;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
 import com.firecode.app.model.service.CycleGenerateService;
+import com.firecode.app.model.service.ExerciseMindfulnessService;
 import com.firecode.app.model.service.SessionStepMappingService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +71,8 @@ public class CoacheeRule {
 
     @Autowired
     private CycleGenerateService cycleGenerateService;
+    
+    @Autowired private ExerciseMindfulnessService exerciseMindfulnessService;
 
     public CoacheeDto init(HttpServletRequest request, HttpServletResponse response) {
         if (cookieRule.readerCookie(request, response) == null) {
@@ -280,7 +285,7 @@ public class CoacheeRule {
     }
 
     /* Busca o registro da tabela cycle_generate pelo idCoachee e idCycle */
-    public CycleGenerateDto findCycleByCoachee(int idCoachee, int idCycle, RedirectAttributes attributes) {
+ /* public CycleGenerateDto findCycleByCoachee(int idCoachee, int idCycle, RedirectAttributes attributes) {
      
         var cycleGenerate = cycleGenerateService.findByIdCoacheeAndIdCycle(new CoacheeEntity(idCoachee), new CycleEntity(idCycle));
 
@@ -289,6 +294,17 @@ public class CoacheeRule {
         }
 
         return CycleGenerateDto.converterObject(cycleGenerate);
+
+    }*/
+    public CycleGenerateEntity findCycleByCoachee(int idCoachee, int idCycle, RedirectAttributes attributes) {
+
+        var cycleGenerate = cycleGenerateService.findByIdCoacheeAndIdCycle(new CoacheeEntity(idCoachee), new CycleEntity(idCycle));
+
+        if (cycleGenerate == null) {
+            return null;
+        }
+
+        return cycleGenerate;
 
     }
 
@@ -311,6 +327,11 @@ public class CoacheeRule {
         return fileName;
 
     }
+    
+    
+    public List<ExerciseMindfulnessEntity> findAllMindfulnessExercise(){
+        return exerciseMindfulnessService.findAll("name");
+    }
 
     public String validationRedirect(String redirectSuccess, String redirectFailure, Object object, RedirectAttributes attributes) {
 
@@ -320,6 +341,11 @@ public class CoacheeRule {
         }
 
         return redirectSuccess;
+    }
+
+    public List<SessionGenerateDto> listSessionGenerate(CycleGenerateEntity cycleGenerate, int idSession) {
+        var sessionGenerateDto = new SessionGenerateDto();
+        return sessionGenerateDto.listGeneratedSession(cycleGenerate, idSession);
     }
 
 }

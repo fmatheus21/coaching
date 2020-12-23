@@ -2,7 +2,9 @@ package com.firecode.app.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -66,6 +69,9 @@ public class SessionGenerateEntity implements Serializable {
     @JoinColumn(name = "id_session", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private SessionEntity idSession;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSessionGenerate")
+    private Collection<SessionGenerateMindfulnessEntity> sessionGenerateMindfulnessEntityCollection;
 
     public SessionGenerateEntity() {
     }
@@ -144,6 +150,14 @@ public class SessionGenerateEntity implements Serializable {
 
     public void setIdSession(SessionEntity idSession) {
         this.idSession = idSession;
+    }
+
+    public Collection<SessionGenerateMindfulnessEntity> getSessionGenerateMindfulnessEntityCollection() {
+        return sessionGenerateMindfulnessEntityCollection;
+    }
+
+    public void setSessionGenerateMindfulnessEntityCollection(Collection<SessionGenerateMindfulnessEntity> sessionGenerateMindfulnessEntityCollection) {
+        this.sessionGenerateMindfulnessEntityCollection = sessionGenerateMindfulnessEntityCollection;
     }
 
     @Override

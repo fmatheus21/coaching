@@ -247,6 +247,10 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     cursor: no-drop;
 }
 
+.input-group > .input-group-append > .btn.btn-light-primary {
+    border: solid #E1F0FF;
+}
+
 @media only screen and (max-width: 600px) {
     .table tbody td .symbol{
         display: none;

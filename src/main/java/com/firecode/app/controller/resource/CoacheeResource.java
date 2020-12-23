@@ -141,6 +141,8 @@ public class CoacheeResource {
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("modelCycleGenerate", cycleGenerate);
+        model.addAttribute("modelSessionGenerate", coacheeRule.listSessionGenerate(cycleGenerate, idSession));
+        model.addAttribute("listExerciseMindfulness", coacheeRule.findAllMindfulnessExercise());
 
         return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, cycleGenerate, attributes);
 

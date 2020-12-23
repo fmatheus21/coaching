@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `coaching` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `coaching`;
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
 -- Host: localhost    Database: coaching
@@ -515,6 +517,7 @@ CREATE TABLE `session_generate` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_cycle_generate` int NOT NULL,
   `id_session_step_mapping` int NOT NULL,
+  `id_session` int NOT NULL,
   `id_created_user` int NOT NULL,
   `id_updated_user` int NOT NULL,
   `created_at` datetime NOT NULL,
@@ -526,8 +529,10 @@ CREATE TABLE `session_generate` (
   KEY `fk_created_cycle_idx` (`id_created_user`),
   KEY `fk_updated_cycle_idx` (`id_updated_user`),
   KEY `fk_cycle_generate_idx` (`id_cycle_generate`),
+  KEY `fk_session_generate_idx` (`id_session`),
   CONSTRAINT `fk_created_cycle` FOREIGN KEY (`id_created_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_cycle_generate_session` FOREIGN KEY (`id_cycle_generate`) REFERENCES `cycle_generate` (`id`),
+  CONSTRAINT `fk_session_generate` FOREIGN KEY (`id_session`) REFERENCES `session` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_session_step_mapping` FOREIGN KEY (`id_session_step_mapping`) REFERENCES `session_step_mapping` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_updated_cycle` FOREIGN KEY (`id_updated_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -539,7 +544,7 @@ CREATE TABLE `session_generate` (
 
 LOCK TABLES `session_generate` WRITE;
 /*!40000 ALTER TABLE `session_generate` DISABLE KEYS */;
-INSERT INTO `session_generate` VALUES (1,31,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(2,31,2,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(3,31,3,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(4,31,4,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(5,31,5,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(6,31,6,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(7,31,7,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(8,31,8,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0);
+INSERT INTO `session_generate` VALUES (1,31,1,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(2,31,2,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(3,31,3,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(4,31,4,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(5,31,5,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(6,31,6,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(7,31,7,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0),(8,31,8,1,1,1,'2020-12-21 13:19:49','2020-12-21 13:19:49',0);
 /*!40000 ALTER TABLE `session_generate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -789,4 +794,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-21 20:05:27
+-- Dump completed on 2020-12-23  3:57:46
