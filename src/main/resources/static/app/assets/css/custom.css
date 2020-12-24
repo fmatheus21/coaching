@@ -251,6 +251,8 @@ html, body, #kt_content, #container, #row, .card.card-custom {
     border: solid #E1F0FF;
 }
 
+
+
 @media only screen and (max-width: 600px) {
     .table tbody td .symbol{
         display: none;

@@ -13,28 +13,74 @@
                     <!-- Col -->
                     <div class="col-lg-12">
 
-                      <!--  <div class="form-group row">
-                            <div class="col-lg-4 form-group-sub">
-                                <label class="form-control-label">Sessão<span
-                                        class="asterisco">*</span></label>
-                                <div class="input-group input-group-solid">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"> <i
-                                                class="flaticon-edit-1 icon-lg"></i></span>
-                                    </div>
-                                    <select class="form-control selectpicker"
-                                            data-size="7" data-live-search="true">
-                                        <option value="0">Selecione</option>
-                                        <option th:each="oject : ${modelCycleGenerate.listSession}"
-                                                th:value="${oject.id}" 
-                                                th:text="${oject.name}" 
-                                                selected> 
-                                        </option>
-                                    </select>
+
+                         <!-- Timeline -->  
+                        <div class="timeline timeline-6 mt-3">
+
+                            <!-- Timeline Item -->                
+                            <div class="timeline-item align-items-start">
+                                <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg"></div>                   
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-primary icon-xl"></i>
+                                </div>
+                                <div class="timeline-content font-weight-mormal font-size-lg text-muted pl-3">
+                                    <span class="text-primary"><b>Coachee: </b></span>[[${modelCycleGenerate.idCoachee.idPerson.nameCompanyname}]]
                                 </div>
                             </div>
+                            <!-- Timeline Item -->  
+                            
+                             <!-- Timeline Item -->                 
+                            <div class="timeline-item align-items-start">
+                                <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg"></div>                   
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-danger icon-xl"></i>
+                                </div>
+                                <div class="timeline-content font-weight-mormal font-size-lg text-muted pl-3">
+                                    <span class="text-danger"><b>Ciclo: </b></span>[[${modelCycleGenerate.idCycle.name}]]
+                                </div>
+                            </div>
+                             <!-- Timeline Item -->  
+                             
+                             <!-- Timeline Item -->                  
+                            <div class="timeline-item align-items-start">
+                                <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg"></div>                   
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-info icon-xl"></i>
+                                </div>
+                                <div class="timeline-content font-weight-mormal font-size-lg text-muted pl-3">
+                                    <span class="text-info"><b>Sessão: </b></span>[[${listSessionGenerate[1].session}]]
+                                </div>
+                            </div>
+                             <!-- Timeline Item -->  
+                          
+                        </div>
+                          <!-- Timeline -->  
+                          
+                          <br/><br/>
+                         
 
-                        </div> -->
+                        <!--  <div class="form-group row">
+                              <div class="col-lg-4 form-group-sub">
+                                  <label class="form-control-label">Sessão<span
+                                          class="asterisco">*</span></label>
+                                  <div class="input-group input-group-solid">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"> <i
+                                                  class="flaticon-edit-1 icon-lg"></i></span>
+                                      </div>
+                                      <select class="form-control selectpicker"
+                                              data-size="7" data-live-search="true">
+                                          <option value="0">Selecione</option>
+                                          <option th:each="oject : ${modelCycleGenerate.listSession}"
+                                                  th:value="${oject.id}" 
+                                                  th:text="${oject.name}" 
+                                                  selected> 
+                                          </option>
+                                      </select>
+                                  </div>
+                              </div>
+  
+                          </div> -->
 
 
 
@@ -86,8 +132,8 @@
 
                                             <div class="col-4">
                                                 <ul class="nav flex-column nav-pills">
-                                                    
-                                                    <li class="nav-item mb-2" th:each="oject : ${modelSessionGenerate}">
+
+                                                    <li class="nav-item mb-2" th:each="oject : ${listSessionGenerate}">
                                                         <a th:id="@{'tab-'+${oject.idStep}}" class="nav-link" data-toggle="tab" th:href="@{'#ref-'+${oject.idStep}}">
                                                             <span class="nav-icon">[[${oject.order}]]&nbsp;&nbsp;&nbsp;|</span>
                                                             <span class="nav-text">[[${oject.step}]]</span>
@@ -102,8 +148,8 @@
                                                             </span>
                                                         </a>
                                                     </li>
-                                                   
-                                                    
+
+
                                                     <!--<li class="nav-item mb-2">
                                                         <a id="one-tab" class="nav-link active" data-toggle="tab" href="#one"   >
                                                             <span class="nav-icon">1&nbsp;&nbsp;&nbsp;|</span>
@@ -256,7 +302,7 @@
                                                             </span>
                                                         </a>
                                                     </li>-->
-                                                    
+
                                                 </ul>
                                             </div>
 

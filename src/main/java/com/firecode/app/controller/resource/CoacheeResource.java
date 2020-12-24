@@ -1,6 +1,7 @@
 package com.firecode.app.controller.resource;
 
 import com.firecode.app.controller.dto.CoacheeDto;
+import com.firecode.app.controller.dto.SessionGenerateDto;
 import com.firecode.app.controller.rule.CoacheeRule;
 import com.firecode.app.controller.rule.FilterRule;
 import com.firecode.app.controller.rule.GlobalRule;
@@ -8,6 +9,7 @@ import com.firecode.app.controller.security.AppUserSecurity;
 import com.firecode.app.model.service.GenderService;
 import com.firecode.app.controller.util.UploadMultipartFileUtil;
 import com.firecode.app.model.repository.filter.RepositoryFilter;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -132,6 +134,8 @@ public class CoacheeResource {
 
         var cycleGenerate = coacheeRule.findCycleByCoachee(idCoachee, idCycle, attributes);
 
+        List<SessionGenerateDto> listSessionGenerate = coacheeRule.listSessionGenerate(cycleGenerate, idSession);
+
         globalRule.model(model, appUserSecurity);
         model.addAttribute("pageTitle", "Sessões");
         model.addAttribute("headerTitle", "Sessões");
@@ -141,8 +145,9 @@ public class CoacheeResource {
         model.addAttribute("buttonAdd", false);
         model.addAttribute("buttonAddLink", "/coachees/create");
         model.addAttribute("modelCycleGenerate", cycleGenerate);
-        model.addAttribute("modelSessionGenerate", coacheeRule.listSessionGenerate(cycleGenerate, idSession));
-        model.addAttribute("listExerciseMindfulness", coacheeRule.findAllMindfulnessExercise());
+        model.addAttribute("listSessionGenerate", listSessionGenerate);
+        model.addAttribute("listExerciseMindfulness", coacheeRule.findAllExerciseMindfulness());
+        model.addAttribute("listSessionGenerateMindfulness", coacheeRule.findAllSessionGenerateMindfulness(cycleGenerate));
 
         return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, cycleGenerate, attributes);
 

@@ -42,7 +42,7 @@ public class SessionGenerateDto {
     @Setter
     private int order;
 
-    public List<SessionGenerateDto> listGeneratedSession(CycleGenerateEntity cycleGenerate, int idSession) {
+    public List<SessionGenerateDto> listSessionGenerate(CycleGenerateEntity cycleGenerate, int idSession) {
 
         /* Retorna uma lista da tabela session_generate filtrado pelo idSession informado */
         List<SessionGenerateEntity> list = cycleGenerate.getSessionGenerateEntityCollection()
@@ -69,6 +69,8 @@ public class SessionGenerateDto {
         sessionGenerateDto.setStep(sessionGenerate.getIdSessionStepMapping().getIdStep().getName());
         sessionGenerateDto.setOrder(sessionGenerate.getIdSessionStepMapping().getOrder());
         sessionGenerateDto.setIdStep(sessionGenerate.getIdSessionStepMapping().getIdStep().getId());
+        sessionGenerateDto.setSession(sessionGenerate.getIdSession().getName());
+        sessionGenerateDto.setIdSessionStepMapping(sessionGenerate.getIdSessionStepMapping().getId());
         if (sessionGenerate.getDone() == true) {
             sessionGenerateDto.setDone(DoneEnum.CONCLUIDO.getDescription());
         } else if (sessionGenerate.getDone() == false) {

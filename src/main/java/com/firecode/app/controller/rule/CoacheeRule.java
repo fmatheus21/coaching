@@ -3,6 +3,7 @@ package com.firecode.app.controller.rule;
 import com.firecode.app.controller.dto.CoacheeDto;
 import com.firecode.app.controller.dto.CycleGenerateDto;
 import com.firecode.app.controller.dto.SessionGenerateDto;
+import com.firecode.app.controller.dto.SessionGenerateMindfulnessDto;
 import com.firecode.app.controller.security.AppUserSecurity;
 import com.firecode.app.model.service.CoacheeService;
 import com.firecode.app.model.service.ContactService;
@@ -71,8 +72,9 @@ public class CoacheeRule {
 
     @Autowired
     private CycleGenerateService cycleGenerateService;
-    
-    @Autowired private ExerciseMindfulnessService exerciseMindfulnessService;
+
+    @Autowired
+    private ExerciseMindfulnessService exerciseMindfulnessService;
 
     public CoacheeDto init(HttpServletRequest request, HttpServletResponse response) {
         if (cookieRule.readerCookie(request, response) == null) {
@@ -327,9 +329,8 @@ public class CoacheeRule {
         return fileName;
 
     }
-    
-    
-    public List<ExerciseMindfulnessEntity> findAllMindfulnessExercise(){
+
+    public List<ExerciseMindfulnessEntity> findAllExerciseMindfulness() {
         return exerciseMindfulnessService.findAll("name");
     }
 
@@ -345,7 +346,12 @@ public class CoacheeRule {
 
     public List<SessionGenerateDto> listSessionGenerate(CycleGenerateEntity cycleGenerate, int idSession) {
         var sessionGenerateDto = new SessionGenerateDto();
-        return sessionGenerateDto.listGeneratedSession(cycleGenerate, idSession);
+        return sessionGenerateDto.listSessionGenerate(cycleGenerate, idSession);
+    }
+
+    public List<SessionGenerateMindfulnessDto> findAllSessionGenerateMindfulness(CycleGenerateEntity cycleGenerate) {
+        var dto = new SessionGenerateMindfulnessDto();
+        return dto.listSessionGenerateMindfulnessDto(cycleGenerate);
     }
 
 }
