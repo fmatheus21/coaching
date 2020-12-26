@@ -501,6 +501,56 @@ var KTFormControls = function () {
         });
     };
     /* form-team-coaching-edit */
+    
+    
+     /* form-initMindfulness */
+    var initMindfulness = function (element) {
+        FormValidation.formValidation(document.getElementById(element), {
+            fields: {
+                   idExerciseMindfulness: {
+                    validators: {
+                        greaterThan: {
+                            message: 'Preenchimento obrigatório.',
+                            min: 1
+                        }
+                    }
+                },
+
+            },
+            plugins: {
+                trigger: new FormValidation.plugins.Trigger,
+                bootstrap: new FormValidation.plugins.Bootstrap,
+
+                // Valide campos ao clicar no botão Enviar
+                submitButton: new FormValidation.plugins.SubmitButton(),
+
+                // Envie o formulário quando todos os campos forem válidos
+                defaultSubmit: new FormValidation.plugins.DefaultSubmit
+
+            }
+        }).on('core.form.invalid', function () {
+            Swal.fire({
+                text: "Existems campos que são de preenchimentos obrigatórios.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "OK, entendi!",
+                customClass: {
+                    confirmButton: "btn font-weight-bold btn-light"
+                }
+            }).then(function () {
+                KTUtil.scrollTop();
+            });
+        }).on('core.form.valid', function () {
+            KTApp.block('body', {
+                overlayColor: '#1bc5bd',
+                opacity: 0.1,
+                state: 'success',
+                size: 'lg', //available custom sizes: sm|lg
+                message: 'Processando...'
+            });
+        });
+    };
+    /* form-mindfulness */
 
 
     return {
@@ -522,6 +572,12 @@ var KTFormControls = function () {
             if (document.getElementById('form-team-coaching-edit')) {
                 initTeamCoachingEdit('form-team-coaching-edit');
             }
+             if (document.getElementById('form-mindfulness')) {
+                initMindfulness('form-mindfulness');
+                console.log('form-mindfulness...............')
+            }
+            
+            
 
         }
     };

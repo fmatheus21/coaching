@@ -2,6 +2,7 @@ package com.firecode.app.controller.resource;
 
 import com.firecode.app.controller.dto.CoacheeDto;
 import com.firecode.app.controller.dto.SessionGenerateDto;
+import com.firecode.app.controller.dto.SessionGenerateMindfulnessDto;
 import com.firecode.app.controller.rule.CoacheeRule;
 import com.firecode.app.controller.rule.FilterRule;
 import com.firecode.app.controller.rule.GlobalRule;
@@ -136,6 +137,8 @@ public class CoacheeResource {
 
         List<SessionGenerateDto> listSessionGenerate = coacheeRule.listSessionGenerate(cycleGenerate, idSession);
 
+        List<SessionGenerateMindfulnessDto> listSessionGenerateMindfulness = coacheeRule.findAllSessionGenerateMindfulness(cycleGenerate);
+
         globalRule.model(model, appUserSecurity);
         model.addAttribute("pageTitle", "Sessões");
         model.addAttribute("headerTitle", "Sessões");
@@ -147,7 +150,8 @@ public class CoacheeResource {
         model.addAttribute("modelCycleGenerate", cycleGenerate);
         model.addAttribute("listSessionGenerate", listSessionGenerate);
         model.addAttribute("listExerciseMindfulness", coacheeRule.findAllExerciseMindfulness());
-        model.addAttribute("listSessionGenerateMindfulness", coacheeRule.findAllSessionGenerateMindfulness(cycleGenerate));
+        model.addAttribute("listSessionGenerateMindfulness", listSessionGenerateMindfulness);
+        model.addAttribute("modelGenerateMindfulnessDto", new SessionGenerateMindfulnessDto().newSessionGenerateMindfulness(listSessionGenerateMindfulness));
 
         return coacheeRule.validationRedirect(redirectSuccess, redirectFailure, cycleGenerate, attributes);
 

@@ -1,38 +1,45 @@
 <div id="ref-9" th:fragment="fragment" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-9">
 
-    <div class="form-group row">
-        <div class="col-sm-12 col-md-8 col-lg-8 form-group-sub">
-            <label class="form-control-label">Mindfulness<span
-                    class="asterisco">*</span></label>
-            <div class="input-group input-group-solid">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i
-                            class="flaticon-interface-10 icon-lg"></i></span>
-                </div>
-                <select class="form-control selectpicker"
-                        data-size="7" data-live-search="true">
-                    <option value="0" selected>Selecione</option>
-                    <option th:each="oject : ${listExerciseMindfulness}"
-                            th:value="${oject.id}" 
-                            th:text="${oject.name}"> 
-                    </option>
-                </select>
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-light-primary font-weight-bold">
-                        <i class="fas fa-plus-circle"></i>Adicionar
-                    </button>
+    [[${modelGenerateMindfulnessDto.idSessionGenerate}]]
+     [[${modelGenerateMindfulnessDto.idExerciseMindfulness}]]
+   
+     <form id="form-mindfulness" th:action="@{/session/generate/mindfulness}" method="post">
+        
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-8 col-lg-8 form-group-sub">
+                <label class="form-control-label">Mindfulness<span
+                        class="asterisco">*</span></label>
+                <div class="input-group input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i
+                                class="flaticon-interface-10 icon-lg"></i></span>
+                    </div>
+                    <select class="form-control selectpicker"
+                            data-size="7" data-live-search="true" th:field="*{modelGenerateMindfulnessDto.idExerciseMindfulness}">
+                        <option value="0" selected>Selecione</option>
+                        <option th:each="oject : ${listExerciseMindfulness}"
+                                th:value="${oject.id}" 
+                                th:text="${oject.name}"> 
+                        </option>
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-light-primary font-weight-bold">
+                            <i class="fas fa-plus-circle"></i>Adicionar
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
+    </form>
 
 
     <div class="form-group row">
         <div class="col-lg-12 form-group-sub" th:each="object :${listSessionGenerateMindfulness}">  
             <label class="form-control-label"><b>Mindfulness:</b> [[${object.exercise}]]
                 <span id="mindfulness"></span></label>
-                <textarea class="form-control" th:text="${object.learning}" rows="5" disabled></textarea>
+            <textarea class="form-control" th:text="${object.learning}" rows="5" th:disabled="${object.disabledComponent}"></textarea>
         </div>
     </div>
 

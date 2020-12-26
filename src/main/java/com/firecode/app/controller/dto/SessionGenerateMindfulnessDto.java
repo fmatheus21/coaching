@@ -5,7 +5,6 @@ import com.firecode.app.model.entity.ExerciseMindfulnessEntity;
 import com.firecode.app.model.entity.SessionGenerateEntity;
 import com.firecode.app.model.entity.SessionGenerateMindfulnessEntity;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
@@ -44,6 +43,9 @@ public class SessionGenerateMindfulnessDto {
     @Getter
     @Setter
     private String exercise;
+    @Getter
+    @Setter
+    private boolean disabledComponent;
 
     public SessionGenerateMindfulnessEntity create(SessionGenerateMindfulnessDto dto) {
 
@@ -73,6 +75,22 @@ public class SessionGenerateMindfulnessDto {
 
     }
 
+    /* Cria uma instancia de SessionGenerateMindfulnessDto e adiciona os valores de IdSessionGenerate e IdExerciseMindfulness
+    do coachee que esta sendo consultado
+     */
+    public SessionGenerateMindfulnessDto newSessionGenerateMindfulness(List<SessionGenerateMindfulnessDto> listSessionGenerateMindfulness) {
+
+        var dto = new SessionGenerateMindfulnessDto();
+
+        for (SessionGenerateMindfulnessDto mindfulness : listSessionGenerateMindfulness) {
+            dto.setIdSessionGenerate(mindfulness.getIdSessionGenerate());
+            //dto.setIdExerciseMindfulness(mindfulness.getIdExerciseMindfulness());
+            break;
+        }
+
+        return dto;
+    }
+
     public static SessionGenerateMindfulnessDto converterObject(SessionGenerateMindfulnessEntity entity) {
 
         var dto = new SessionGenerateMindfulnessDto();
@@ -83,6 +101,7 @@ public class SessionGenerateMindfulnessDto {
         dto.setSession(entity.getIdSessionGenerate().getIdSession().getName());
         dto.setStep(entity.getIdSessionGenerate().getIdSessionStepMapping().getIdStep().getName());
         dto.setExercise(entity.getIdExerciseMindfulness().getName());
+        dto.setDisabledComponent(entity.isDisabled());
 
         return dto;
 

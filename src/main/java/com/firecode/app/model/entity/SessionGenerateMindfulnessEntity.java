@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -43,6 +44,11 @@ public class SessionGenerateMindfulnessEntity implements Serializable {
     @JoinColumn(name = "id_session_generate", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private SessionGenerateEntity idSessionGenerate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "disabled", nullable = false)
+    private boolean disabled;
 
     public SessionGenerateMindfulnessEntity() {
     }
@@ -81,6 +87,14 @@ public class SessionGenerateMindfulnessEntity implements Serializable {
 
     public void setIdSessionGenerate(SessionGenerateEntity idSessionGenerate) {
         this.idSessionGenerate = idSessionGenerate;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override
