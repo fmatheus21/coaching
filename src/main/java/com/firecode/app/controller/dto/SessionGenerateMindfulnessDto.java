@@ -46,6 +46,10 @@ public class SessionGenerateMindfulnessDto {
     @Getter
     @Setter
     private boolean disabledComponent;
+    @Getter
+    @Setter
+    private String file;
+    private static String pathFileMindfulness = "/app/upload/media/audio/mindfulness/";
 
     public SessionGenerateMindfulnessEntity create(SessionGenerateMindfulnessDto dto) {
 
@@ -84,6 +88,10 @@ public class SessionGenerateMindfulnessDto {
 
         for (SessionGenerateMindfulnessDto mindfulness : listSessionGenerateMindfulness) {
             dto.setIdSessionGenerate(mindfulness.getIdSessionGenerate());
+            if (mindfulness.getIdExerciseMindfulness() == 1) {
+                dto.setFile(pathFileMindfulness + mindfulness.getFile());
+                System.out.println("File 1: " + pathFileMindfulness + mindfulness.getFile());
+            }
             //dto.setIdExerciseMindfulness(mindfulness.getIdExerciseMindfulness());
             break;
         }
@@ -102,6 +110,8 @@ public class SessionGenerateMindfulnessDto {
         dto.setStep(entity.getIdSessionGenerate().getIdSessionStepMapping().getIdStep().getName());
         dto.setExercise(entity.getIdExerciseMindfulness().getName());
         dto.setDisabledComponent(entity.isDisabled());
+        dto.setFile(pathFileMindfulness + entity.getIdExerciseMindfulness().getFileName());
+        System.out.println("File 2: " + pathFileMindfulness + entity.getIdExerciseMindfulness().getFileName());
 
         return dto;
 

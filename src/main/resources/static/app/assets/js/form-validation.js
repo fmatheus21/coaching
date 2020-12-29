@@ -501,20 +501,23 @@ var KTFormControls = function () {
         });
     };
     /* form-team-coaching-edit */
-    
-    
-     /* form-initMindfulness */
+
+
+    /* form-initMindfulness */
     var initMindfulness = function (element) {
         FormValidation.formValidation(document.getElementById(element), {
             fields: {
-                   idExerciseMindfulness: {
+                learning: {
                     validators: {
-                        greaterThan: {
-                            message: 'Preenchimento obrigatório.',
-                            min: 1
+                        notEmpty: {
+                            message: "Preenchimento obrigatório."
+                        },
+                        stringLength: {
+                            min: 10,                            
+                            message: 'Deve conter no mínimo 10 caracteres'
                         }
                     }
-                },
+                }              
 
             },
             plugins: {
@@ -572,12 +575,11 @@ var KTFormControls = function () {
             if (document.getElementById('form-team-coaching-edit')) {
                 initTeamCoachingEdit('form-team-coaching-edit');
             }
-             if (document.getElementById('form-mindfulness')) {
-                initMindfulness('form-mindfulness');
-                console.log('form-mindfulness...............')
+            if (document.getElementById('form-mindfulness')) {
+                initMindfulness('form-mindfulness');               
             }
-            
-            
+
+
 
         }
     };

@@ -23,7 +23,7 @@ public class PathUtil {
     @Getter
     @Value("${path.avatar.coachee}")
     private String pathAvatarCoachee;
-    
+
     @Getter
     @Value("${path.avatar.user}")
     private String pathAvatarUser;
@@ -31,8 +31,8 @@ public class PathUtil {
     @Getter
     @Value("${path.avatar.user.mary}")
     private String pathAvatarUserMary;
-    
-     @Getter
+
+    @Getter
     @Value("${path.avatar.user.dylan}")
     private String pathAvatarUserDylan;
 
@@ -47,6 +47,10 @@ public class PathUtil {
     @Getter
     @Value("${file.size.total}")
     private long fileSizeTotal;
+
+    @Getter
+    @Value("${path.file.mindfulness}")
+    private String pathFileMindfulness;
 
     public String localPath() {
         // return System.getProperty("user.dir");
